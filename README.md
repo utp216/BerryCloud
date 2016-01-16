@@ -23,11 +23,11 @@ this is because the RPI2 is supposed to eat sd cards, this setup boots of of the
 
 5.Run: sudo mkdir /var/scripts
 
-5.Run: wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre-img-cmd.sh -p /var/scripts/
+5.Run: wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre-img-cmd.sh -P /var/scripts/
 
 7.Run: bash /var/scripts/pre-img-cmd.sh
 
-8.Run: wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/setup.sh -p /var/scripts/
+8.Run: wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/setup.sh -P /var/scripts/
 
 9.Run: bash /var/scripts/setup.sh
 
