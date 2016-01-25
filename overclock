@@ -1,0 +1,28 @@
+# This setup voids warranty, use at your own risk
+# This setup runs smooth on my RPI and has not broke my RPI (testing it with this setup for over 2 months)
+# I use heatsinks and a cpu fan on my RPI
+
+gpu_mem=16
+cma_lwm=16
+cma_hwm=32
+boot_delay=1
+force_turbo=1
+initial_turbo=30
+temp_limit=80
+arm_freq=1100
+core_freq=600
+sdram_freq=500
+over_voltage=8
+over_voltage_sdram=4
+over_voltage_sdram_c=4
+over_voltage_sdram_i=4
+over_voltage_sdram_p=4
+
+# Not an overclock setting
+dtparam=act_led_trigger=heartbeat
+dtparam=pwr_led_trigger=heartbeat
+max_usb_current=1
+disable_splash=1
+disable_overscan=1
+framebuffer_depth=32
+framebuffer_ignore_alpha=1
