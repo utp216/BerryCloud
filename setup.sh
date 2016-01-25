@@ -10,7 +10,32 @@ OCPATH=$HTML/owncloud
 ssl_conf="/etc/apache2/sites-available/owncloud_ssl_domain_self_signed.conf"
 IFACE="eth0"
 IFCONFIG="/sbin/ifconfig"
-ADDRESS=$($IFCONFIG $IFACE | awk -F'[: ]+' '/\<inet\>/ {print $4; exit}')
+IP="/sbin/ip"
+INTERFACES="/etc/network/interfaces"
+ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
+NETMASK=$(ifconfig eth0 | grep Mask | sed s/^.*Mask://)
+GATEWAY=$(/sbin/ip route | awk '/default/ { print $3 }')
+
+clear
+echo "+--------------------------------------------------------------------+"
+echo "| This script will install your ownCloud and activate SSL.           |"
+echo "| It will do alot more, nano/vi the script to see what.              |"
+echo "|                                                                    |"
+echo "|                                                                    |"
+echo "|   The script will take about 60 minutes to finish,                 |"
+echo "|   depending on your internet connection and if you overclocked     |"
+echo "|                      your RaspberryPi2                             |"
+echo "|                                                                    |"
+echo "|   We offer more aswome Virtual Machines, guides and news           |"
+echo "|         on our website https://www.techandme.se                    |"
+echo "|                                                                    |"
+echo "| ####################### Tech and Me - 2016 ####################### |"
+echo "+--------------------------------------------------------------------+"
+echo -e "\e[32m"
+read -p "Press any key to start the script..." -n1 -s
+clear
+echo -e "\e[0m"
+
 
 # Check if root
         if [ "$(whoami)" != "root" ]; then
@@ -20,8 +45,155 @@ ADDRESS=$($IFCONFIG $IFACE | awk -F'[: ]+' '/\<inet\>/ {print $4; exit}')
         exit 1
 fi
 
-# Fix for missing keys
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+# Install swapfile of 2 GB
+fallocate -l 2048M /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo "/swapfile none swap defaults 0 0" >> /etc/fstab
+
+# Resolve network error
+echo "auto eth0
+   iface eth0 inet dhcp" >> /etc/network/interfaces
+
+      	# Create dir
+if 		[ -d $SCRIPTS ];
+	then
+      		sleep 1
+      	else
+      		mkdir $SCRIPTS
+fi
+
+# Get ownCloud install script
+#if 		[ -f $SCRIPTS/owncloud_install.sh ];
+#        then
+#                echo "owncloud_install.sh exists"
+#        else
+#        	wget wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_install.sh -P $SCRIPTS
+#fi
+
+# Get Redis install script
+if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
+        then
+                echo "install-redis-php-7.sh exists"
+        else
+        	wget wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P $SCRIPTS
+fi
+# Activate SSL
+if 		[ -f $SCRIPTS/activate-ssl.sh ];
+        then
+                echo "activate-ssl.sh exists"
+        else
+        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
+fi
+# The update script
+if 		[ -f $SCRIPTS/owncloud_update.sh ];
+        then
+        	echo "owncloud_update.sh exists"
+        else
+        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_update.sh -P $SCRIPTS
+fi
+# Sets static IP to UNIX
+if 		[ -f $SCRIPTS/ip.sh ];
+        then
+                echo "ip.sh exists"
+        else
+      		wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/ip.sh -P $SCRIPTS
+fi
+# Tests connection after static IP is set
+if 		[ -f $SCRIPTS/test_connection.sh ];
+        then
+                echo "test_connection.sh exists"
+        else
+        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/test_connection.sh -P $SCRIPTS
+fi
+# Welcome message after login (change in /home/ocadmin/.profile
+#if 		[ -f $SCRIPTS/instruction.sh ];
+#        then
+#                echo "instruction.sh exists"
+#        else
+#        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/instruction.sh -P $SCRIPTS
+#fi
+# Clears command history on every login
+if 		[ -f $SCRIPTS/history.sh ];
+        then
+                echo "history.sh exists"
+        else
+        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/history.sh -P $SCRIPTS
+fi
+# Change roots .bash_profile
+#if 		[ -f $SCRIPTS/change-root-profile.sh ];
+#        then
+#                echo "change-root-profile.sh exists"
+#        else
+#        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-root-profile.sh -P $SCRIPTS
+#fi
+# Change ocadmin .bash_profile
+#if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
+#        then
+#        	echo "change-ocadmin-profile.sh  exists"
+#        else
+#        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-ocadmin-profile.sh -P $SCRIPTS
+#fi
+# Get startup-script for root
+#if 		[ -f $SCRIPTS/owncloud-startup-script.sh ];
+#        then
+#                echo "owncloud-startup-script.sh exists"
+#        else
+#       	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud-startup-script.sh -P $SCRIPTS
+#fi
+
+# Make $SCRIPTS excutable
+        	chmod +x -R $SCRIPTS
+        	chown root:root -R $SCRIPTS
+
+# Allow ocadmin to run theese scripts
+        	chown ocadmin:ocadmin $SCRIPTS/instruction.sh
+        	chown ocadmin:ocadmin $SCRIPTS/history.sh
+
+# Get the Welcome Screen when http://$address
+if 		[ -f $HTML/index.php ];
+	then
+ 		rm $HTML/index.php
+ 		wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
+ 		chmod 750 $HTML/index.php && chown www-data:www-data $HTML/index.php
+ 	else	
+		wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
+		chmod 750 $HTML/index.php && chown www-data:www-data $HTML/index.php
+fi	
+# Remove the regular index.html if it exists
+if		[ -f $HTML/index.html ];
+        then
+                rm -f $HTML/index.html
+fi
+
+# Change .profile
+#        	bash $SCRIPTS/change-root-profile.sh
+#        	bash $SCRIPTS/change-ocadmin-profile.sh
+
+sudo apt-get install -y net-tools sudo nano git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration #python
+#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+
+# Remove locale error over ssh in other language
+sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
+sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
+
+# Resolve an issue with php7
+#export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
+
+# Add repository's
+sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
+sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
+sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|g" /etc/apt/sources.list
+sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|g" /etc/apt/sources.list
+sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|g" /etc/apt/sources.list
+sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|g" /etc/apt/sources.list
+sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|g" /etc/apt/sources.list
+sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|g" /etc/apt/sources.list
+sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|g" /etc/apt/sources.list
+sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|g" /etc/apt/sources.list
+sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
+sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
 
 # Change DNS
 echo "nameserver 8.26.56.26" > /etc/resolv.conf
@@ -46,13 +218,13 @@ sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
 
 # Install MYSQL 5.6
 apt-get install software-properties-common -y
-add-apt-repository -y ppa:ondrej/mysql-5.6
+sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/mysql-5.6
 echo "mysql-server-5.6 mysql-server/root_password password $mysql_pass" | debconf-set-selections
 echo "mysql-server-5.6 mysql-server/root_password_again password $mysql_pass" | debconf-set-selections
 apt-get install mysql-server-5.6 -y
 
 # mysql_secure_installation
-aptitude -y install expect
+apt-get -y install expect
 SECURE_MYSQL=$(expect -c "
 set timeout 10
 spawn mysql_secure_installation
@@ -71,7 +243,7 @@ send \"y\r\"
 expect eof
 ")
 echo "$SECURE_MYSQL"
-aptitude -y purge expect
+apt-get remove --purge expect -y
 
 # Install Apache
 apt-get install apache2 -y
@@ -85,13 +257,16 @@ a2enmod rewrite \
         
 # Set hostname and ServerName
 sudo sh -c "echo 'ServerName owncloud' >> /etc/apache2/apache2.conf"
-sudo hostnamectl set-hostname owncloud
+sudo hostnamectl set-hostname owncloud 
+echo "127.0.0.1 localhost" >> /etc/hosts
+echo "127.0.1.1 owncloud" >> /etc/hosts
 service apache2 restart
 
 # Install PHP 7
-apt-get install software-properties-common -y && echo -ne '\n' | sudo add-apt-repository ppa:ondrej/php-7.0
+apt-get install software-properties-common -y && echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php-7.0
+# sudo add-apt-repository ppa:ondrej/php-7.0
 apt-get update
-aptitude install -y \
+apt-get install -y \
         php7.0 \
         php7.0-common \
         php7.0-mysql \
@@ -131,10 +306,18 @@ echo
 sleep 3
 
 # Set trusted domain
-wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
-chmod a+x $SCRIPTS/update-config.php
-php $SCRIPTS/update-config.php $OCPATH/config/config.php 'trusted_domains[]' localhost ${ADDRESS[@]} $(hostname) $(hostname --fqdn)
-php $SCRIPTS/update-config.php $OCPATH/config/config.php overwrite.cli.url https://$ADDRESS/owncloud
+cat <<TRUSTED >> /var/www/html/owncloud/config/config.php
+'trusted_domains' =>
+  array (
+    0 => '$ADDRESS',
+  ),
+'overwrite.cli.url' => 'http://$ADDRESS/owncloud',
+);
+TRUSTED
+#wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
+#chmod a+x $SCRIPTS/update-config.php
+#php $SCRIPTS/update-config.php $OCPATH/config/config.php 'trusted_domains[]' localhost ${ADDRESS[@]} $(hostname) $(hostname --fqdn)
+#php $SCRIPTS/update-config.php $OCPATH/config/config.php overwrite.cli.url https://$ADDRESS/owncloud
 
 # Prepare cron.php to be run every 15 minutes
 # The user still has to activate it in the settings GUI
@@ -163,9 +346,9 @@ else
     Header add Strict-Transport-Security: "max-age=15768000;includeSubdomains"
     SSLEngine on
 ### YOUR SERVER ADDRESS ###
-#    ServerAdmin admin@example.com
-#    ServerName example.com
-#    ServerAlias subdomain.example.com 
+    ServerAdmin admin@test.com
+    ServerName test.com
+    ServerAlias test.test.com 
 ### SETTINGS ###
     DocumentRoot $OCPATH
 
@@ -271,30 +454,6 @@ fi
 # Set secure permissions final (./data/.htaccess has wrong permissions otherwise)
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 
-clear
-echo "+--------------------------------------------------------------------+"
-echo "| This script will configure your ownCloud and activate SSL.         |"
-echo "| It will also do the following:                                     |"
-echo "|                                                                    |"
-echo "| - Install Webmin                                                   |"
-echo "| - Install Redis Cache                                              |"
-echo "| - Upgrade your system to latest version                            |"
-echo "| - Set new passwords to Ubuntu Server and ownCloud                  |"
-echo "| - Set new keyboard layout                                          |"
-echo "| - Change timezone                                                  |"
-echo "| - Set static IP to the system (you have to set the same IP in      |"
-echo "|   your router) https://www.techandme.se/open-port-80-443/          |"
-echo "|                                                                    |"
-echo "|   The script will take about 10 minutes to finish,                 |"
-echo "|   depending on your internet connection.                           |"
-echo "|                                                                    |"
-echo "| ####################### Tech and Me - 2016 ####################### |"
-echo "+--------------------------------------------------------------------+"
-echo -e "\e[32m"
-read -p "Press any key to start the script..." -n1 -s
-clear
-echo -e "\e[0m"
-
 # Install packages for Webmin
 apt-get install --force-yes -y zip perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
 
@@ -332,9 +491,6 @@ sleep 3
 clear
 
 # Change IP
-IFACE="eth0"
-IFCONFIG="/sbin/ifconfig"
-ADDRESS=$($IFCONFIG $IFACE | awk -F'[: ]+' '/\<inet\>/ {print $4; exit}')
 echo -e "\e[0m"
 echo "The script will now configure your IP to be static."
 echo -e "\e[36m"
@@ -352,7 +508,18 @@ ifdown eth0
 sleep 2
 ifup eth0
 sleep 2
-bash /var/scripts/ip.sh
+
+cat <<-IPCONFIG > "$INTERFACES"
+        auto lo $IFACE
+        iface lo inet loopback
+        iface $IFACE inet static
+                address $ADDRESS
+                netmask $NETMASK
+                gateway $GATEWAY
+# Exit and save:	[CTRL+X] + [Y] + [ENTER]
+# Exit without saving:	[CTRL+X]
+IPCONFIG
+
 ifdown eth0
 sleep 2
 ifup eth0
@@ -381,6 +548,13 @@ bash /var/scripts/test_connection.sh
 sleep 2
 clear
 
+# Change password
+echo -e "\e[0m"
+echo "For better security, change the Linux password for [root]"
+echo -e "\e[32m"
+read -p "Press any key to change password for Linux... " -n1 -s
+echo -e "\e[0m"
+sudo passwd root
 
 # Change password
 echo -e "\e[0m"
@@ -399,6 +573,7 @@ fi
 echo
 clear &&
 echo -e "\e[0m"
+
 echo "For better security, change the ownCloud password for [ocadmin]"
 echo "The current password is [owncloud]"
 echo -e "\e[32m"
@@ -452,13 +627,21 @@ sleep 2
 echo
 echo
 apt-get update
-aptitude full-upgrade -y
+apt-get upgrade -y
 
 # Cleanup 1
 apt-get autoremove -y
 CLEARBOOT=$(dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e [0-9] | xargs sudo apt-get -y purge)
 echo "$CLEARBOOT"
 clear
+
+# Use external harddrive to mount os and sd card to boot
+echo "We are now setting up your USB harddrive to mount the os, please attach your USB harddrive now, if you have not done so."
+echo -e "\e[32m"
+read -p "Press any key to confirm the harddrive is plugged in and only one storage device is plugged in... " -n1 -s
+echo -e "\e[0m"
+dd bs=1M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1 -v
+sed -i 's|root=/dev/mmcblk0p2|root=/dev/sda1|g' /boot/cmdline.txt
 
 # Success!
 echo -e "\e[32m"
@@ -478,6 +661,7 @@ echo
 
 # Cleanup 2
 sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
+apt-get remove --purge expect
 #rm /var/scripts/owncloud-startup-script.sh
 #rm /var/scripts/ip.sh
 #rm /var/scripts/test_connection.sh
@@ -510,10 +694,10 @@ sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
 # bits.
 #
 # By default this script does nothing.
-
-exit 0
-
-RCLOCAL
+#
+#exit 0
+#
+#RCLOCAL
 
 ## Reboot
 reboot
