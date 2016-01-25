@@ -171,16 +171,6 @@ fi
 #        	bash $SCRIPTS/change-root-profile.sh
 #        	bash $SCRIPTS/change-ocadmin-profile.sh
 
-sudo apt-get install -y net-tools sudo nano git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration #python
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
-
-# Remove locale error over ssh in other language
-sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
-sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
-
-# Resolve an issue with php7
-#export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
-
 # Add repository's
 sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
 sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
@@ -194,6 +184,17 @@ sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|de
 sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|g" /etc/apt/sources.list
 sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
 sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+sudo apt-get update
+sudo apt-get install -y python-software-properties net-tools sudo nano git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
+
+# Remove locale error over ssh in other language
+sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
+sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
+
+# Resolve an issue with php7
+#export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
 
 # Change DNS
 echo "nameserver 8.26.56.26" > /etc/resolv.conf
