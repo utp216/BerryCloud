@@ -1,4 +1,5 @@
 # Try out scripts and configs for the rpi / ownCloud / wd project
+# UNDER HEAVY CONSTRUCTION!!!!!!!! 
 
 Base OS: ubuntu core 15.04
 
