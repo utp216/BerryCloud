@@ -264,7 +264,7 @@ echo "127.0.1.1 owncloud" >> /etc/hosts
 service apache2 restart
 
 # Install PHP 7
-apt-get install software-properties-common -y && echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php-7.0
+echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php -y
 # sudo add-apt-repository ppa:ondrej/php-7.0
 apt-get update
 apt-get install -y \
@@ -641,7 +641,7 @@ echo "We are now setting up your USB harddrive to mount the os, please attach yo
 echo -e "\e[32m"
 read -p "Press any key to confirm the harddrive is plugged in and only one storage device is plugged in... " -n1 -s
 echo -e "\e[0m"
-dd bs=1M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1 -v
+dd bs=1M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
 sed -i 's|root=/dev/mmcblk0p2|root=/dev/sda1|g' /boot/cmdline.txt
 
 # Success!
@@ -663,24 +663,24 @@ echo
 # Cleanup 2
 sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
 apt-get remove --purge expect
-#rm /var/scripts/owncloud-startup-script.sh
-#rm /var/scripts/ip.sh
-#rm /var/scripts/test_connection.sh
-#rm /var/scripts/change-ocadmin-profile.sh
-#rm /var/scripts/change-root-profile.sh
-#rm /var/scripts/install-redis-php-7.sh
-#rm /var/scripts/index.html
-#rm /var/scripts/update-config.php
-#rm /var/www/html/index.html
-#rm /var/scripts/owncloud_install.sh
+rm /var/scripts/owncloud-startup-script.sh
+rm /var/scripts/ip.sh
+rm /var/scripts/test_connection.sh
+rm /var/scripts/change-ocadmin-profile.sh
+rm /var/scripts/change-root-profile.sh
+rm /var/scripts/install-redis-php-7.sh
+rm /var/scripts/index.html
+rm /var/scripts/update-config.php
+rm /var/www/html/index.html
+rm /var/scripts/owncloud_install.sh
 #rm /var/rc.local
-#rm /var/www/html/owncloud/data/owncloud.log
-#cat /dev/null > ~/.bash_history
-#cat /dev/null > /var/spool/mail/root
-#cat /dev/null > /var/spool/mail/ocadmin
-#cat /dev/null > /var/log/apache2/access.log
-#cat /dev/null > /var/log/apache2/error.log
-#cat /dev/null > /var/log/cronjobs_success.log
+rm /var/www/html/owncloud/data/owncloud.log
+cat /dev/null > ~/.bash_history
+cat /dev/null > /var/spool/mail/root
+cat /dev/null > /var/spool/mail/ocadmin
+cat /dev/null > /var/log/apache2/access.log
+cat /dev/null > /var/log/apache2/error.log
+cat /dev/null > /var/log/cronjobs_success.log
 #sed -i 's/sudo -i//g' /home/ocadmin/.bash_profile
 #cat << RCLOCAL > "/etc/rc.local"
 #!/bin/sh -e
