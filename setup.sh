@@ -3,6 +3,7 @@
 # Tech and Me, 2016 - www.techandme.se
 
 mysql_pass=owncloud
+CONFIG=$HTML/owncloud/config/config.php
 OCVERSION=owncloud-8.2.2.zip
 SCRIPTS=/var/scripts
 HTML=/var/www/html
@@ -308,14 +309,15 @@ echo
 sleep 3
 
 # Set trusted domain
-cat <<TRUSTED >> /var/www/html/owncloud/config/config.php
-'trusted_domains' =>
-  array (
-    0 => '$ADDRESS',
-  ),
-'overwrite.cli.url' => 'http://$ADDRESS/owncloud',
-);
-TRUSTED
+sed -i "s|0 => 'localhost',|0 => '$ADDRESS',|g" $CONFIG
+#cat <<TRUSTED >> /var/www/html/owncloud/config/config.php
+#'trusted_domains' =>
+#  array (
+#    0 => '$ADDRESS',
+#  ),
+#'overwrite.cli.url' => 'http://$ADDRESS/owncloud',
+#);
+#TRUSTED
 #wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
 #chmod a+x $SCRIPTS/update-config.php
 #php $SCRIPTS/update-config.php $OCPATH/config/config.php 'trusted_domains[]' localhost ${ADDRESS[@]} $(hostname) $(hostname --fqdn)
