@@ -1,3 +1,19 @@
+gpu_mem=16
+#cma_lwm=16
+#cma_hwm=32
+boot_delay=1
+force_turbo=1
+initial_turbo=30
+temp_limit=80
+over_voltage_sdram=4
+over_voltage_sdram_c=4
+over_voltage_sdram_i=4
+over_voltage_sdram_p=4
+# Not an overclock setting
+dtparam=act_led_trigger=heartbeat
+dtparam=pwr_led_trigger=heartbeat
+max_usb_current=1
+disable_splash=1
 ################################################################################
 ##  Raspberry Pi Configuration Settings
 ##
@@ -366,7 +382,7 @@
 ##     0        Overscan Enabled (Default)
 ##     1        Overscan Disabled
 ##
-disable_overscan=1
+#disable_overscan=1
 
 ################################################################################
 ##  Framebuffer Video Settings
@@ -395,7 +411,7 @@ disable_overscan=1
 ##     32       Has no corruption issues but needs framebuffer_ignore_alpha=1
 ##              and shows the wrong colors as of 2012/06/15
 ##
-framebuffer_depth=32
+#framebuffer_depth=16
 
 ## framebuffer_ignore_alpha
 ##     Set to 1 to disable alpha channel. Helps with 32bit.
@@ -405,7 +421,7 @@ framebuffer_depth=32
 ##     0        Enable Alpha Channel (Default)
 ##     1        Disable Alpha Channel
 ##
-framebuffer_ignore_alpha=1
+#framebuffer_ignore_alpha=0
 
 ################################################################################
 ##  General Video Settings
@@ -513,7 +529,7 @@ framebuffer_ignore_alpha=1
 ##
 ##     Default 64
 ##
-gpu_mem=128
+#gpu_mem=128
 
 ## gpu_mem_256
 ##     GPU memory allocation in MB for 256MB board revision.
@@ -547,13 +563,13 @@ gpu_mem=128
 ##     When GPU has less than cma_lwm (low water mark) memory available it
 ##     will request some from ARM.
 ##
-cma_lwm=16
+#cma_lwm=16
 
 ## cma_hwm
 ##     When GPU has more than cma_hwm (high water mark) memory available it
 ##     will release some to ARM.
 ##
-cma_hwm=32
+#cma_hwm=32
 
 ################################################################################
 ##  Boot Option Settings
@@ -643,7 +659,7 @@ cma_hwm=32
 ##
 ##     Default 1
 ##
-boot_delay=1
+#boot_delay=0
 
 ## boot_delay_ms
 ##     Wait for a given number of milliseconds in start.elf before loading
@@ -675,7 +691,7 @@ boot_delay=1
 ##     0        Splash screen enabled (Default)
 ##     1        Splash screen disabled
 ##
-disable_splash=1
+#disable_splash=1
 
 ################################################################################
 ##  Overclocking Settings
@@ -718,7 +734,7 @@ disable_splash=1
 ##              and SDRAM.
 ##              Overclocking of h264_freq, v3d_freq and isp_freq is allowed.
 ##
-force_turbo=1
+#force_turbo=0
 
 ## initial_turbo
 ##     Enables turbo mode from boot for the given value in seconds (up to 60)
@@ -727,7 +743,7 @@ force_turbo=1
 ##
 ##     Default 0
 ##
-initial_turbo=30
+#initial_turbo=0
 
 ## temp_limit
 ##     Overheat protection. Sets clocks and voltages to default when the SoC
@@ -736,7 +752,7 @@ initial_turbo=30
 ##
 ##     Default 85
 ##
-temp_limit=80
+#temp_limit=85
 
 ## arm_freq
 ##     Frequency of ARM in MHz.
@@ -757,7 +773,7 @@ arm_freq=1100
 ##
 ##     Default 250.
 ##
-gpu_freq=400
+#gpu_freq=250
 
 ## core_freq
 ##     Frequency of GPU processor core in MHz. It has an impact on ARM
@@ -765,7 +781,7 @@ gpu_freq=400
 ##
 ##     Default 250.
 ##
-core_freq=600
+core_freq=500
 
 ## core_freq_min
 ##     Minimum frequency of GPU processor core in MHz (used for dynamic
@@ -780,21 +796,21 @@ core_freq=600
 ##
 ##     Default 250.
 ##
-#h264_freq=300
+#h264_freq=250
 
 ## isp_freq
 ##     Frequency of image sensor pipeline block in MHz.
 ##
 ##     Default 250.
 ##
-#isp_freq=300
+#isp_freq=250
 
 ## v3d_freq
 ##     Frequency of 3D block in MHz.
 ##
 ##     Default 250.
 ##
-#v3d_freq=300
+#v3d_freq=250
 
 ## sdram_freq
 ##     Frequency of SDRAM in MHz.
@@ -933,7 +949,7 @@ over_voltage=8
 ##     7        1.375 V
 ##     8        1.4   V
 ##
-over_voltage_sdram=4
+#over_voltage_sdram=0
 
 ## over_voltage_sdram_c
 ##     SDRAM controller voltage adjust.
@@ -966,7 +982,7 @@ over_voltage_sdram=4
 ##     7        1.375 V
 ##     8        1.4   V
 ##
-over_voltage_sdram_c=4
+#over_voltage_sdram_c=0
 
 ## over_voltage_sdram_i
 ##     SDRAM I/O voltage adjust.
@@ -999,7 +1015,7 @@ over_voltage_sdram_c=4
 ##     7        1.375 V
 ##     8        1.4   V
 ##
-over_voltage_sdram_i=4
+#over_voltage_sdram_i=0
 
 ## over_voltage_sdram_p
 ##     SDRAM phy voltage adjust.
@@ -1032,7 +1048,7 @@ over_voltage_sdram_i=4
 ##     7        1.375 V
 ##     8        1.4   V
 ##
-over_voltage_sdram_p=4
+#over_voltage_sdram_p=0
 
 ################################################################################
 ##  USB Power
@@ -1046,7 +1062,7 @@ over_voltage_sdram_p=4
 ##
 ##     Default 0.
 ##
-max_usb_current=1
+#max_usb_current=0
 
 ################################################################################
 ##  Base Device Tree Parameters
@@ -1131,7 +1147,7 @@ max_usb_current=1
 ##
 ##     Default mmc.
 ##
-dtparam=act_led_trigger=heartbeat
+#dtparam=act_led_trigger=mmc
 
 ## act_led_activelow
 ##     Set to "on" to invert the sense of the LED
@@ -1158,7 +1174,7 @@ dtparam=act_led_trigger=heartbeat
 ##
 ##     Default mmc.
 ##
-dtparam=pwr_led_trigger=heartbeat
+#dtparam=pwr_led_trigger=mmc
 
 ## pwr_led_activelow
 ##     Set to "on" to invert the sense of the LED
