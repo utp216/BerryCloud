@@ -78,7 +78,7 @@ if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
         then
                 echo "install-redis-php-7.sh exists"
         else
-        	wget wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P $SCRIPTS
+        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P /var/scripts
 fi
 # Activate SSL
 if 		[ -f $SCRIPTS/activate-ssl.sh ];
@@ -284,7 +284,8 @@ apt-get install -y \
         php7.0-sqlite3 \
         php7.0-curl \
         libsm6 \
-        libsmbclient
+        libsmbclient \
+        smbclient
 
 # Download $OCVERSION
 wget https://download.owncloud.org/community/$OCVERSION -P $HTML
