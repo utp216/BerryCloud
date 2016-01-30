@@ -14,5 +14,5 @@ wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config
 apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 -y
 dpkg -i raspi-config_20150131-5_all.deb
 raspi-config
-
+fdisk /dev/mmcblk0
 sudo reboot
