@@ -46,6 +46,8 @@ echo -e "\e[0m"
         exit 1
 fi
 
+sudo resize2fs /dev/mmcblk0p2
+
 # Install swapfile of 2 GB
 fallocate -l 2048M /swapfile
 chmod 600 /swapfile
