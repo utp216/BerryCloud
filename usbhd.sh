@@ -13,7 +13,7 @@ fdisk /dev/sda1 << EOF
 wipefs
 EOF
 fdisk /dev/sda1 << EOF
-0
+o
 n
 p
 1
