@@ -11,6 +11,8 @@ then
 # Format and create partition
 fdisk /dev/sda1 << EOF
 wipefs
+EOF
+fdisk /dev/sda1 << EOF
 0
 n
 p
@@ -19,7 +21,7 @@ p
 
 w
 EOF
-	sudo mkfs.ext4 /dev/sda1
+	sudo mkfs.ext4 /dev/sda1 -y
 	dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
 	sed -i 's|/dev/mmcblk0p2|/dev/sda1|g' /etc/fstab
 else
