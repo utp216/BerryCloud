@@ -1,19 +1,5 @@
-gpu_mem=16
-#cma_lwm=16
-#cma_hwm=32
-boot_delay=1
-force_turbo=1
-initial_turbo=30
-temp_limit=80
-over_voltage_sdram=4
-over_voltage_sdram_c=4
-over_voltage_sdram_i=4
-over_voltage_sdram_p=4
-# Not an overclock setting
-dtparam=act_led_trigger=heartbeat
-dtparam=pwr_led_trigger=heartbeat
-max_usb_current=1
-disable_splash=1
+## Tech and me 2016 overclock setup - Warning voids warrenty - we cant be held 
+## responsible for any damage or loss what so ever
 ################################################################################
 ##  Raspberry Pi Configuration Settings
 ##
@@ -529,7 +515,7 @@ disable_splash=1
 ##
 ##     Default 64
 ##
-#gpu_mem=128
+gpu_mem=16
 
 ## gpu_mem_256
 ##     GPU memory allocation in MB for 256MB board revision.
@@ -659,7 +645,7 @@ disable_splash=1
 ##
 ##     Default 1
 ##
-#boot_delay=0
+boot_delay=1
 
 ## boot_delay_ms
 ##     Wait for a given number of milliseconds in start.elf before loading
@@ -691,7 +677,7 @@ disable_splash=1
 ##     0        Splash screen enabled (Default)
 ##     1        Splash screen disabled
 ##
-#disable_splash=1
+disable_splash=1
 
 ################################################################################
 ##  Overclocking Settings
@@ -734,7 +720,7 @@ disable_splash=1
 ##              and SDRAM.
 ##              Overclocking of h264_freq, v3d_freq and isp_freq is allowed.
 ##
-#force_turbo=0
+force_turbo=1
 
 ## initial_turbo
 ##     Enables turbo mode from boot for the given value in seconds (up to 60)
@@ -743,7 +729,7 @@ disable_splash=1
 ##
 ##     Default 0
 ##
-#initial_turbo=0
+initial_turbo=30
 
 ## temp_limit
 ##     Overheat protection. Sets clocks and voltages to default when the SoC
@@ -752,7 +738,7 @@ disable_splash=1
 ##
 ##     Default 85
 ##
-#temp_limit=85
+temp_limit=80
 
 ## arm_freq
 ##     Frequency of ARM in MHz.
@@ -949,7 +935,7 @@ over_voltage=8
 ##     7        1.375 V
 ##     8        1.4   V
 ##
-#over_voltage_sdram=0
+over_voltage_sdram=8
 
 ## over_voltage_sdram_c
 ##     SDRAM controller voltage adjust.
@@ -1062,7 +1048,7 @@ over_voltage=8
 ##
 ##     Default 0.
 ##
-#max_usb_current=0
+max_usb_current=1
 
 ################################################################################
 ##  Base Device Tree Parameters
@@ -1147,7 +1133,7 @@ over_voltage=8
 ##
 ##     Default mmc.
 ##
-#dtparam=act_led_trigger=mmc
+dtparam=act_led_trigger=heartbeat
 
 ## act_led_activelow
 ##     Set to "on" to invert the sense of the LED
@@ -1174,7 +1160,7 @@ over_voltage=8
 ##
 ##     Default mmc.
 ##
-#dtparam=pwr_led_trigger=mmc
+dtparam=pwr_led_trigger=heartbeat
 
 ## pwr_led_activelow
 ##     Set to "on" to invert the sense of the LED
