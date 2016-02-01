@@ -250,6 +250,9 @@ else
 	sleep 1
 fi
 
+# Fix ownership issue
+sudo chown ocadmin:ocadmin /home/ocadmin/.bash_profile
+
 # Resize sdcard and update system
 sudo bash /var/scripts/pre.sh
 
