@@ -17,6 +17,14 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 NETMASK=$(ifconfig eth0 | grep Mask | sed s/^.*Mask://)
 GATEWAY=$(/sbin/ip route | awk '/default/ { print $3 }')
 
+# Check if root
+        if [ "$(whoami)" != "root" ]; then
+        echo
+        echo -e "\e[31mSorry, you are not root.\n\e[0mYou must type: \e[36msudo \e[0mbash $SCRIPTS/owncloud_install.sh"
+        echo
+        exit 1
+fi
+
 clear
 echo "+--------------------------------------------------------------------+"
 echo "| This script will install your ownCloud and activate SSL.           |"
@@ -37,15 +45,7 @@ read -p "Press any key to start the script..." -n1 -s
 clear
 echo -e "\e[0m"
 
-
-# Check if root
-        if [ "$(whoami)" != "root" ]; then
-        echo
-        echo -e "\e[31mSorry, you are not root.\n\e[0mYou must type: \e[36msudo \e[0mbash $SCRIPTS/owncloud_install.sh"
-        echo
-        exit 1
-fi
-
+# Resize sdcard
 sudo resize2fs /dev/mmcblk0p2
 
 # Install swapfile of 2 GB
@@ -56,9 +56,9 @@ swapon /swapfile
 echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 
 # Resolve network error
-echo "auto eth0
-   iface eth0 inet dhcp" >> /etc/network/interfaces
-
+#echo "auto eth0
+#   iface eth0 inet dhcp" >> /etc/network/interfaces
+#
       	# Create dir
 if 		[ -d $SCRIPTS ];
 	then
@@ -200,8 +200,9 @@ fi
 sudo apt-get update && apt-get install -f -y
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 sudo apt-get update
-sudo apt-get install -y software-properties-common ifupdown python-software-properties clamav net-tools sudo dnsutils nano git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
+sudo apt-get install -y software-properties-common ifupdown python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
+# sudo dnsutils nano
 
 # Remove locale error over ssh in other language
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
@@ -216,7 +217,8 @@ sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
 
 # Check network
 sudo ifdown $IFACE && sudo ifup $IFACE
-nslookup google.com
+#nslookup google.com
+bash /var/scripts/test_connection.sh
 if [[ $? > 0 ]]
 then
     echo "Network NOT OK. You must have a working Network connection to run this script."
@@ -280,19 +282,19 @@ echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php -y
 # sudo add-apt-repository ppa:ondrej/php-7.0
 apt-get update
 apt-get install -y \
-        php7.0 \
-        php7.0-common \
-        php7.0-mysql \
-        php7.0-intl \
-        php7.0-mcrypt \
-        php7.0-ldap \
-        php7.0-imap \
-        php7.0-cli \
-        php7.0-gd \
-        php7.0-pgsql \
-        php7.0-json \
-        php7.0-sqlite3 \
-        php7.0-curl \
+        php \
+        php-common \
+        php-mysql \
+        php-intl \
+        php-mcrypt \
+        php-ldap \
+        php-imap \
+        php-cli \
+        php-gd \
+        php-pgsql \
+        php-json \
+        php-sqlite3 \
+        php-curl \
         libsm6 \
         libsmbclient \
         smbclient
@@ -397,7 +399,7 @@ sudo -u www-data php $OCPATH/occ config:system:set mail_from_address --value="ww
 sudo -u www-data php $OCPATH/occ config:system:set mail_domain --value="gmail.com"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtpsecure --value="ssl"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtpname --value="www.en0ch.se@gmail.com"
-sudo -u www-data php $OCPATH/occ config:system:set mail_smtppassword --value="hejasverige"
+sudo -u www-data php $OCPATH/occ config:system:set mail_smtppassword --value="techandme_se"
 
 # Install Libreoffice Writer to be able to read MS documents.
 echo -ne '\n' | sudo apt-add-repository ppa:libreoffice/libreoffice-4-4
@@ -626,13 +628,14 @@ echo
 echo
 apt-get update
 apt-get upgrade -y
+apt-get -f install -y
 
 # Cleanup 1
-#apt-get autoremove -y
-#CLEARBOOT=$(dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e [0-9] | xargs sudo apt-get -y purge)
-#echo "$CLEARBOOT"
-#clear
-#
+apt-get autoremove -y
+CLEARBOOT=$(dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e [0-9] | xargs sudo apt-get -y purge)
+echo "$CLEARBOOT"
+clear
+
 # Use external harddrive to mount os and sd card to boot
 #function ask_yes_or_no() {
 #    read -p "$1 ([y]es or [N]o): "
@@ -687,7 +690,7 @@ echo    "| You have sucessfully installed ownCloud! System will now reboot... |"
 echo    "|                                                                    |"
 echo -e "|         \e[0mLogin to ownCloud in your browser:\e[36m" $ADDRESS"\e[32m           |"
 echo    "|                                                                    |"
-echo -e "|         \e[0mPublish your server online! \e[36mhttp://goo.gl/H7IsHm\e[32m           |"
+echo -e "|         \e[0mPublish your server online! \e[36mhttps://goo.gl/iUGE2U\e[32m           |"
 echo    "|                                                                    |"
 echo -e "|    \e[91m#################### Tech and Me - 2016 ####################\e[32m    |"
 echo    "+--------------------------------------------------------------------+"
