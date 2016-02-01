@@ -111,12 +111,11 @@ if 		[ -f $SCRIPTS/test_connection.sh ];
         	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/test_connection.sh -P $SCRIPTS
 fi
 # Welcome message after login (change in /home/ocadmin/.profile
-#if 		[ -f $SCRIPTS/instruction.sh ];
-#        then
-#                echo "instruction.sh exists"
-#        else
-#        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/instruction.sh -P $SCRIPTS
-#fi
+if 		[ -f $SCRIPTS/instruction.sh ];
+        then
+                echo "instruction.sh exists"
+        else        	wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/instruction.sh -P $SCRIPTS
+fi
 # Clears command history on every login
 if 		[ -f $SCRIPTS/history.sh ];
         then
@@ -124,6 +123,23 @@ if 		[ -f $SCRIPTS/history.sh ];
         else
         	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/history.sh -P $SCRIPTS
 fi
+
+# Trusted ip conf script
+if 		[ -f $SCRIPTS/trusted.sh ];
+        then
+                echo "trusted.sh"
+        else
+        	wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/trusted.sh -P $SCRIPTS
+fi
+
+# Update-config script
+if 		[ -f $SCRIPTS/update-config.php ];
+        then
+                echo "update-config.php exists"
+        else
+        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
+fi
+
 # Change roots .bash_profile
 #if 		[ -f $SCRIPTS/change-root-profile.sh ];
 #        then
@@ -131,13 +147,14 @@ fi
 #        else
 #        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-root-profile.sh -P $SCRIPTS
 #fi
+
 # Change ocadmin .bash_profile
-#if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
-#        then
-#        	echo "change-ocadmin-profile.sh  exists"
-#        else
-#        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-ocadmin-profile.sh -P $SCRIPTS
-#fi
+if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
+        then
+        	echo "change-ocadmin-profile.sh  exists"
+        else
+        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-ocadmin-profile.sh -P $SCRIPTS
+fi
 # Get startup-script for root
 #if 		[ -f $SCRIPTS/owncloud-startup-script.sh ];
 #        then
@@ -191,7 +208,7 @@ fi
 sudo apt-get update
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 sudo apt-get update
-sudo apt-get install -y software-properties-common ifupdown python-software-properties net-tools sudo dnsutils nano git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
+sudo apt-get install -y software-properties-common ifupdown python-software-properties clamav net-tools sudo dnsutils nano git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
 
 # Remove locale error over ssh in other language
@@ -313,19 +330,7 @@ echo
 sleep 3
 
 # Set trusted domain
-sed -i "s|0 => 'localhost',|0 => '$ADDRESS',|g" $CONFIG
-#cat <<TRUSTED >> /var/www/html/owncloud/config/config.php
-#'trusted_domains' =>
-#  array (
-#    0 => '$ADDRESS',
-#  ),
-#'overwrite.cli.url' => 'http://$ADDRESS/owncloud',
-#);
-#TRUSTED
-#wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
-#chmod a+x $SCRIPTS/update-config.php
-#php $SCRIPTS/update-config.php $OCPATH/config/config.php 'trusted_domains[]' localhost ${ADDRESS[@]} $(hostname) $(hostname --fqdn)
-#php $SCRIPTS/update-config.php $OCPATH/config/config.php overwrite.cli.url https://$ADDRESS/owncloud
+sudo bash $SCRIPTS/trusted.sh
 
 # Prepare cron.php to be run every 15 minutes
 # The user still has to activate it in the settings GUI
@@ -469,9 +474,6 @@ apt-get install --force-yes -y zip perl libnet-ssleay-perl openssl libauthen-pam
 cd
 wget http://prdownloads.sourceforge.net/webadmin/webmin_1.780_all.deb
 dpkg --install webmin_1.780_all.deb
-IFACE="eth0"
-IFCONFIG="/sbin/ifconfig"
-ADDRESS=$($IFCONFIG $IFACE | awk -F'[: ]+' '/\<inet\>/ {print $4; exit}')
 echo
 echo "Webmin is installed, access it from your browser: https://$ADDRESS:10000"
 sleep 2
@@ -578,8 +580,6 @@ then
 else
     sleep 2
 fi
-echo
-clear &&
 echo -e "\e[0m"
 
 echo "For better security, change the ownCloud password for [ocadmin]"
@@ -600,21 +600,21 @@ fi
         rm /var/scripts/activate-ssl.sh
         wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh
         chmod 755 /var/scripts/activate-ssl.sh
-clear
+#clear
 # Let's Encrypt
-function ask_yes_or_no() {
-    read -p "$1 ([y]es or [N]o): "
-    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
-        y|yes) echo "yes" ;;
-        *)     echo "no" ;;
-    esac
-}
-if [[ "yes" == $(ask_yes_or_no "Last but not least, do you want to install a real SSL cert (from Let's Encrypt) on this machine?") ]]
-then
-	sudo bash /var/scripts/activate-ssl.sh
-else
+#function ask_yes_or_no() {
+#    read -p "$1 ([y]es or [N]o): "
+#    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+#        y|yes) echo "yes" ;;
+#        *)     echo "no" ;;
+#    esac
+#}
+#if [[ "yes" == $(ask_yes_or_no "Last but not least, do you want to install a real SSL cert (from Let's Encrypt) on this machine?") ]]
+#then
+#	sudo bash /var/scripts/activate-ssl.sh
+#else
 echo
-    echo "OK, but if you want to run it later, just type: bash /var/scripts/activate-ssl.sh"
+    echo "If you want to run the installation of a real ssl cert later, just type: bash /var/scripts/activate-ssl.sh"
     echo -e "\e[32m"
     read -p "Press any key to continue... " -n1 -s
     echo -e "\e[0m"
@@ -644,12 +644,30 @@ echo "$CLEARBOOT"
 clear
 
 # Use external harddrive to mount os and sd card to boot
-echo "We are now setting up your USB harddrive to mount the os, please attach your USB harddrive now, if you have not done so."
-echo -e "\e[32m"
-read -p "Press any key to confirm the harddrive is plugged in and only one storage device is plugged in... " -n1 -s
-echo -e "\e[0m"
-dd bs=1M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
-sed -i 's|root=/dev/mmcblk0p2|root=/dev/sda1|g' /boot/cmdline.txt
+function ask_yes_or_no() {
+    read -p "$1 ([y]es or [N]o): "
+    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+        y|yes) echo "yes" ;;
+        *)     echo "no" ;;
+    esac
+}
+if [[ "yes" == $(ask_yes_or_no "We are now setting up your USB harddrive to mount the os, please attach your USB harddrive now, if you have not done so and type yes.") ]]
+then
+	dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
+	sed -i 's|root=/dev/mmcblk0p2|root=/dev/sda1|g' /boot/cmdline.txt
+#else
+echo
+    echo "If you want to do this later: bash /var/scripts/usbhd.sh"
+    echo -e "\e[32m"
+    read -p "Press any key to continue... " -n1 -s
+    echo -e "\e[0m"
+fi
+#echo "We are now setting up your USB harddrive to mount the os, please attach your USB harddrive now, if you have not done so."
+#echo -e "\e[32m"
+#read -p "Press any key to confirm the harddrive is plugged in and only one storage device is plugged in... " -n1 -s
+#echo -e "\e[0m"
+#dd bs=1M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
+#sed -i 's|root=/dev/mmcblk0p2|root=/dev/sda1|g' /boot/cmdline.txt
 
 # Success!
 echo -e "\e[32m"
