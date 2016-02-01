@@ -610,7 +610,7 @@ echo
     echo -e "\e[32m"
     read -p "Press any key to continue... " -n1 -s
     echo -e "\e[0m"
-fi
+#fi
 
 # Install Redis
 bash /var/scripts/install-redis-php-7.sh
