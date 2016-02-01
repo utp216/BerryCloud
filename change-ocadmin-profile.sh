@@ -24,7 +24,7 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
-bash /var/scripts/instruction.sh
+bash /var/scripts/instructions.sh
 bash /var/scripts/history.sh
 sudo -i
 OCADMIN-PROFILE
