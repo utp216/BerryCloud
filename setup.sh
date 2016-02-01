@@ -664,7 +664,7 @@ fdisk /dev/sda1 << EOF
 wipefs
 EOF
 fdisk /dev/sda1 << EOF
-0
+o
 n
 p
 1
@@ -672,7 +672,11 @@ p
 
 w
 EOF
-	sudo mkfs.ext4 /dev/sda1 -y
+	echo -e "\e[32m"
+	read -p "If it asks to overwrite anything just hit yes, make sure there are no needed files on the hd. Press any key to start the script..." -n1 -s
+	clear
+	echo -e "\e[0m"
+	sudo mkfs.ext4 /dev/sda1
 	dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
 	sed -i 's|/dev/mmcblk0p2|/dev/sda1|g' /etc/fstab
 else
@@ -682,6 +686,7 @@ echo
     read -p "Press any key to continue... " -n1 -s
     echo -e "\e[0m"
 fi
+
 #echo "We are now setting up your USB harddrive to mount the os, please attach your USB harddrive now, if you have not done so."
 #echo -e "\e[32m"
 #read -p "Press any key to confirm the harddrive is plugged in and only one storage device is plugged in... " -n1 -s
