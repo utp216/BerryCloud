@@ -226,14 +226,12 @@ else
 fi
 
 # Update system
-apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autoclean -y
+apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autoclean -y && apt-get -f install -y
 
 # Set locales
 sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
 
 # Install MYSQL 5.6
-apt-get install software-properties-common -y
-sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/mysql-5.6
 echo "mysql-server-5.6 mysql-server/root_password password $mysql_pass" | debconf-set-selections
 echo "mysql-server-5.6 mysql-server/root_password_again password $mysql_pass" | debconf-set-selections
 apt-get install mysql-server-5.6 -y
