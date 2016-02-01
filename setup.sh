@@ -123,7 +123,13 @@ if 		[ -f $SCRIPTS/history.sh ];
         else
         	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/history.sh -P $SCRIPTS
 fi
-
+# Sets root partition to external drive
+if 		[ -f $SCRIPTS/usbhd.sh ];
+        then
+                echo "usbhd.sh exists"
+        else
+        	wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/usbhd.sh -P $SCRIPTS
+fi
 # Trusted ip conf script
 if 		[ -f $SCRIPTS/trusted.sh ];
         then
@@ -141,12 +147,12 @@ if 		[ -f $SCRIPTS/update-config.php ];
 fi
 
 # Change roots .bash_profile
-#if 		[ -f $SCRIPTS/change-root-profile.sh ];
-#        then
-#                echo "change-root-profile.sh exists"
-#        else
-#        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-root-profile.sh -P $SCRIPTS
-#fi
+if 		[ -f $SCRIPTS/change-root-profile.sh ];
+        then
+                echo "change-root-profile.sh exists"
+        else
+        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-root-profile.sh -P $SCRIPTS
+fi
 
 # Change ocadmin .bash_profile
 if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
