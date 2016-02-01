@@ -65,7 +65,7 @@ if 		[ -f $SCRIPTS/instruction.sh ];
         then
                 echo "instruction.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/instruction.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/instructions.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -82,21 +82,21 @@ if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
         then
                 echo "install-redis-php-7.sh exists"
         else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P /var/scripts
+        	wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P /var/scripts
 fi
 # Activate SSL
 if 		[ -f $SCRIPTS/activate-ssl.sh ];
         then
                 echo "activate-ssl.sh exists"
         else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
 fi
 # The update script
 if 		[ -f $SCRIPTS/owncloud_update.sh ];
         then
         	echo "owncloud_update.sh exists"
         else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_update.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_update.sh -P $SCRIPTS
 fi
 
 # Sets static IP to UNIX
@@ -104,7 +104,7 @@ if 		[ -f $SCRIPTS/ip.sh ];
         then
                 echo "ip.sh exists"
         else
-      		wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/ip.sh -P $SCRIPTS
+      		wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/ip.sh -P $SCRIPTS
 fi
 
 # Tests connection after static IP is set
@@ -112,7 +112,7 @@ if 		[ -f $SCRIPTS/test_connection.sh ];
         then
                 echo "test_connection.sh exists"
         else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/test_connection.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/test_connection.sh -P $SCRIPTS
 fi
 
 # Sets root partition to external drive
@@ -120,7 +120,7 @@ if 		[ -f $SCRIPTS/usbhd.sh ];
         then
                 echo "usbhd.sh exists"
         else
-        	wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/usbhd.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/usbhd.sh -P $SCRIPTS
 fi
 
 # Trusted ip conf script
@@ -128,7 +128,7 @@ if 		[ -f $SCRIPTS/trusted.sh ];
         then
                 echo "trusted.sh"
         else
-        	wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/trusted.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/trusted.sh -P $SCRIPTS
 fi
 
 # Update-config script
@@ -136,7 +136,7 @@ if 		[ -f $SCRIPTS/update-config.php ];
         then
                 echo "update-config.php exists"
         else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
 fi
 
 # Clears command history on every login
@@ -144,7 +144,7 @@ if 		[ -f $SCRIPTS/history.sh ];
         then
                 echo "history.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/history.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/history.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -160,7 +160,7 @@ if 		[ -f $SCRIPTS/change-root-profile.sh ];
         then
                 echo "change-root-profile.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/change-root-profile.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/change-root-profile.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -176,7 +176,7 @@ if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
         then
         	echo "change-ocadmin-profile.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/change-ocadmin-profile.sh -P $SCRIPTS
+        	wget -q wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/change-ocadmin-profile.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -199,10 +199,10 @@ fi
 if 		[ -f $HTML/index.php ];
 	then
  		rm $HTML/index.php
- 		wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
+ 		wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
  		chmod 750 $HTML/index.php && chown www-data:www-data $HTML/index.php
  	else	
-		wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
+		wget -q wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
 		chmod 750 $HTML/index.php && chown www-data:www-data $HTML/index.php
 fi
 if [[ $? > 0 ]]
