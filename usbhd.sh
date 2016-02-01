@@ -21,7 +21,11 @@ p
 
 w
 EOF
-	sudo mkfs.ext4 /dev/sda1 -y
+	echo -e "\e[32m"
+	read -p "If it asks to overwrite anything just hit yes, make sure there are no needed files on the hd. Press any key to start the script..." -n1 -s
+	clear
+	echo -e "\e[0m"
+	sudo mkfs.ext4 /dev/sda1
 	dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
 	sed -i 's|/dev/mmcblk0p2|/dev/sda1|g' /etc/fstab
 else
