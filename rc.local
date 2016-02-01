@@ -13,7 +13,7 @@
 
 SCRIPTS=/var/scripts
 HTML=/var/www/html
-
+WWW=/var/www
       	# Create dir
 if 		[ -d $SCRIPTS ];
 	then
@@ -27,6 +27,13 @@ if 		[ -d $HTML ];
       		sleep 1
       	else
       		mkdir $HTML
+fi
+      	# Create dir
+if 		[ -d $WWW ];
+	then
+      		sleep 1
+      	else
+      		mkdir $WWW
 fi
 
 # Reset interfaces
