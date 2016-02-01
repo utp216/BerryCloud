@@ -197,7 +197,7 @@ fi
         	bash $SCRIPTS/change-root-profile.sh
         	bash $SCRIPTS/change-ocadmin-profile.sh
 
-sudo apt-get update
+sudo apt-get update && apt-get install -f -y
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 sudo apt-get update
 sudo apt-get install -y software-properties-common ifupdown python-software-properties clamav net-tools sudo dnsutils nano git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
