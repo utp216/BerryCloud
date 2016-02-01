@@ -582,7 +582,24 @@ cat /dev/null > /var/spool/mail/ocadmin
 cat /dev/null > /var/log/apache2/access.log
 cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
-sed -i 's/sudo -i//g' /home/ocadmin/.bash_profile
+sed -i 's/sudo -i//g' /home/ocadmin/.profile
+
+# Change root .profile
+rm /root/.profile
+cat <<-ROOT-PROFILE > "/root/.profile"
+# ~/.profile: executed by Bourne-compatible login shells.
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+if [ -x /var/scripts/history.sh ]; then
+        /var/scripts/history.sh
+fi
+mesg n
+ROOT-PROFILE
+
+# Change back rc.local
 cat << RCLOCAL > "/etc/rc.local"
 #!/bin/sh -e
 #
