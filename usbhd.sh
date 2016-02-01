@@ -10,6 +10,7 @@ if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for ROOT parti
 then
 # Format and create partition
 fdisk /dev/sda1 << EOF
+wipefs
 0
 n
 p
