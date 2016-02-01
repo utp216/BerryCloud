@@ -8,7 +8,7 @@ function ask_yes_or_no() {
 }
 if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for ROOT partition? Also attach it before typing yes!!") ]]
 then
-	# Resize sd card
+# Format and create partition
 fdisk /dev/sda1 << EOF
 0
 n
