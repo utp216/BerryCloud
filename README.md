@@ -5,9 +5,9 @@ Base OS: ubuntu core 15.04
 
 # how to: 
 
-1. install ubuntu core on sdcard, boot up, login with root///dont enter a password
-2. boot
-3. login root///no password
+1. Download the Ubuntu Core 15.04 RaspberryPI2 .img from:
+2. Write .img to sdcard see this page: https://www.raspberrypi.org/documentation/installation/installing-images/
+3. Boot RaspberryPI2 with the newly made sdcard
 4. download and run with root priv: pre.sh
 5. login with ocadmin///owncloud
 6. download and run with root priv: setup.sh
