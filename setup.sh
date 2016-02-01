@@ -20,7 +20,7 @@ GATEWAY=$(/sbin/ip route | awk '/default/ { print $3 }')
 # Check if root
         if [ "$(whoami)" != "root" ]; then
         echo
-        echo -e "\e[31mSorry, you are not root.\n\e[0mYou must type: \e[36msudo \e[0mbash $SCRIPTS/owncloud_install.sh"
+        echo -e "\e[31mSorry, you are not root.\n\e[0mYou must type: \e[36msudo \e[0mbash $SCRIPTS/setup.sh"
         echo
         exit 1
 fi
@@ -58,144 +58,6 @@ echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 # Resolve network error
 #echo "auto eth0
 #   iface eth0 inet dhcp" >> /etc/network/interfaces
-#
-      	# Create dir
-if 		[ -d $SCRIPTS ];
-	then
-      		sleep 1
-      	else
-      		mkdir $SCRIPTS
-fi
-
-# Get ownCloud install script
-#if 		[ -f $SCRIPTS/owncloud_install.sh ];
-#        then
-#                echo "owncloud_install.sh exists"
-#        else
-#        	wget wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_install.sh -P $SCRIPTS
-#fi
-
-# Get Redis install script
-if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
-        then
-                echo "install-redis-php-7.sh exists"
-        else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P /var/scripts
-fi
-# Activate SSL
-if 		[ -f $SCRIPTS/activate-ssl.sh ];
-        then
-                echo "activate-ssl.sh exists"
-        else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
-fi
-# The update script
-if 		[ -f $SCRIPTS/owncloud_update.sh ];
-        then
-        	echo "owncloud_update.sh exists"
-        else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_update.sh -P $SCRIPTS
-fi
-# Sets static IP to UNIX
-if 		[ -f $SCRIPTS/ip.sh ];
-        then
-                echo "ip.sh exists"
-        else
-      		wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/ip.sh -P $SCRIPTS
-fi
-# Tests connection after static IP is set
-if 		[ -f $SCRIPTS/test_connection.sh ];
-        then
-                echo "test_connection.sh exists"
-        else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/test_connection.sh -P $SCRIPTS
-fi
-# Welcome message after login (change in /home/ocadmin/.profile
-if 		[ -f $SCRIPTS/instruction.sh ];
-        then
-                echo "instruction.sh exists"
-        else        	wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/instruction.sh -P $SCRIPTS
-fi
-# Clears command history on every login
-if 		[ -f $SCRIPTS/history.sh ];
-        then
-                echo "history.sh exists"
-        else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/history.sh -P $SCRIPTS
-fi
-# Sets root partition to external drive
-if 		[ -f $SCRIPTS/usbhd.sh ];
-        then
-                echo "usbhd.sh exists"
-        else
-        	wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/usbhd.sh -P $SCRIPTS
-fi
-# Trusted ip conf script
-if 		[ -f $SCRIPTS/trusted.sh ];
-        then
-                echo "trusted.sh"
-        else
-        	wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/trusted.sh -P $SCRIPTS
-fi
-
-# Update-config script
-if 		[ -f $SCRIPTS/update-config.php ];
-        then
-                echo "update-config.php exists"
-        else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
-fi
-
-# Change roots .bash_profile
-if 		[ -f $SCRIPTS/change-root-profile.sh ];
-        then
-                echo "change-root-profile.sh exists"
-        else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-root-profile.sh -P $SCRIPTS
-fi
-
-# Change ocadmin .bash_profile
-if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
-        then
-        	echo "change-ocadmin-profile.sh  exists"
-        else
-        	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/change-ocadmin-profile.sh -P $SCRIPTS
-fi
-# Get startup-script for root
-#if 		[ -f $SCRIPTS/owncloud-startup-script.sh ];
-#        then
-#                echo "owncloud-startup-script.sh exists"
-#        else
-#       	wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud-startup-script.sh -P $SCRIPTS
-#fi
-
-# Make $SCRIPTS excutable
-        	chmod +x -R $SCRIPTS
-        	chown root:root -R $SCRIPTS
-
-# Allow ocadmin to run theese scripts
-        	chown ocadmin:ocadmin $SCRIPTS/instruction.sh
-        	chown ocadmin:ocadmin $SCRIPTS/history.sh
-
-# Get the Welcome Screen when http://$address
-if 		[ -f $HTML/index.php ];
-	then
- 		rm $HTML/index.php
- 		wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
- 		chmod 750 $HTML/index.php && chown www-data:www-data $HTML/index.php
- 	else	
-		wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
-		chmod 750 $HTML/index.php && chown www-data:www-data $HTML/index.php
-fi	
-# Remove the regular index.html if it exists
-if		[ -f $HTML/index.html ];
-        then
-                rm -f $HTML/index.html
-fi
-
-# Change .profile
-        	bash $SCRIPTS/change-root-profile.sh
-        	bash $SCRIPTS/change-ocadmin-profile.sh
 
 sudo apt-get update && apt-get install -f -y
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
@@ -688,9 +550,9 @@ echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
 echo    "| You have sucessfully installed ownCloud! System will now reboot... |"
 echo    "|                                                                    |"
-echo -e "|         \e[0mLogin to ownCloud in your browser:\e[36m" $ADDRESS"\e[32m           |"
+echo -e "| \e[0mLogin to ownCloud in your browser:\e[36m" https://$ADDRESS/owncloud"\e[32m           |"
 echo    "|                                                                    |"
-echo -e "|         \e[0mPublish your server online! \e[36mhttps://goo.gl/iUGE2U\e[32m           |"
+echo -e "|    \e[0mPublish your server online! \e[36mhttps://goo.gl/iUGE2U\e[32m           |"
 echo    "|                                                                    |"
 echo -e "|    \e[91m#################### Tech and Me - 2016 ####################\e[32m    |"
 echo    "+--------------------------------------------------------------------+"
@@ -702,7 +564,7 @@ echo
 # Cleanup 2
 sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
 apt-get remove --purge expect
-rm /var/scripts/owncloud-startup-script.sh
+#rm /var/scripts/owncloud-startup-script.sh
 rm /var/scripts/ip.sh
 rm /var/scripts/test_connection.sh
 rm /var/scripts/change-ocadmin-profile.sh
@@ -711,8 +573,8 @@ rm /var/scripts/install-redis-php-7.sh
 rm /var/scripts/index.html
 rm /var/scripts/update-config.php
 rm /var/www/html/index.html
-rm /var/scripts/owncloud_install.sh
-#rm /var/rc.local
+rm /var/scripts/setup.sh
+rm /var/rc.local
 rm /var/www/html/owncloud/data/owncloud.log
 cat /dev/null > ~/.bash_history
 cat /dev/null > /var/spool/mail/root
@@ -720,8 +582,8 @@ cat /dev/null > /var/spool/mail/ocadmin
 cat /dev/null > /var/log/apache2/access.log
 cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
-#sed -i 's/sudo -i//g' /home/ocadmin/.bash_profile
-#cat << RCLOCAL > "/etc/rc.local"
+sed -i 's/sudo -i//g' /home/ocadmin/.bash_profile
+cat << RCLOCAL > "/etc/rc.local"
 #!/bin/sh -e
 #
 # rc.local
@@ -734,10 +596,10 @@ cat /dev/null > /var/log/cronjobs_success.log
 # bits.
 #
 # By default this script does nothing.
-#
-#exit 0
-#
-#RCLOCAL
+
+exit 0
+
+RCLOCAL
 
 ## Reboot
 reboot
