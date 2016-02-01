@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OCADMIN_PROFILE="/home/ocadmin/.bash_profile"
+OCADMIN_PROFILE="/home/ocadmin/.profile"
 
 rm /home/ocadmin/.profile
 
