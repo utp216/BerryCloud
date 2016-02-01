@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROOT_PROFILE="/root/.bash_profile"
+ROOT_PROFILE="/root/.profile"
 
 rm /root/.profile
 
