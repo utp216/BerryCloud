@@ -10,7 +10,7 @@
 ##  For up-to-date information please refer to wiki page
 ##
 ##  Wiki Location : http://elinux.org/RPiconfig
-##
+## 
 ##
 ##  Description:
 ##    Details of each setting are described with each section that begins with
