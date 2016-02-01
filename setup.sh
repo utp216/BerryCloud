@@ -62,7 +62,7 @@ echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 sudo apt-get update && apt-get install -f -y
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 sudo apt-get update
-sudo apt-get install -y software-properties-common ifupdown python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
+sudo apt-get install -y software-properties-common ifupdown openssh-server python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
 # sudo dnsutils nano
 
