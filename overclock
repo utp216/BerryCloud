@@ -3,20 +3,15 @@
 # I use heatsinks and a cpu fan on my RPI
 
 gpu_mem=16
-cma_lwm=16
-cma_hwm=32
 boot_delay=1
 force_turbo=1
 initial_turbo=30
 temp_limit=80
 arm_freq=1100
-core_freq=600
+core_freq=500
 sdram_freq=500
 over_voltage=8
 over_voltage_sdram=4
-over_voltage_sdram_c=4
-over_voltage_sdram_i=4
-over_voltage_sdram_p=4
 
 # Not an overclock setting
 dtparam=act_led_trigger=heartbeat
