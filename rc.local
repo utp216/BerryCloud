@@ -21,6 +21,13 @@ if 		[ -d $SCRIPTS ];
       	else
       		mkdir $SCRIPTS
 fi
+      	# Create dir
+if 		[ -d $HTML ];
+	then
+      		sleep 1
+      	else
+      		mkdir $HTML
+fi
 
 # Reset interfaces
 sudo ifdown -a
