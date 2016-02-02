@@ -1,7 +1,12 @@
-# Try out scripts and configs for the rpi / ownCloud / wd project
-# UNDER HEAVY CONSTRUCTION!!!!!!!! 
+# ownCloud server on your RaspberryPI2
+* Redis cache
+* Fail2ban
+* Apache2
+* MySql
+* Libre Office Writer
+* Much more, see the setup.sh and other scripts
 
-Base OS: ubuntu core 15.04
+Base OS: ubuntu core 15.04 with apt-get package manager (NOTE THIS IS NOT SNAPPY CORE)
 
 # how to: 
 
