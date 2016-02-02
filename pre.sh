@@ -5,6 +5,7 @@
 USERNAME=ocadmin
 USERPASS=owncloud
 device=/dev/mmcblk0
+ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 
 # Add repository's
 sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
