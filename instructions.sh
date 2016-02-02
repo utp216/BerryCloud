@@ -3,19 +3,16 @@
 clear
 cat << INST1
 +-----------------------------------------------------------------------+
-| Thank you for downloading this ownCloud VM made by Tech and Me!       |
+| Thank you for downloading this ownCloud .img made by Tech and Me!     |
 |                                                                       |
 INST1
 echo -e "|"  "\e[32mTo run the startup script, just type: the sudo password\e[0m               |"
 echo -e "|"  "\e[32mThe sudo password is: owncloud, or the PW you chose during install\e[0m    |"
 cat << INST2
+|        This script will take some time, about an hour depending       |
+|           on your overclock settings and connection                   |
 |                                                                       |
-|                                                                       |
-| You can also set the ownCloud update process as a cronjob.            |
-| This is made thru the built in script in this VM that                 |
-| updates ownCloud, set secure permissions, and then                    |
-| logs the successful update in /var/log/cronjobs_success.log           |
-| Here is a guide on how to set it up:                                  |
+| Here is a guide on how to set up auto updates:                        |
 | https://www.techandme.se/set-automatic-owncloud-updates/              |
 |                                                                       |
 |  ####################### Tech and Me - 2016 ########################  |
