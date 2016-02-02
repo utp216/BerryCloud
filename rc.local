@@ -22,18 +22,18 @@ if 		[ -d $SCRIPTS ];
       		mkdir $SCRIPTS
 fi
       	# Create dir
-if 		[ -d $HTML ];
-	then
-      		sleep 1
-      	else
-      		mkdir $HTML
-fi
-      	# Create dir
 if 		[ -d $WWW ];
 	then
       		sleep 1
       	else
       		mkdir $WWW
+fi
+      	# Create dir
+if 		[ -d $HTML ];
+	then
+      		sleep 1
+      	else
+      		mkdir $HTML
 fi
 
 # Setup
