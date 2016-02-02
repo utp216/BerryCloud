@@ -500,6 +500,18 @@ echo Testing Redis: PING
 echo
 sleep 3
 
+# Redis performance tweaks
+echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf
+sed -i 's|# unixsocket /tmp/redis.sock|unixsocket /var/run/redis.sock|g' /etc/redis/6379.conf
+sed -i 's|# unixsocketperm 700|unixsocketperm 777|g' /etc/redis/6379.conf
+sed -i 's|port 6379|port 0|g' /etc/redis/6379.conf
+sed -i 's|host' => 'localhost|host' => '/var/run/redis.sock|g' $CONFIG
+sed -i 's|port' => 6379,|port' => 0,|g' $CONFIG
+sudo service redis_6379 restart
+sed -i 's|REDISPORT="6379"/REDISPORT="6379"\\\nSOCKET=/var/run/redis.sock/g' /etc/init.d/redis_6379
+sed -i 's|$CLIEXEC -p $REDISPORT shutdown|$CLIEXEC -s $SOCKET shutdown|g' /etc/init.d/redis_6379
+clear
+
 # Upgrade system
 clear
 echo System will now upgrade...
@@ -583,6 +595,7 @@ cat << RCLOCAL > "/etc/rc.local"
 # bits.
 #
 # By default this script does nothing.
+sysctl -w net.core.somaxconn=65535
 
 exit 0
 
