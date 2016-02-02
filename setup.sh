@@ -2,7 +2,8 @@
 
 # Tech and Me, 2016 - www.techandme.se
 
-mysql_pass=owncloud
+MYSQL_PASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $SHUF | head -n 1)
+PW_FILE=/var/mysql_password.txt
 CONFIG=$HTML/owncloud/config/config.php
 OCVERSION=owncloud-8.2.2.zip
 SCRIPTS=/var/scripts
@@ -70,13 +71,6 @@ sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
 sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
 
-# Resolve an issue with php7
-#export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
-
-# Change DNS
-#echo "nameserver 8.26.56.26" > /etc/resolv.conf
-#echo "nameserver 8.20.247.20" >> /etc/resolv.conf
-
 # Check network
 sudo ifdown $IFACE && sudo ifup $IFACE
 #nslookup google.com
@@ -95,18 +89,29 @@ apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autocle
 # Set locales
 sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
 
+# Show MySQL pass, and write it to a file in case the user fails to write it down
+echo
+echo -e "Your MySQL root password is: \e[32m$MYSQL_PASS\e[0m"
+echo "Please save this somewhere safe. The password is also saved in this file: $PW_FILE."
+echo "$MYSQL_PASS" > $PW_FILE
+chmod 600 $PW_FILE
+echo -e "\e[32m"
+read -p "Press any key to continue..." -n1 -s
+echo -e "\e[0m"
+
 # Install MYSQL 5.6
-echo "mysql-server-5.6 mysql-server/root_password password $mysql_pass" | debconf-set-selections
-echo "mysql-server-5.6 mysql-server/root_password_again password $mysql_pass" | debconf-set-selections
+apt-get install software-properties-common -y
+echo "mysql-server-5.6 mysql-server/root_password password $MYSQL_PASS" | debconf-set-selections
+echo "mysql-server-5.6 mysql-server/root_password_again password $MYSQL_PASS" | debconf-set-selections
 apt-get install mysql-server-5.6 -y
 
 # mysql_secure_installation
-apt-get -y install expect
+aptitude -y install expect
 SECURE_MYSQL=$(expect -c "
 set timeout 10
 spawn mysql_secure_installation
 expect \"Enter current password for root (enter for none):\"
-send \"$mysql_pass\r\"
+send \"$MYSQL_PASS\r\"
 expect \"Change the root password?\"
 send \"n\r\"
 expect \"Remove anonymous users?\"
@@ -120,7 +125,7 @@ send \"y\r\"
 expect eof
 ")
 echo "$SECURE_MYSQL"
-apt-get remove --purge expect -y
+aptitude -y purge expect
 
 # Install Apache
 apt-get install apache2 -y
@@ -176,7 +181,7 @@ bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 
 # Install ownCloud
 cd $OCPATH
-sudo -u www-data php occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$mysql_pass" --admin-user "ocadmin" --admin-pass "owncloud"
+sudo -u www-data php occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$MYSQL_PASS" --admin-user "ocadmin" --admin-pass "owncloud"
 echo
 echo ownCloud version:
 sudo -u www-data php $OCPATH/occ status
@@ -448,6 +453,16 @@ then
 else
     sleep 2
 fi
+
+# Add clamav-freshclam cmd to cron to update antivirus def.
+echo "#!/bin/sh" >> /etc/cron.daily/freshclam.sh
+echo "/usr/bin/freshclam --quiet" >> /etc/cron.daily/freshclam.sh
+sudo chmod 755 /etc/cron.daily/freshclam.sh
+
+# Redirect http to https
+echo "RewriteEngine On" >> $OCPATH/.htaccess
+echo "RewriteCond %{HTTPS} off" >> $OCPATH/.htaccess
+echo "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]" >> $OCPATH/.htaccess
 
 # Use an external HD for storage of ROOT
 sudo bash $SCRIPTS/usbhd.sh
