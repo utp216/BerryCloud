@@ -59,7 +59,7 @@ echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 #echo "auto eth0
 #   iface eth0 inet dhcp" >> /etc/network/interfaces
 
-sudo apt-get update && apt-get install -f -y
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 sudo apt-get update
 sudo apt-get install -y software-properties-common ifupdown openssh-server python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
@@ -449,11 +449,14 @@ else
     sleep 2
 fi
 
+# Use an external HD for storage of ROOT
+sudo bash $SCRIPTS/usbhd.sh
+
 # Get the latest active-ssl script
-        cd /var/scripts
-        rm /var/scripts/activate-ssl.sh
-        wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh
-        chmod 755 /var/scripts/activate-ssl.sh
+#        cd /var/scripts
+#        rm /var/scripts/activate-ssl.sh
+#        wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh
+#        chmod 755 /var/scripts/activate-ssl.sh
 #clear
 # Let's Encrypt
 #function ask_yes_or_no() {
@@ -467,11 +470,11 @@ fi
 #then
 #	sudo bash /var/scripts/activate-ssl.sh
 #else
-echo
-    echo "If you want to run the installation of a real ssl cert later, just type: bash /var/scripts/activate-ssl.sh"
-    echo -e "\e[32m"
-    read -p "Press any key to continue... " -n1 -s
-    echo -e "\e[0m"
+#echo
+#    echo "If you want to run the installation of a real ssl cert later, just type: bash /var/scripts/activate-ssl.sh"
+#    echo -e "\e[32m"
+#    read -p "Press any key to continue... " -n1 -s
+#    echo -e "\e[0m"
 #fi
 
 # Install Redis
@@ -498,53 +501,6 @@ CLEARBOOT=$(dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cu
 echo "$CLEARBOOT"
 clear
 
-# Use external harddrive to mount os and sd card to boot
-#function ask_yes_or_no() {
-#    read -p "$1 ([y]es or [N]o): "
-#    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
-#        y|yes) echo "yes" ;;
-#        *)     echo "no" ;;
-#    esac
-#}
-#if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for ROOT partition (format to fat/ext4 first)? Also attach it before typing yes!!") ]]
-#then
-# Format and create partition
-
-#fdisk /dev/sda1 << EOF
-#wipefs
-#EOF
-
-#fdisk /dev/sda1 << EOF
-#o
-#n
-#p
-#
-#
-#
-#w
-#EOF
-#	echo -e "\e[32m"
-#	read -p "If it asks to overwrite anything just hit yes, make sure there are no needed files on the hd. Press any key to start the script..." -n1 -s
-#	echo -e "\e[0m"
-#	sudo mkfs.ext4 -n 'PI_ROOT' -I /dev/sda1
-#	sudo mount /dev
-#	dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
-#	sed -i 's|/dev/mmcblk0p2|/dev/sda1|g' /etc/fstab
-#else
-#echo
-#    echo "If you want to do this later: bash /var/scripts/usbhd.sh"
-#    echo -e "\e[32m"
-#    read -p "Press any key to continue... " -n1 -s
-#    echo -e "\e[0m"
-#fi
-
-#echo "We are now setting up your USB harddrive to mount the os, please attach your USB harddrive now, if you have not done so."
-#echo -e "\e[32m"
-#read -p "Press any key to confirm the harddrive is plugged in and only one storage device is plugged in... " -n1 -s
-#echo -e "\e[0m"
-#dd bs=1M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
-#sed -i 's|root=/dev/mmcblk0p2|root=/dev/sda1|g' /boot/cmdline.txt
-
 # Success!
 echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
@@ -564,7 +520,6 @@ echo
 # Cleanup 2
 sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
 apt-get remove --purge expect
-#rm /var/scripts/owncloud-startup-script.sh
 rm /var/scripts/ip.sh
 rm /var/scripts/test_connection.sh
 rm /var/scripts/change-ocadmin-profile.sh
