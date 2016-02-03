@@ -301,6 +301,8 @@ fi
 # Allow ocadmin to run theese scripts
         	chown ocadmin:ocadmin $SCRIPTS/instructions.sh
         	chown ocadmin:ocadmin $SCRIPTS/history.sh
+        	chown ocadmin:ocadmin $SCRIPTS/pre.sh
+        	chown ocadmin:ocadmin $SCRIPTS/pre1.sh
 ##################################################################################################################
 # Change root profile
         	bash $SCRIPTS/change-root-profile.sh
