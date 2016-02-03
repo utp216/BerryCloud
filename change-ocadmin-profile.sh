@@ -29,10 +29,6 @@ bash /var/scripts/history.sh
 bash /var/scripts/pre1.sh
 sudo bash /var/scripts/pre.sh
 #sudo -i
-sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
-sed -i 's|bash /var/scripts/pre1.sh|#bash /var/scripts/pre1.sh|g' /home/ocadmin/.profile
-sed -i 's|bash /var/scripts/pre.sh|#bash /var/scripts/pre.sh|g' /home/ocadmin/.profile
-sed -i 's|#sudo -i|sudo -i|g' /home/ocadmin/.profile
 
 OCADMIN-PROFILE
 
