@@ -10,7 +10,7 @@
 # bits.
 #
 # By default this script does nothing.
-
+sleep 10
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 WWW=/var/www
@@ -87,6 +87,23 @@ else
 	sleep 1
 fi
 
+# Pre1.sh
+if 		[ -f $SCRIPTS/pre1.sh ];
+        then
+                echo "pre1.sh exists"
+        else
+        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre1.sh -P $SCRIPTS
+fi
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded pre1.sh."
+	sleep 1
+fi
+
 # Get Redis install script
 if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
         then
@@ -94,6 +111,7 @@ if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
         else
         	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P /var/scripts
 fi
+
 # Activate SSL
 if 		[ -f $SCRIPTS/activate-ssl.sh ];
         then
@@ -255,8 +273,5 @@ fi
 
 # Fix ownership issue
 sudo chown ocadmin:ocadmin /home/ocadmin/.profile
-
-# Resize sdcard and update system
-sudo bash /var/scripts/pre.sh
 
 exit 0
