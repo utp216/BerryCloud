@@ -38,7 +38,7 @@ if 		[ -d $HTML ];
       	else
       		mkdir $HTML
 fi
-
+##################################################################################################################
 # Setup
 if 		[ -f $SCRIPTS/setup.sh ];
         then
@@ -55,7 +55,7 @@ else
 	echo "Downloaded setup.sh."
 	sleep 1
 fi
-
+##################################################################################################################
 # Pre script
 if 		[ -f $SCRIPTS/pre.sh ];
         then
@@ -72,7 +72,7 @@ else
 	echo "Downloaded pre.sh."
 	sleep 1
 fi
-
+##################################################################################################################
 # Welcome message after login (change in /home/ocadmin/.profile
 if 		[ -f $SCRIPTS/instruction.sh ];
         then
@@ -89,7 +89,7 @@ else
 	echo "Downloaded instruction.sh."
 	sleep 1
 fi
-
+##################################################################################################################
 # Pre1.sh
 if 		[ -f $SCRIPTS/pre1.sh ];
         then
@@ -106,70 +106,143 @@ else
 	echo "Downloaded pre1.sh."
 	sleep 1
 fi
-
+##################################################################################################################
 # Get Redis install script
 if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
         then
-                echo "install-redis-php-7.sh exists"
+        	echo "install-redis-php-7.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P /var/scripts
+        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P $SCRIPTS
 fi
-
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded install-redis-php-7.sh."
+	sleep 1
+fi
+##################################################################################################################
 # Activate SSL
 if 		[ -f $SCRIPTS/activate-ssl.sh ];
         then
-                echo "activate-ssl.sh exists"
+        	echo "activate-ssl.sh  exists"
         else
         	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
 fi
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded activate-ssl.sh."
+	sleep 1
+fi
+##################################################################################################################
 # The update script
 if 		[ -f $SCRIPTS/owncloud_update.sh ];
         then
-        	echo "owncloud_update.sh exists"
+        	echo "owncloud_update.sh  exists"
         else
         	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_update.sh -P $SCRIPTS
 fi
-
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded owncloud_update.sh."
+	sleep 1
+fi
+##################################################################################################################
 # Sets static IP to UNIX
 if 		[ -f $SCRIPTS/ip.sh ];
         then
-                echo "ip.sh exists"
+        	echo "ip.sh  exists"
         else
-      		wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/ip.sh -P $SCRIPTS
+        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/ip.sh -P $SCRIPTS
 fi
-
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded ip.sh."
+	sleep 1
+fi
+##################################################################################################################
 # Tests connection after static IP is set
 if 		[ -f $SCRIPTS/test_connection.sh ];
         then
-                echo "test_connection.sh exists"
+        	echo "test_connection.sh  exists"
         else
         	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/test_connection.sh -P $SCRIPTS
 fi
-
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded test_connection.sh."
+	sleep 1
+fi
+##################################################################################################################
 # Sets root partition to external drive
 if 		[ -f $SCRIPTS/usbhd.sh ];
         then
-                echo "usbhd.sh exists"
+        	echo "usbhd.sh  exists"
         else
         	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/usbhd.sh -P $SCRIPTS
 fi
-
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded usbhd.sh."
+	sleep 1
+fi
+##################################################################################################################
 # Trusted ip conf script
 if 		[ -f $SCRIPTS/trusted.sh ];
         then
-                echo "trusted.sh"
+        	echo "trusted.sh  exists"
         else
         	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/trusted.sh -P $SCRIPTS
 fi
-
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded trusted.sh."
+	sleep 1
+fi
+##################################################################################################################
 # Update-config script
 if 		[ -f $SCRIPTS/update-config.php ];
         then
-                echo "update-config.php exists"
+        	echo "update-config.php  exists"
         else
         	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
 fi
-
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded update-config.php."
+	sleep 1
+fi
+##################################################################################################################
 # Clears command history on every login
 if 		[ -f $SCRIPTS/history.sh ];
         then
@@ -186,6 +259,7 @@ else
 	echo "Downloaded history.sh."
 	sleep 1
 fi
+##################################################################################################################
 # Change roots .bash_profile
 if 		[ -f $SCRIPTS/change-root-profile.sh ];
         then
@@ -202,6 +276,7 @@ else
 	echo "Downloaded change-root-profile.sh."
 	sleep 1
 fi
+##################################################################################################################
 # Change ocadmin .bash_profile
 if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
         then
@@ -218,14 +293,15 @@ else
 	echo "Downloaded change-ocadmin-profile.sh."
 	sleep 1
 fi
+##################################################################################################################
 # Make $SCRIPTS excutable
         	chmod +x -R $SCRIPTS
         	chown root:root -R $SCRIPTS
-
+##################################################################################################################
 # Allow ocadmin to run theese scripts
         	chown ocadmin:ocadmin $SCRIPTS/instructions.sh
         	chown ocadmin:ocadmin $SCRIPTS/history.sh
-
+##################################################################################################################
 # Get the Welcome Screen when http://$ADDRESS
 if 		[ -f $HTML/index.php ];
 	then
@@ -245,12 +321,13 @@ else
 	echo "Downloaded index.php."
 	sleep 1
 fi
+##################################################################################################################
 # Remove the regular index.html if it exists
 if		[ -f $HTML/index.html ];
         then
                 rm -f $HTML/index.html
 fi
-
+##################################################################################################################
 # Change root profile
         	bash $SCRIPTS/change-root-profile.sh
 if [[ $? > 0 ]]
@@ -262,6 +339,7 @@ else
 	echo "change-root-profile.sh script executed OK."
 	sleep 1
 fi
+##################################################################################################################
 # Change ocadmin profile
         	bash $SCRIPTS/change-ocadmin-profile.sh
 if [[ $? > 0 ]]
@@ -273,7 +351,7 @@ else
 	echo "change-ocadmin-profile.sh executed OK."
 	sleep 1
 fi
-
+##################################################################################################################
 # Fix ownership issue
 sudo chown ocadmin:ocadmin /home/ocadmin/.profile
 
