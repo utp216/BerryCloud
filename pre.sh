@@ -44,7 +44,27 @@ raspi-config
 # Change login scripts
 sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
 sed -i 's|bash /var/scripts/pre1.sh|#bash /var/scripts/pre1.sh|g' /home/ocadmin/.profile
-sed -i 's|bash /var/scripts/pre.sh||g' /root/.profile
+
+# Change back root/.profile
+ROOT_PROFILE="/root/.profile"
+
+rm /root/.profile
+
+cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
+# ~/.profile: executed by Bourne-compatible login shells.
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+if [ -x /var/scripts/setup.sh ]; then
+        /var/scripts/setup.sh
+fi
+if [ -x /var/scripts/history.sh ]; then
+        /var/scripts/history.sh
+fi
+mesg n
+ROOT-PROFILE
 
 # Change back rc.local
 rm /etc/rc.local
