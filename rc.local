@@ -10,7 +10,9 @@
 # bits.
 #
 # By default this script does nothing.
+
 sleep 10
+
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 WWW=/var/www
