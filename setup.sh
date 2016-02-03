@@ -557,7 +557,6 @@ sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
 apt-get remove --purge expect
 rm /var/www/html/index.html
 rm /var/scripts/*
-rm /etc/rc.local
 wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
 rm /var/www/html/owncloud/data/owncloud.log
 cat /dev/null > ~/.bash_history
@@ -584,29 +583,6 @@ if [ -x /var/scripts/history.sh ]; then
 fi
 mesg n
 ROOT-PROFILE
-
-# Change back rc.local
-cat << RCLOCAL > "/etc/rc.local"
-#!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
-sysctl -w net.core.somaxconn=65535
-
-exit 0
-
-RCLOCAL
-
-# Set permissions for rc.local
-sudo chmod 755 /etc/rc.local
 
 ## Reboot
 reboot
