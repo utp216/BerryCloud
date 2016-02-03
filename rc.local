@@ -11,7 +11,7 @@
 #
 # By default this script does nothing.
 
-sleep 10
+sleep 5
 
 SCRIPTS=/var/scripts
 HTML=/var/www/html
