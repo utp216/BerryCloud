@@ -137,6 +137,14 @@ a2enmod rewrite \
         ssl \
         setenvif
         
+# Remove the regular index.html if it exists
+if		[ -f $HTML/index.html ];
+        then
+                rm -f $HTML/index.html
+fi
+
+wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
+        
 # Set hostname and ServerName
 sudo sh -c "echo 'ServerName owncloud' >> /etc/apache2/apache2.conf"
 sudo hostnamectl set-hostname owncloud 
