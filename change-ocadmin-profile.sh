@@ -26,9 +26,9 @@ if [ -d "$HOME/bin" ] ; then
 fi
 #bash /var/scripts/instructions.sh
 bash /var/scripts/history.sh
-bash /var/scripts/pre1.sh
-sudo bash /var/scripts/pre.sh
 #sudo -i
+bash /var/scripts/pre1.sh
+bash /var/scripts/pre.sh
 
 OCADMIN-PROFILE
 
