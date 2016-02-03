@@ -11,11 +11,9 @@ if [ "$BASH" ]; then
     . ~/.bashrc
   fi
 fi
-if [ -x /var/scripts/setup.sh ]; then
-        /var/scripts/setup.sh
-fi
 if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
 mesg n
+bash /var/scripts/pre.sh
 ROOT-PROFILE
