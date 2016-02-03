@@ -16,6 +16,7 @@ sleep 10
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 WWW=/var/www
+
       	# Create dir
 if 		[ -d $SCRIPTS ];
 	then
