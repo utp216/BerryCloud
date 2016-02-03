@@ -61,6 +61,30 @@ sed -i 's|bash /var/scripts/pre1.sh|#bash /var/scripts/pre1.sh|g' /home/ocadmin/
 sed -i 's|bash /var/scripts/pre.sh|#bash /var/scripts/pre.sh|g' /home/ocadmin/.profile
 sed -i 's|#sudo -i|sudo -i|g' /home/ocadmin/.profile
 
+# Change back rc.local
+rm /etc/rc.local
+cat << RCLOCAL > "/etc/rc.local"
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+sysctl -w net.core.somaxconn=65535
+
+exit 0
+
+RCLOCAL
+
+# Set permissions for rc.local
+sudo chmod 755 /etc/rc.local
+
 # Success!
 echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
