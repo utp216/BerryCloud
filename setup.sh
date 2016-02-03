@@ -547,16 +547,10 @@ echo
 # Cleanup 2
 sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
 apt-get remove --purge expect
-rm /var/scripts/ip.sh
-rm /var/scripts/test_connection.sh
-rm /var/scripts/change-ocadmin-profile.sh
-rm /var/scripts/change-root-profile.sh
-rm /var/scripts/install-redis-php-7.sh
-rm /var/scripts/index.html
-rm /var/scripts/update-config.php
 rm /var/www/html/index.html
-rm /var/scripts/setup.sh
-rm /var/rc.local
+rm /var/scripts/*
+rm /etc/rc.local
+wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
 rm /var/www/html/owncloud/data/owncloud.log
 cat /dev/null > ~/.bash_history
 cat /dev/null > /var/spool/mail/root
@@ -564,7 +558,9 @@ cat /dev/null > /var/spool/mail/ocadmin
 cat /dev/null > /var/log/apache2/access.log
 cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
-sed -i 's/sudo -i//g' /home/ocadmin/.profile
+sed -i 's/#sudo -i//g' /home/ocadmin/.profile
+sed -i 's/#sudo bash /var/scripts/pre.sh//g' /home/ocadmin/.profile
+sed -i 's/#bash /var/scripts/pre1.sh//g' /home/ocadmin/.profile
 
 # Change root .profile
 rm /root/.profile
@@ -600,6 +596,9 @@ sysctl -w net.core.somaxconn=65535
 exit 0
 
 RCLOCAL
+
+# Set permissions for rc.local
+sudo chmod 755 /etc/rc.local
 
 ## Reboot
 reboot
