@@ -283,7 +283,7 @@ sudo -u www-data php $OCPATH/occ config:system:set mail_smtpname --value="www.en
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtppassword --value="techandme_se"
 
 # Install Libreoffice Writer to be able to read MS documents.
-echo -ne '\n' | sudo apt-add-repository ppa:libreoffice/libreoffice-4-4
+echo -ne '\n' | sudo add-apt-repository ppa:libreoffice/libreoffice-4-4
 apt-get update
 sudo apt-get install --no-install-recommends libreoffice-writer -y
 
