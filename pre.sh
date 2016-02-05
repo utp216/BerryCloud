@@ -7,6 +7,14 @@ USERPASS=owncloud
 device=/dev/mmcblk0
 ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 
+# Check if root
+        if [ "$(whoami)" != "root" ]; then
+        echo
+        echo -e "\e[31mSorry, you are not root.\n\e[0mYou must type: \e[36msudo \e[0mbash /var/scripts/pre.sh"
+        echo
+        exit 1
+fi
+
 sudo apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autoclean -y && apt-get -f install -y
 sudo apt-get install openssh-server -y
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
