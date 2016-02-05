@@ -16,7 +16,7 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 fi
 
 sudo apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autoclean -y && apt-get -f install -y
-sudo apt-get install openssh-server -y
+sudo apt-get install openssh-server dialog -y
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 
 # Add repository's
