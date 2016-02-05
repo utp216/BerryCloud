@@ -73,9 +73,8 @@ echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 sudo apt-get update
-sudo apt-get install -y software-properties-common ifupdown openssh-server add-apt-repository python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect aptitude dialog lvm2 ntp curl initscripts keyboard-configuration
+sudo apt-get install -y software-properties-common ifupdown openssh-server add-apt-repository python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect aptitude lvm2 ntp curl initscripts keyboard-configuration
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
-# sudo dnsutils nano
 
 # Remove locale error over ssh in other language
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
@@ -92,9 +91,6 @@ then
 else
     echo "Network OK."
 fi
-
-# Update system
-apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autoclean -y && apt-get -f install -y
 
 # Set locales
 sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
