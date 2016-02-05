@@ -49,9 +49,10 @@ EOF
 
 # Install raspi-config
 cd /tmp
-wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20150131-5_all.deb
-apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 -y
-dpkg -i raspi-config_20150131-5_all.deb
+sudo apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 -y
+wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160108_all.deb
+dpkg -i raspi-config_20160108_all.deb
+
 # Overclock
 echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
@@ -60,7 +61,7 @@ echo    "| Void warrenty as stated on the RPI2 site. If you want to use the   |"
 echo    "| Max overclock settings, visit BerryCloud @ gitgub                  |"
 echo    "+--------------------------------------------------------------------+"
 echo
-read -p "Press any key to enter overclock menu (only overclock dont use other settings and don't update, it will break overclocking)..." -n1 -s
+read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
 echo -e "\e[0m"
 echo
 raspi-config
