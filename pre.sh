@@ -125,6 +125,7 @@ echo
 read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
 echo -e "\e[0m"
 echo
+sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
 raspi-config
 
 sudo reboot
