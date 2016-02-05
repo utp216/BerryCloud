@@ -10,7 +10,7 @@ Base OS: ubuntu core 15.04 with apt-get package manager (NOTE THIS IS NOT SNAPPY
 
 # How to: 
 
-1. Download the Ubuntu Core 15.04 RaspberryPI2 .img from: https://waaromzomoeilijk.com/index.php/s/IcpQKfr1HCK1AG8
+1. Download Ubuntu Core 15.04 RaspberryPI2 .img: https://waaromzomoeilijk.com/index.php/s/IcpQKfr1HCK1AG8
 2. Write .img to sdcard see this page: https://www.raspberrypi.org/documentation/installation/installing-images/
 3. Boot RaspberryPI2 with the newly made sdcard
 4. login with ocadmin///owncloud (Connected to monitor with keyboard)
