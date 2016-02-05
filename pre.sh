@@ -53,19 +53,6 @@ sudo apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 -y
 wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160108_all.deb
 dpkg -i raspi-config_20160108_all.deb
 
-# Overclock
-echo -e "\e[32m"
-echo    "+--------------------------------------------------------------------+"
-echo    "| I recommend you to use one of the overclock settings, which do not |"
-echo    "| Void warrenty as stated on the RPI2 site. If you want to use the   |"
-echo    "| Max overclock settings, visit BerryCloud @ gitgub                  |"
-echo    "+--------------------------------------------------------------------+"
-echo
-read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
-echo -e "\e[0m"
-echo
-raspi-config
-
 # Change login scripts
 sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
 sed -i 's|bash /var/scripts/pre1.sh|#bash /var/scripts/pre1.sh|g' /home/ocadmin/.profile
@@ -123,7 +110,21 @@ echo    "| Monitor and continue the installation over ssh, after reboot.      |"
 echo    "| After this reboot log back in with ocadmin///owncloud              |"
 echo    "+--------------------------------------------------------------------+"
 echo
-read -p "Press any key to reboot..." -n1 -s
+read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
 echo
+
+# Overclock
+echo -e "\e[32m"
+echo    "+--------------------------------------------------------------------+"
+echo    "| I recommend you to use one of the overclock settings, which do not |"
+echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
+echo    "| max overclock settings, visit BerryCloud @ gitgub                  |"
+echo    "+--------------------------------------------------------------------+"
+echo
+read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
+echo -e "\e[0m"
+echo
+raspi-config
+
 sudo reboot
