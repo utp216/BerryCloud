@@ -18,17 +18,13 @@ Base OS: ubuntu core 15.04 with apt-get package manager (NOTE THIS IS NOT SNAPPY
 6. For now only use Rapi-Config tool for overclocking. (RECOMMENDED FOR SPEED, this tool uses non warrenty void settings, if you dont care about that... remove the old config.txt from PI_BOOT partition and cp config.txt above to PI_BOOT)
 
 # Unpacking the image on unix:
-1. Install p7zip-full if not already installed (enter in terminal):
+(Open terminal, enter following commands)
+(go to directory where you have just downloaded the image, eg: cd /home/yourusername/Downloads)
 
-sudo apt-get install p7zip-full
+1. sudo apt-get install p7zip-full
+2. 7za x ownCloud-RPI2-UbuntuCore15.04-www.techandme.se.img.7z
 
-2. Execute this command to extract .tar.7z file (go to directory where is your file, if myfile.tar.7z is your file name):
-
-7za x myfile.tar.7z
-
-tar -xvf myfile.tar
-3. That's it. Actually first command extracts in .tar file then next command extracts it completely.
-4. On linux you can also use your archive manager to unpack
+On linux you can also use your archive manager to unpack
 
 # Unpacking the image on windows:
 1. Download winrar, double click the archive and extract it.
