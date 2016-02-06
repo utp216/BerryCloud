@@ -8,7 +8,7 @@
 
 *Apache2
 
-*ClamAv (anti virus, app can be found in the ownCloud app section)
+*ClamAv (antivirus, app can be found in the ownCloud app section)
 
 *LVM2
 
