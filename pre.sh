@@ -48,10 +48,10 @@ w
 EOF
 
 # Install raspi-config
-cd /tmp
-sudo apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 -y
-wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160108_all.deb
-dpkg -i raspi-config_20160108_all.deb
+#cd /tmp
+#sudo apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 -y
+#wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160108_all.deb
+#dpkg -i raspi-config_20160108_all.deb
 
 # Change login scripts
 sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
@@ -115,17 +115,17 @@ echo -e "\e[0m"
 echo
 
 # Overclock
-echo -e "\e[32m"
-echo    "+--------------------------------------------------------------------+"
-echo    "| I recommend you to use one of the overclock settings, which do not |"
-echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
-echo    "| max overclock settings, visit BerryCloud @ gitgub                  |"
-echo    "+--------------------------------------------------------------------+"
-echo
-read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
-echo -e "\e[0m"
-echo
+#echo -e "\e[32m"
+#echo    "+--------------------------------------------------------------------+"
+#echo    "| I recommend you to use one of the overclock settings, which do not |"
+#echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
+#echo    "| max overclock settings, visit BerryCloud @ gitgub                  |"
+#echo    "+--------------------------------------------------------------------+"
+#echo
+#read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
+#echo -e "\e[0m"
+#echo
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
-raspi-config
+#raspi-config
 
 sudo reboot
