@@ -1,15 +1,18 @@
 #!/bin/bash
-
+#
 # Tech and Me, 2016 - www.techandme.se
-
+#
+# MySql
 MYSQL_PASS=$(cat /dev/urandom| tr -dc 'a-zA-Z0-9-_!@#$%^&*()_+{}|:<>?='|fold -w 19| head -1)
 SHUF=$(shuf -i 27-38 -n 1)
 PW_FILE=/var/mysql_password.txt
+# ownCloud
 CONFIG=$HTML/owncloud/config/config.php
 OCVERSION=owncloud-8.2.2.zip
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 OCPATH=$HTML/owncloud
+# Network
 ssl_conf="/etc/apache2/sites-available/owncloud_ssl_domain_self_signed.conf"
 IFACE="eth0"
 IFCONFIG="/sbin/ifconfig"
@@ -18,7 +21,7 @@ INTERFACES="/etc/network/interfaces"
 ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 NETMASK=$(ifconfig eth0 | grep Mask | sed s/^.*Mask://)
 GATEWAY=$(/sbin/ip route | awk '/default/ { print $3 }')
-
+#
 # Check if root
         if [ "$(whoami)" != "root" ]; then
         echo
@@ -26,7 +29,7 @@ GATEWAY=$(/sbin/ip route | awk '/default/ { print $3 }')
         echo
         exit 1
 fi
-
+#
 clear
 echo "+--------------------------------------------------------------------+"
 echo "| This script will install your ownCloud and activate SSL.           |"
@@ -46,17 +49,17 @@ echo -e "\e[32m"
 read -p "Press any key to start the script..." -n1 -s
 clear
 echo -e "\e[0m"
-
+#
 # Resize sdcard
-sudo resize2fs /dev/mmcblk0p2
-
+resize2fs /dev/mmcblk0p2
+#
 # Install swapfile of 2 GB
 fallocate -l 2048M /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
 echo "/swapfile none swap defaults 0 0" >> /etc/fstab
-
+#
 # Change IP
 echo -e "\e[0m"
 echo "The script will now configure your IP to be static."
@@ -75,7 +78,7 @@ ifdown eth0
 sleep 2
 ifup eth0
 sleep 2
-
+#
 cat <<-IPCONFIG > "$INTERFACES"
         auto lo $IFACE
         iface lo inet loopback
@@ -86,7 +89,7 @@ cat <<-IPCONFIG > "$INTERFACES"
 # Exit and save:	[CTRL+X] + [Y] + [ENTER]
 # Exit without saving:	[CTRL+X]
 IPCONFIG
-
+#
 ifdown eth0
 sleep 2
 ifup eth0
@@ -114,20 +117,18 @@ echo
 bash /var/scripts/test_connection.sh
 sleep 2
 clear
-
+#
 apt-get update && apt-get upgrade -y && && apt-get -f install -y
-#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
-#sudo apt-get update
-sudo apt-get install -y software-properties-common ifupdown openssh-server add-apt-repository python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration
+apt-get install -y software-properties-common ifupdown openssh-server add-apt-repository python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration
 apt-get update && apt-get upgrade -y && && apt-get -f install -y
-
+#
 # Remove locale error over ssh in other language
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
 sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
-
+#
 # Set locales
 sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
-
+#
 # Show MySQL pass, and write it to a file in case the user fails to write it down
 echo
 echo -e "Your MySQL root password is: \e[32m$MYSQL_PASS\e[0m"
@@ -137,12 +138,12 @@ chmod 600 $PW_FILE
 echo -e "\e[32m"
 read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
-
+#
 # Install MYSQL 5.6
 echo "mysql-server-5.6 mysql-server/root_password password $MYSQL_PASS" | debconf-set-selections
 echo "mysql-server-5.6 mysql-server/root_password_again password $MYSQL_PASS" | debconf-set-selections
 apt-get install mysql-server-5.6 -y
-
+#
 # mysql_secure_installation
 apt-get -y install expect
 SECURE_MYSQL=$(expect -c "
@@ -164,7 +165,7 @@ expect eof
 ")
 echo "$SECURE_MYSQL"
 apt-get remove --purge expect -y
-
+#
 # Install Apache
 apt-get install apache2 -y
 a2enmod rewrite \
@@ -174,22 +175,22 @@ a2enmod rewrite \
         mime \
         ssl \
         setenvif
-        
+#        
 # Remove the regular index.html if it exists
 if		[ -f $HTML/index.html ];
         then
                 rm -f $HTML/index.html
 fi
-
+#
 wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
-        
+#        
 # Set hostname and ServerName
-sudo sh -c "echo 'ServerName owncloud' >> /etc/apache2/apache2.conf"
-sudo hostnamectl set-hostname owncloud 
+sh -c "echo 'ServerName owncloud' >> /etc/apache2/apache2.conf"
+hostnamectl set-hostname owncloud 
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "127.0.1.1 owncloud" >> /etc/hosts
 service apache2 restart
-
+#
 # Install PHP 7
 echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php -y
 apt-get update
@@ -216,14 +217,14 @@ wget https://download.owncloud.org/community/$OCVERSION -P $HTML
 apt-get install unzip -y
 unzip -q $HTML/$OCVERSION -d $HTML 
 rm $HTML/$OCVERSION
-
+#
 # Create data folder, occ complains otherwise
 mkdir $OCPATH/data
-
+#
 # Secure permissions
 wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/setup_secure_permissions_owncloud.sh -P $SCRIPTS
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
-
+#
 # Install ownCloud
 cd $OCPATH
 sudo -u www-data php occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$MYSQL_PASS" --admin-user "ocadmin" --admin-pass "owncloud"
@@ -232,14 +233,14 @@ echo ownCloud version:
 sudo -u www-data php $OCPATH/occ status
 echo
 sleep 3
-
+#
 # Set trusted domain
-sudo bash $SCRIPTS/trusted.sh
-
+bash $SCRIPTS/trusted.sh
+#
 # Prepare cron.php to be run every 15 minutes
 # The user still has to activate it in the settings GUI
 crontab -u www-data -l | { cat; echo "*/15  *  *  *  * php -f $OCPATH/cron.php > /dev/null 2>&1"; } | crontab -u www-data -
-
+#
 # Change values in php.ini (increase max file size)
 # max_execution_time
 sed -i "s|max_execution_time = 30|max_execution_time = 7000|g" /etc/php/7.0/apache2/php.ini
@@ -251,7 +252,7 @@ sed -i "s|memory_limit = 128M|memory_limit = 512M|g" /etc/php/7.0/apache2/php.in
 sed -i "s|post_max_size = 8M|post_max_size = 2000M|g" /etc/php/7.0/apache2/php.ini
 # upload_max
 sed -i "s|upload_max_filesize = 2M|upload_max_filesize = 1800M|g" /etc/php/7.0/apache2/php.ini
-
+#
 # Generate $ssl_conf
 if [ -f $ssl_conf ];
         then
@@ -292,12 +293,12 @@ SSL_CREATE
 echo "$ssl_conf was successfully created"
 sleep 3
 fi
-
+#
 # Enable new config
 a2ensite owncloud_ssl_domain_self_signed.conf
 a2dissite default-ssl
 service apache2 restart
-
+#
 ## Set config values
 # Experimental apps
 sudo -u www-data php $OCPATH/occ config:system:set appstore.experimental.enabled --value="true"
@@ -312,12 +313,12 @@ sudo -u www-data php $OCPATH/occ config:system:set mail_domain --value="gmail.co
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtpsecure --value="ssl"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtpname --value="www.en0ch.se@gmail.com"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtppassword --value="techandme_se"
-
+#
 # Install Libreoffice Writer to be able to read MS documents.
 echo -ne '\n' | sudo add-apt-repository ppa:libreoffice/libreoffice-4-4
 apt-get update
-sudo apt-get install --no-install-recommends libreoffice-writer -y
-
+apt-get install --no-install-recommends libreoffice-writer -y
+#
 # Download and install Documents
 #if [ -d $OCPATH/apps/documents ]; then
 #sleep 1
@@ -370,10 +371,10 @@ sudo apt-get install --no-install-recommends libreoffice-writer -y
 
 # Set secure permissions final (./data/.htaccess has wrong permissions otherwise)
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
-
+#
 # Install packages for Webmin
 apt-get install --force-yes -y zip perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
-
+#
 # Install Webmin
 cd
 wget http://prdownloads.sourceforge.net/webadmin/webmin_1.780_all.deb
@@ -382,7 +383,7 @@ echo
 echo "Webmin is installed, access it from your browser: https://$ADDRESS:10000"
 sleep 2
 clear
-
+#
 # Set keyboard layout
 echo "Current keyboard layout is English"
 echo "You must change keyboard layout to your language"
@@ -392,7 +393,7 @@ echo -e "\e[0m"
 dpkg-reconfigure keyboard-configuration
 echo
 clear
-
+#
 # Change Timezone
 echo "Current Timezone is Europe/Amsterdam"
 echo "You must change timezone to your timezone"
@@ -403,15 +404,15 @@ dpkg-reconfigure tzdata
 echo
 sleep 3
 clear
-
+#
 # Change password
 echo -e "\e[0m"
 echo "For better security, change the Linux password for [root]"
 echo -e "\e[32m"
 read -p "Press any key to change password for Linux... " -n1 -s
 echo -e "\e[0m"
-sudo passwd root
-
+passwd root
+#
 # Change password
 echo -e "\e[0m"
 echo "For better security, change the Linux password for [ocadmin]"
@@ -419,10 +420,10 @@ echo "The current password is [owncloud]"
 echo -e "\e[32m"
 read -p "Press any key to change password for Linux... " -n1 -s
 echo -e "\e[0m"
-sudo passwd ocadmin
+passwd ocadmin
 if [[ $? > 0 ]]
 then
-    sudo passwd ocadmin
+    passwd ocadmin
 else
     sleep 2
 fi
@@ -440,20 +441,20 @@ then
 else
     sleep 2
 fi
-
+#
 # Add clamav-freshclam cmd to cron to update antivirus def.
 echo "#!/bin/sh" >> /etc/cron.daily/freshclam.sh
 echo "/usr/bin/freshclam --quiet" >> /etc/cron.daily/freshclam.sh
-sudo chmod 755 /etc/cron.daily/freshclam.sh
-
+chmod 755 /etc/cron.daily/freshclam.sh
+#
 # Redirect http to https
 echo "RewriteEngine On" >> $OCPATH/.htaccess
 echo "RewriteCond %{HTTPS} off" >> $OCPATH/.htaccess
 echo "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]" >> $OCPATH/.htaccess
-
+#
 # Use an external HD for storage of ROOT
-sudo bash $SCRIPTS/usbhd.sh
-
+bash $SCRIPTS/usbhd.sh
+#
 # Get the latest active-ssl script
 #        cd /var/scripts
 #        rm /var/scripts/activate-ssl.sh
@@ -478,7 +479,7 @@ sudo bash $SCRIPTS/usbhd.sh
 #    read -p "Press any key to continue... " -n1 -s
 #    echo -e "\e[0m"
 #fi
-
+#
 # Install Redis
 bash /var/scripts/install-redis-php-7.sh
 echo
@@ -486,7 +487,7 @@ redis-cli ping
 echo Testing Redis: PING
 echo
 sleep 3
-
+#
 # Redis performance tweaks
 echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf
 sed -i 's|# unixsocket /tmp/redis.sock|unixsocket /var/run/redis.sock|g' /etc/redis/6379.conf
@@ -494,11 +495,11 @@ sed -i 's|# unixsocketperm 700|unixsocketperm 777|g' /etc/redis/6379.conf
 sed -i 's|port 6379|port 0|g' /etc/redis/6379.conf
 sed -i 's|host' => 'localhost|host' => '/var/run/redis.sock|g' $CONFIG
 sed -i 's|port' => 6379,|port' => 0,|g' $CONFIG
-sudo service redis_6379 restart
+service redis_6379 restart
 sed -i 's|REDISPORT="6379"/REDISPORT="6379"\\\nSOCKET=/var/run/redis.sock/g' /etc/init.d/redis_6379
 sed -i 's|$CLIEXEC -p $REDISPORT shutdown|$CLIEXEC -s $SOCKET shutdown|g' /etc/init.d/redis_6379
 clear
-
+#
 # Upgrade system
 clear
 echo System will now upgrade...
@@ -508,13 +509,13 @@ echo
 apt-get update
 apt-get upgrade -y
 apt-get -f install -y
-
+#
 # Cleanup 1
 apt-get autoremove -y
 CLEARBOOT=$(dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e [0-9] | xargs sudo apt-get -y purge)
 echo "$CLEARBOOT"
 clear
-
+#
 # Success!
 echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
@@ -530,7 +531,7 @@ echo
 read -p "Press any key to reboot..." -n1 -s
 echo -e "\e[0m"
 echo
-
+#
 # Cleanup 2
 sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
 apt-get remove --purge expect
@@ -546,7 +547,7 @@ cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
 sed -i 's/sudo -i//g' /home/ocadmin/.profile
 sed -i 's/#bash /var/scripts/pre1.sh//g' /home/ocadmin/.profile
-
+#
 # Change root .profile
 rm /root/.profile
 cat <<-ROOT-PROFILE > "/root/.profile"
@@ -561,7 +562,7 @@ if [ -x /var/scripts/history.sh ]; then
 fi
 mesg n
 ROOT-PROFILE
-
+#
 ## Reboot
 reboot
 exit 0
