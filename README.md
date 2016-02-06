@@ -1,20 +1,33 @@
 # ownCloud server on your RaspberryPI2
-* Redis cache
-* Fail2ban
-* Apache2
-* MySql
-* Libre Office Writer
-* Much more, see the setup.sh and other scripts
+*Redis cache
+*Php7
+*Fail2ban
+*Apache2
+*ClamAv (anti virus, app can be found in the ownCloud app section)
+*LVM2
+*Webmin
+*MySql (random password generated)
+*Libre Office Writer
+*2 GB swapfile
+*Possibility to use an external USB device as ROOT partition
+*Much more, see the setup.sh and other scripts
 
-Base OS: ubuntu core 15.04 with apt-get package manager (NOTE THIS IS NOT SNAPPY CORE)
+Base OS: Ubuntu Core 15.04 with apt-get package manager
 
 # How to: 
 
 1. Download Ubuntu Core 15.04 RaspberryPI2 .img: https://waaromzomoeilijk.com/index.php/s/IcpQKfr1HCK1AG8
+
+1.1 Unpacking, see below!
+
 2. Write .img to sdcard see this page: https://www.raspberrypi.org/documentation/installation/installing-images/
-3. Boot RaspberryPI2 with the newly made sdcard
+
+3. Boot RaspberryPI2 with the newly made SD card
+
 4. login with ocadmin///owncloud (Connected to monitor with keyboard)
+
 5. Follow the instructions
+
 6. For now only use Rapi-Config tool for overclocking. (RECOMMENDED FOR SPEED, this tool uses non warrenty void settings, if you dont care about that... remove the old config.txt from PI_BOOT partition and cp config.txt above to PI_BOOT)
 
 # Unpacking the image on unix:
@@ -38,8 +51,8 @@ On linux you can also use your archive manager to unpack
 
 # If you encounter any issues please use the issue tracker here on github: https://github.com/ezraholm50/BerryCloud/issues
 
-**This project is created by ezraholm50 with much support of en0ch85, I also use his scripts to automate this installation.
-For great guides on Linux, ownCloud and Virtual Machines visit https://www.techandme.se**
+** This project is created by ezraholm50 with much support of en0ch85, I also use his scripts to automate this installation.
+For great guides on Linux, ownCloud and Virtual Machines visit https://www.techandme.se **
 
 **We can not be held responsible for anything whatsoever, we do our utmost best to make this build perfect. Use this build at your own risk.**
 
