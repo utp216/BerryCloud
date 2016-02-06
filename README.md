@@ -43,7 +43,8 @@ Base OS: Ubuntu Core 15.04 with apt-get package manager
 6. For now only use Rapi-Config tool for overclocking. (RECOMMENDED FOR SPEED, this tool uses non warrenty void settings, if you dont care about that... remove the old config.txt from PI_BOOT partition and cp config.txt above to PI_BOOT)
 
 # Unpacking the image on unix:
-(Open terminal, enter following commands)
+Open terminal, enter following commands
+
 (go to directory where you have just downloaded the image, eg: cd /home/yourusername/Downloads)
 
 1. sudo apt-get install p7zip-full
