@@ -1,15 +1,27 @@
 # ownCloud server on your RaspberryPI2
+
 *Redis cache
+
 *Php7
+
 *Fail2ban
+
 *Apache2
+
 *ClamAv (anti virus, app can be found in the ownCloud app section)
+
 *LVM2
+
 *Webmin
+
 *MySql (random password generated)
+
 *Libre Office Writer
+
 *2 GB swapfile
+
 *Possibility to use an external USB device as ROOT partition
+
 *Much more, see the setup.sh and other scripts
 
 Base OS: Ubuntu Core 15.04 with apt-get package manager
@@ -18,7 +30,7 @@ Base OS: Ubuntu Core 15.04 with apt-get package manager
 
 1. Download Ubuntu Core 15.04 RaspberryPI2 .img: https://waaromzomoeilijk.com/index.php/s/IcpQKfr1HCK1AG8
 
-1.1 Unpacking, see below!
+ 1.1 Unpacking, see below!
 
 2. Write .img to sdcard see this page: https://www.raspberrypi.org/documentation/installation/installing-images/
 
