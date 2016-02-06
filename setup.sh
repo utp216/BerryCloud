@@ -2,7 +2,7 @@
 
 # Tech and Me, 2016 - www.techandme.se
 
-MYSQL_PASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $SHUF | head -n 1)
+MYSQL_PASS=$(cat /dev/urandom| tr -dc 'a-zA-Z0-9-_!@#$%^&*()_+{}|:<>?='|fold -w 19| head -1)
 SHUF=$(shuf -i 27-38 -n 1)
 PW_FILE=/var/mysql_password.txt
 CONFIG=$HTML/owncloud/config/config.php
@@ -57,26 +57,73 @@ mkswap /swapfile
 swapon /swapfile
 echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 
-sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && && apt-get -f install -y
+# Change IP
+echo -e "\e[0m"
+echo "The script will now configure your IP to be static."
+echo -e "\e[36m"
+echo -e "\e[1m"
+echo "Your internal IP is: $ADDRESS"
+echo -e "\e[0m"
+echo -e "Write this down, you will need it to set static IP"
+echo -e "in your router later. It's included in this guide:"
+echo -e "https://www.techandme.se/open-port-80-443/ (step 1 - 5)"
+echo -e "\e[32m"
+read -p "Press any key to set static IP..." -n1 -s
+clear
+echo -e "\e[0m"
+ifdown eth0
+sleep 2
+ifup eth0
+sleep 2
+
+cat <<-IPCONFIG > "$INTERFACES"
+        auto lo $IFACE
+        iface lo inet loopback
+        iface $IFACE inet static
+                address $ADDRESS
+                netmask $NETMASK
+                gateway $GATEWAY
+# Exit and save:	[CTRL+X] + [Y] + [ENTER]
+# Exit without saving:	[CTRL+X]
+IPCONFIG
+
+ifdown eth0
+sleep 2
+ifup eth0
+sleep 2
+echo
+echo "Testing if network is OK..."
+sleep 1
+echo
+bash /var/scripts/test_connection.sh
+sleep 2
+echo
+echo -e "\e[0mIf the output is \e[32mConnected! \o/\e[0m everything is working."
+echo -e "\e[0mIf the output is \e[31mNot Connected!\e[0m you should change\nyour settings manually in the next step."
+echo -e "\e[32m"
+read -p "Press any key to open /etc/network/interfaces..." -n1 -s
+echo -e "\e[0m"
+nano /etc/network/interfaces
+clear &&
+echo "Testing if network is OK..."
+ifdown eth0
+sleep 2
+ifup eth0
+sleep 2
+echo
+bash /var/scripts/test_connection.sh
+sleep 2
+clear
+
+apt-get update && apt-get upgrade -y && && apt-get -f install -y
 #sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
 #sudo apt-get update
-sudo apt-get install -y software-properties-common ifupdown openssh-server add-apt-repository python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect aptitude lvm2 ntp curl initscripts keyboard-configuration
-sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && && apt-get -f install -y
+sudo apt-get install -y software-properties-common ifupdown openssh-server add-apt-repository python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration
+apt-get update && apt-get upgrade -y && && apt-get -f install -y
 
 # Remove locale error over ssh in other language
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
 sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
-
-# Check network
-sudo ifdown $IFACE && sudo ifup $IFACE
-bash /var/scripts/test_connection.sh
-if [[ $? > 0 ]]
-then
-    echo "Network NOT OK. You must have a working Network connection to run this script."
-    exit
-else
-    echo "Network OK."
-fi
 
 # Set locales
 sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
@@ -92,13 +139,12 @@ read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
 
 # Install MYSQL 5.6
-apt-get install software-properties-common -y
 echo "mysql-server-5.6 mysql-server/root_password password $MYSQL_PASS" | debconf-set-selections
 echo "mysql-server-5.6 mysql-server/root_password_again password $MYSQL_PASS" | debconf-set-selections
 apt-get install mysql-server-5.6 -y
 
 # mysql_secure_installation
-aptitude -y install expect
+apt-get -y install expect
 SECURE_MYSQL=$(expect -c "
 set timeout 10
 spawn mysql_secure_installation
@@ -117,7 +163,7 @@ send \"y\r\"
 expect eof
 ")
 echo "$SECURE_MYSQL"
-aptitude -y purge expect
+apt-get remove --purge expect -y
 
 # Install Apache
 apt-get install apache2 -y
@@ -146,22 +192,21 @@ service apache2 restart
 
 # Install PHP 7
 echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php -y
-# sudo add-apt-repository ppa:ondrej/php-7.0
 apt-get update
 apt-get install -y \
-        php \
-        php-common \
-        php-mysql \
-        php-intl \
-        php-mcrypt \
-        php-ldap \
-        php-imap \
-        php-cli \
-        php-gd \
-        php-pgsql \
-        php-json \
-        php-sqlite3 \
-        php-curl \
+        php7.0 \
+        php7.0-common \
+        php7.0-mysql \
+        php7.0-intl \
+        php7.0-mcrypt \
+        php7.0-ldap \
+        php7.0-imap \
+        php7.0-cli \
+        php7.0-gd \
+        php7.0-pgsql \
+        php7.0-json \
+        php7.0-sqlite3 \
+        php7.0-curl \
         libsm6 \
         libsmbclient \
         smbclient
@@ -357,64 +402,6 @@ echo -e "\e[0m"
 dpkg-reconfigure tzdata
 echo
 sleep 3
-clear
-
-# Change IP
-echo -e "\e[0m"
-echo "The script will now configure your IP to be static."
-echo -e "\e[36m"
-echo -e "\e[1m"
-echo "Your internal IP is: $ADDRESS"
-echo -e "\e[0m"
-echo -e "Write this down, you will need it to set static IP"
-echo -e "in your router later. It's included in this guide:"
-echo -e "https://www.techandme.se/open-port-80-443/ (step 1 - 5)"
-echo -e "\e[32m"
-read -p "Press any key to set static IP..." -n1 -s
-clear
-echo -e "\e[0m"
-ifdown eth0
-sleep 2
-ifup eth0
-sleep 2
-
-cat <<-IPCONFIG > "$INTERFACES"
-        auto lo $IFACE
-        iface lo inet loopback
-        iface $IFACE inet static
-                address $ADDRESS
-                netmask $NETMASK
-                gateway $GATEWAY
-# Exit and save:	[CTRL+X] + [Y] + [ENTER]
-# Exit without saving:	[CTRL+X]
-IPCONFIG
-
-ifdown eth0
-sleep 2
-ifup eth0
-sleep 2
-echo
-echo "Testing if network is OK..."
-sleep 1
-echo
-bash /var/scripts/test_connection.sh
-sleep 2
-echo
-echo -e "\e[0mIf the output is \e[32mConnected! \o/\e[0m everything is working."
-echo -e "\e[0mIf the output is \e[31mNot Connected!\e[0m you should change\nyour settings manually in the next step."
-echo -e "\e[32m"
-read -p "Press any key to open /etc/network/interfaces..." -n1 -s
-echo -e "\e[0m"
-nano /etc/network/interfaces
-clear &&
-echo "Testing if network is OK..."
-ifdown eth0
-sleep 2
-ifup eth0
-sleep 2
-echo
-bash /var/scripts/test_connection.sh
-sleep 2
 clear
 
 # Change password
