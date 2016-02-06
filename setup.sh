@@ -3,6 +3,7 @@
 # Tech and Me, 2016 - www.techandme.se
 
 MYSQL_PASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w $SHUF | head -n 1)
+SHUF=$(shuf -i 27-38 -n 1)
 PW_FILE=/var/mysql_password.txt
 CONFIG=$HTML/owncloud/config/config.php
 OCVERSION=owncloud-8.2.2.zip
@@ -56,25 +57,11 @@ mkswap /swapfile
 swapon /swapfile
 echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 
-# Add repository's
-#sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
-#sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
-#sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|g" /etc/apt/sources.list
-#sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|g" /etc/apt/sources.list
-#sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|g" /etc/apt/sources.list
-#sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|g" /etc/apt/sources.list
-#sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|g" /etc/apt/sources.list
-#sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|g" /etc/apt/sources.list
-#sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|g" /etc/apt/sources.list
-#sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|g" /etc/apt/sources.list
-#sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
-#sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
-
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
-sudo apt-get update
+#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C
+#sudo apt-get update
 sudo apt-get install -y software-properties-common ifupdown openssh-server add-apt-repository python-software-properties clamav net-tools git linux-firmware dnsutils language-pack-en-base expect aptitude lvm2 ntp curl initscripts keyboard-configuration
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
+sudo apt-get update && sudo apt-get upgrade -y apt-get autoremove -y && apt-get -f install -y
 
 # Remove locale error over ssh in other language
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
@@ -82,7 +69,6 @@ sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
 
 # Check network
 sudo ifdown $IFACE && sudo ifup $IFACE
-#nslookup google.com
 bash /var/scripts/test_connection.sh
 if [[ $? > 0 ]]
 then
@@ -211,15 +197,15 @@ crontab -u www-data -l | { cat; echo "*/15  *  *  *  * php -f $OCPATH/cron.php >
 
 # Change values in php.ini (increase max file size)
 # max_execution_time
-sed -i "s|max_execution_time = 30|max_execution_time = 3500|g" /etc/php/7.0/apache2/php.ini
+sed -i "s|max_execution_time = 30|max_execution_time = 7000|g" /etc/php/7.0/apache2/php.ini
 # max_input_time
-sed -i "s|max_input_time = 60|max_input_time = 3600|g" /etc/php/7.0/apache2/php.ini
+sed -i "s|max_input_time = 60|max_input_time = 7000|g" /etc/php/7.0/apache2/php.ini
 # memory_limit
 sed -i "s|memory_limit = 128M|memory_limit = 512M|g" /etc/php/7.0/apache2/php.ini
 # post_max
-sed -i "s|post_max_size = 8M|post_max_size = 1100M|g" /etc/php/7.0/apache2/php.ini
+sed -i "s|post_max_size = 8M|post_max_size = 2000M|g" /etc/php/7.0/apache2/php.ini
 # upload_max
-sed -i "s|upload_max_filesize = 2M|upload_max_filesize = 1000M|g" /etc/php/7.0/apache2/php.ini
+sed -i "s|upload_max_filesize = 2M|upload_max_filesize = 1800M|g" /etc/php/7.0/apache2/php.ini
 
 # Generate $ssl_conf
 if [ -f $ssl_conf ];
@@ -276,7 +262,7 @@ sudo -u www-data php $OCPATH/occ config:system:set mail_smtpauth --value="1"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtpport --value="465"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtphost --value="smtp.gmail.com"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtpauthtype --value="LOGIN"
-sudo -u www-data php $OCPATH/occ config:system:set mail_from_address --value="www.en0ch.se"
+sudo -u www-data php $OCPATH/occ config:system:set mail_from_address --value="www.techandme.se"
 sudo -u www-data php $OCPATH/occ config:system:set mail_domain --value="gmail.com"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtpsecure --value="ssl"
 sudo -u www-data php $OCPATH/occ config:system:set mail_smtpname --value="www.en0ch.se@gmail.com"
@@ -288,53 +274,53 @@ apt-get update
 sudo apt-get install --no-install-recommends libreoffice-writer -y
 
 # Download and install Documents
-if [ -d $OCPATH/apps/documents ]; then
-sleep 1
-else
-wget https://github.com/owncloud/documents/archive/master.zip -P $OCPATH/apps
-cd $OCPATH/apps
-unzip -q master.zip
-rm master.zip
-mv documents-master/ documents/
-fi
+#if [ -d $OCPATH/apps/documents ]; then
+#sleep 1
+#else
+#wget https://github.com/owncloud/documents/archive/master.zip -P $OCPATH/apps
+#cd $OCPATH/apps
+#unzip -q master.zip
+#rm master.zip
+#mv documents-master/ documents/
+#fi
 
 # Enable documents
-if [ -d $OCPATH/apps/documents ]; then
-sudo -u www-data php $OCPATH/occ app:enable documents
-sudo -u www-data php $OCPATH/occ config:system:set preview_libreoffice_path --value="/usr/bin/libreoffice"
-fi
+#if [ -d $OCPATH/apps/documents ]; then
+#sudo -u www-data php $OCPATH/occ app:enable documents
+#sudo -u www-data php $OCPATH/occ config:system:set preview_libreoffice_path --value="/usr/bin/libreoffice"
+#fi
 
 # Download and install Contacts
-if [ -d $OCPATH/apps/contacts ]; then
-sleep 1
-else
-wget https://github.com/owncloud/contacts/archive/master.zip -P $OCPATH/apps
-unzip -q $OCPATH/apps/master.zip -d $OCPATH/apps
-cd $OCPATH/apps
-rm master.zip
-mv contacts-master/ contacts/
-fi
+#if [ -d $OCPATH/apps/contacts ]; then
+#sleep 1
+#else
+#wget https://github.com/owncloud/contacts/archive/master.zip -P $OCPATH/apps
+#unzip -q $OCPATH/apps/master.zip -d $OCPATH/apps
+#cd $OCPATH/apps
+#rm master.zip
+#mv contacts-master/ contacts/
+#fi
 
 # Enable Contacts
-if [ -d $OCPATH/apps/contacts ]; then
-sudo -u www-data php $OCPATH/occ app:enable contacts
-fi
+#if [ -d $OCPATH/apps/contacts ]; then
+#sudo -u www-data php $OCPATH/occ app:enable contacts
+#fi
 
 # Download and install Calendar
-if [ -d $OCPATH/apps/calendar ]; then
-sleep 1
-else
-wget https://github.com/owncloud/calendar/archive/master.zip -P $OCPATH/apps
-unzip -q $OCPATH/apps/master.zip -d $OCPATH/apps
-cd $OCPATH/apps
-rm master.zip
-mv calendar-master/ calendar/
-fi
+#if [ -d $OCPATH/apps/calendar ]; then
+#sleep 1
+#else
+#wget https://github.com/owncloud/calendar/archive/master.zip -P $OCPATH/apps
+#unzip -q $OCPATH/apps/master.zip -d $OCPATH/apps
+#cd $OCPATH/apps
+#rm master.zip
+#mv calendar-master/ calendar/
+#fi
 
 # Enable Calendar
-if [ -d $OCPATH/apps/calendar ]; then
-sudo -u www-data php $OCPATH/occ app:enable calendar
-fi
+#if [ -d $OCPATH/apps/calendar ]; then
+#sudo -u www-data php $OCPATH/occ app:enable calendar
+#fi
 
 
 # Set secure permissions final (./data/.htaccess has wrong permissions otherwise)
