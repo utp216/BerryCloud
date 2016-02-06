@@ -15,7 +15,7 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
         exit 1
 fi
 
-sudo apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autoclean -y && apt-get -f install -y
+sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && && apt-get -f install -y
 sudo apt-get install openssh-server dialog -y
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 
@@ -125,7 +125,7 @@ echo
 #read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
 #echo -e "\e[0m"
 #echo
-sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoclean && apt-get clean -y && apt-get autoremove -y && apt-get -f install -y
+sudo apt-get update && sudo apt-get upgrade -y && apt-get -f install -y
 #raspi-config
 
 sudo reboot
