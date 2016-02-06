@@ -804,7 +804,7 @@ core_freq=500
 ##
 ##     Default 400.
 ##
-sdram_freq=600
+sdram_freq=500
 
 ## sdram_freq_min
 ##     Minimum frequency of SDRAM in MHz (used for dynamic clocking).
