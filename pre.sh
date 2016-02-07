@@ -15,7 +15,7 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
         exit 1
 fi
 
-sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && && apt-get -f install -y
+sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
 sudo apt-get install openssh-server dialog -y
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 
@@ -32,7 +32,7 @@ sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|de
 sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|g" /etc/apt/sources.list
 sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
 sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
-sudo apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autoclean -y && apt-get -f install -y
+sudo apt-get update && apt-get upgrade -y && apt-get -f install -y
 
 
 # Resize sd card
