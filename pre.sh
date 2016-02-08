@@ -17,6 +17,8 @@ fi
 
 sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
 sudo apt-get install openssh-server dialog -y
+sudo do-release-upgrade -d
+sudo apt-get dist-upgrade -d
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 
 # Add repository's
