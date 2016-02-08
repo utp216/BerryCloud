@@ -195,19 +195,19 @@ service apache2 restart
 echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php -y
 apt-get update
 apt-get install -y \
-        php7.0 \
-        php7.0-common \
-        php7.0-mysql \
-        php7.0-intl \
-        php7.0-mcrypt \
-        php7.0-ldap \
-        php7.0-imap \
-        php7.0-cli \
-        php7.0-gd \
-        php7.0-pgsql \
-        php7.0-json \
-        php7.0-sqlite3 \
-        php7.0-curl \
+        php \
+        php-common \
+        php-mysql \
+        php-intl \
+        php-mcrypt \
+        php-ldap \
+        php-imap \
+        php-cli \
+        php-gd \
+        php-pgsql \
+        php-json \
+        php-sqlite3 \
+        php-curl \
         libsm6 \
         libsmbclient \
         smbclient
