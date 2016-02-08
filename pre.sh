@@ -16,24 +16,8 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 fi
 
 sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
-sudo apt-get install openssh-server dialog -y
-sudo do-release-upgrade -d
-sudo apt-get dist-upgrade -d
+sudo apt-get install openssh-server dialog libnewt0.52 whiptail parted triggerhappy lua5.1 -y
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
-
-# Add repository's
-sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
-sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid universe|g" /etc/apt/sources.list
-sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|g" /etc/apt/sources.list
-sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-updates universe|g" /etc/apt/sources.list
-sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|g" /etc/apt/sources.list
-sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-backports main restricted|g" /etc/apt/sources.list
-sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|g" /etc/apt/sources.list
-sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security main restricted|g" /etc/apt/sources.list
-sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|g" /etc/apt/sources.list
-sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security universe|g" /etc/apt/sources.list
-sed -i "s|# deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
-sed -i "s|# deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|deb-src http://ports.ubuntu.com/ubuntu-ports/ vivid-security multiverse|g" /etc/apt/sources.list
 sudo apt-get update && apt-get upgrade -y && apt-get -f install -y
 
 
@@ -50,10 +34,10 @@ w
 EOF
 
 # Install raspi-config
-#cd /tmp
-#sudo apt-get install libnewt0.52 whiptail parted triggerhappy lua5.1 -y
-#wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160108_all.deb
-#dpkg -i raspi-config_20160108_all.deb
+cd /tmp
+wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160108_all.deb
+dpkg -i raspi-config_20160108_all.deb
+cd
 
 # Change login scripts
 sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
@@ -117,17 +101,17 @@ echo -e "\e[0m"
 echo
 
 # Overclock
-#echo -e "\e[32m"
-#echo    "+--------------------------------------------------------------------+"
-#echo    "| I recommend you to use one of the overclock settings, which do not |"
-#echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
-#echo    "| max overclock settings, visit BerryCloud @ gitgub                  |"
-#echo    "+--------------------------------------------------------------------+"
-#echo
-#read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
-#echo -e "\e[0m"
-#echo
+echo -e "\e[32m"
+echo    "+--------------------------------------------------------------------+"
+echo    "| I recommend you to use one of the overclock settings, which do not |"
+echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
+echo    "| max overclock settings, visit BerryCloud @ gitgub                  |"
+echo    "+--------------------------------------------------------------------+"
+echo
+read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
+echo -e "\e[0m"
+echo
 sudo apt-get update && sudo apt-get upgrade -y && apt-get -f install -y
-#raspi-config
+raspi-config
 
 sudo reboot
