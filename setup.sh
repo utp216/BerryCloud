@@ -124,8 +124,6 @@ sleep 2
 clear
 #
 apt-get update && apt-get upgrade -y && apt-get -f install -y
-apt-get install -y software-properties-common ifupdown openssh-server dialog clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration
-apt-get update && apt-get upgrade -y && apt-get -f install -y
 #
 # Remove locale error over ssh in other language
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
