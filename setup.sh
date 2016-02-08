@@ -60,6 +60,11 @@ mkswap /swapfile
 swapon /swapfile
 echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 #
+# Set hostname and ServerName
+hostnamectl set-hostname owncloud 
+echo "127.0.0.1 localhost" >> /etc/hosts
+echo "127.0.1.1 owncloud" >> /etc/hosts
+#
 # Change IP
 echo -e "\e[0m"
 echo "The script will now configure your IP to be static."
@@ -175,7 +180,11 @@ a2enmod rewrite \
         mime \
         ssl \
         setenvif
-#        
+        #
+# Set hostname and ServerName
+sh -c "echo 'ServerName owncloud' >> /etc/apache2/apache2.conf"
+service apache2 restart
+#
 # Remove the regular index.html if it exists
 if		[ -f $HTML/index.html ];
         then
@@ -184,13 +193,6 @@ fi
 #
 wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
 #        
-# Set hostname and ServerName
-sh -c "echo 'ServerName owncloud' >> /etc/apache2/apache2.conf"
-hostnamectl set-hostname owncloud 
-echo "127.0.0.1 localhost" >> /etc/hosts
-echo "127.0.1.1 owncloud" >> /etc/hosts
-service apache2 restart
-#
 # Install PHP 7
 echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php -y
 apt-get update
