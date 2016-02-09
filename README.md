@@ -18,9 +18,9 @@
 
 *Libre Office Writer
 
-*2 GB swapfile
+*2 GB swap file / 2 GB swap partition (partition is used when using the external USB as ROOT option)
 
-*Possibility to use an external USB device as ROOT partition
+*Possibility to use an external USB device as ROOT partition (recommended, preferably an SSD)
 
 *Much more, see the setup.sh and other scripts
 
