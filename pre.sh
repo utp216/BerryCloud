@@ -16,7 +16,8 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 fi
 
 sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
-sudo apt-get install software-properties-common openssh-server dialog libnewt0.52 whiptail parted triggerhappy lua5.1 apt-tranport-https ifupdown openssh-server clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration -y
+sudo apt-get install openssh-server libnewt0.52 whiptail parted triggerhappy lua5.1 expect lvm2 -y
+#sudo apt-get install dnsutils
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 sudo apt-get update && apt-get upgrade -y && apt-get -f install -y
 
