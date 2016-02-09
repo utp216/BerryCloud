@@ -1,8 +1,3 @@
-# Swap
-mkswap -L PI_SWAP /dev/sda1
-swapon /dev/sda1
-echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
-	
 # External HD	
 echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' -I /dev/sda2
 dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda2
