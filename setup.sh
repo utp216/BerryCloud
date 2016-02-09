@@ -215,7 +215,7 @@ rm $HTML/$OCVERSION
 mkdir $OCPATH/data
 #
 # Secure permissions
-wget https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/setup_secure_permissions_owncloud.sh -P $SCRIPTS
+wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/setup_secure_permissions_owncloud.sh -P $SCRIPTS
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 #
 # Install ownCloud
