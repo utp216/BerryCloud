@@ -52,6 +52,7 @@ echo -e "\e[0m"
 #
 # Resize sdcard
 resize2fs /dev/mmcblk0p2
+clear
 #
 # Set hostname and ServerName
 hostnamectl set-hostname owncloud 
