@@ -88,30 +88,39 @@ RCLOCAL
 # Set permissions for rc.local
 sudo chmod 755 /etc/rc.local
 
+clear
 # Success!
 echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
-echo    "| Your ip is $ADDRESS ssh is now install so you can disconnect your  |"
-echo    "| Monitor and continue the installation over ssh, after reboot.      |"
+echo    "| Your ip is $ADDRESS ssh is now installed so you can disconnect your|"
+echo    "| Monitor and continue the installation over ssh, after the reboot.  |"
 echo    "| After this reboot log back in with ocadmin///owncloud              |"
+echo    "| The installation will then automatically begin.                    |"
+echo    "|                                                                    |"
+echo    "|                        ***SSH***                                   |"
+echo    "| 1. Open a terminal on laptop/desktop (ctrl + alt + T for linux)    |"
+echo    "| 2. Execute the command: sudo apt-get install openssh-client        |"
+echo    "| 3. Execute the command: ssh -l ocadmin $ADDRESS                    |"
+echo    "| 4. Type password: owncloud                                         |"
+echo    "| 5. Follow the instructions                                         |"
 echo    "+--------------------------------------------------------------------+"
 echo
 read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
 echo
-
+sudo apt-get update && sudo apt-get upgrade -y && apt-get -f install -y
+clear
 # Overclock
 echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
 echo    "| I recommend you to use one of the overclock settings, which do not |"
 echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
-echo    "| max overclock settings, visit BerryCloud @ gitgub                  |"
+echo    "| max overclock settings, visit config.txt @ BerryCloud @ gitgub     |"
 echo    "+--------------------------------------------------------------------+"
 echo
-read -p "Press any key to enter overclock menu (only overclock dont use other settings yet, it will break the system)..." -n1 -s
+read -p "Press any key to enter overclock menu (only use overclock, don't use other settings yet, not tested)..." -n1 -s
 echo -e "\e[0m"
 echo
-sudo apt-get update && sudo apt-get upgrade -y && apt-get -f install -y
 raspi-config
 
 sudo reboot
