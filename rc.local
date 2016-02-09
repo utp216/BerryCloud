@@ -10,13 +10,10 @@
 # bits.
 #
 # By default this script does nothing.
-
-#sleep 5
-
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 WWW=/var/www
-
+sleep 5
       	# Create dir
 if 		[ -d $SCRIPTS ];
 	then
@@ -323,25 +320,25 @@ fi
 ##################################################################################################################
 # Change root profile
         	bash $SCRIPTS/change-root-profile.sh
-#if [[ $? > 0 ]]
-#then
-#	echo "change-root-profile.sh were not executed correctly. System will reboot in 5 seconds..."
-#	sleep 5
-#	reboot
-#else
-#	echo "change-root-profile.sh script executed OK."
-#fi
+if [[ $? > 0 ]]
+then
+	echo "change-root-profile.sh were not executed correctly. System will reboot in 5 seconds..."
+	sleep 5
+	reboot
+else
+	echo "change-root-profile.sh script executed OK."
+fi
 ##################################################################################################################
 # Change ocadmin profile
         	bash $SCRIPTS/change-ocadmin-profile.sh
-#if [[ $? > 0 ]]
-#then
-#	echo "change-ocadmin-profile.sh were not executed correctly. System will reboot in 5 seconds..."
-#	sleep 5
-#	reboot
-#else
-#	echo "change-ocadmin-profile.sh executed OK."
-#fi
+if [[ $? > 0 ]]
+then
+	echo "change-ocadmin-profile.sh were not executed correctly. System will reboot in 5 seconds..."
+	sleep 5
+	reboot
+else
+	echo "change-ocadmin-profile.sh executed OK."
+fi
 ##################################################################################################################
 # Fix ownership issue
 sudo chown ocadmin:ocadmin /home/ocadmin/.profile
