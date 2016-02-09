@@ -53,13 +53,6 @@ echo -e "\e[0m"
 # Resize sdcard
 resize2fs /dev/mmcblk0p2
 #
-# Install swapfile of 2 GB
-fallocate -l 2048M /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-echo "/swapfile none swap defaults 0 0" >> /etc/fstab
-#
 # Set hostname and ServerName
 hostnamectl set-hostname owncloud 
 echo "127.0.0.1 localhost" >> /etc/hosts
