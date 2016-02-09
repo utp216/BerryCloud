@@ -18,8 +18,8 @@ fi
 sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
 sudo apt-get install openssh-server dialog libnewt0.52 whiptail parted triggerhappy lua5.1 software-properties-common ifupdown openssh-server dialog clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration -y
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
+sudo apt-get install python-software-properties python3-software-properties
 sudo apt-get update && apt-get upgrade -y && apt-get -f install -y
-
 
 # Resize sd card
 fdisk $device << EOF
@@ -62,7 +62,7 @@ if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
 mesg n
-bash /var/scripts/usbhd2.sh
+#bash /var/scripts/usbhd2.sh
 ROOT-PROFILE
 
 # Change back rc.local
