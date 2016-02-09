@@ -209,6 +209,23 @@ else
 	sleep 1
 fi
 ##################################################################################################################
+# Sets root partition to external drive
+if 		[ -f $SCRIPTS/usbhd2.sh ];
+        then
+        	echo "usbhd.sh  exists"
+        else
+        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/usbhd2.sh -P $SCRIPTS
+fi
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded usbhd2.sh."
+	sleep 1
+fi
+##################################################################################################################
 # Trusted ip conf script
 if 		[ -f $SCRIPTS/trusted.sh ];
         then
