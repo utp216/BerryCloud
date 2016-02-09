@@ -15,6 +15,7 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
         exit 1
 fi
 
+#sudo dpkg --add-architecture armhf
 sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
 sudo apt-get install openssh-server expect lvm2 -y
 #sudo apt-get install dnsutils libnewt0.52 whiptail parted triggerhappy lua5.1
