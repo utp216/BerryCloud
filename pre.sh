@@ -16,7 +16,7 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 fi
 
 sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
-sudo apt-get install openssh-server dialog libnewt0.52 whiptail parted triggerhappy lua5.1 apt-tranport-https software-properties-common ifupdown openssh-server dialog clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration -y
+sudo apt-get install software-properties-common openssh-server dialog libnewt0.52 whiptail parted triggerhappy lua5.1 apt-tranport-https ifupdown openssh-server clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration -y
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 sudo apt-get update && apt-get upgrade -y && apt-get -f install -y
 
@@ -115,7 +115,7 @@ echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
 echo    "| I recommend you to use one of the overclock settings, which do not |"
 echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
-echo    "| max overclock settings, visit config.txt @ BerryCloud @ gitgub     |"
+echo    "| max overclock settings, visit config.txt @ BerryCloud @ github     |"
 echo    "+--------------------------------------------------------------------+"
 echo
 read -p "Press any key to enter overclock menu (only use overclock, don't use other settings yet, not tested)..." -n1 -s
