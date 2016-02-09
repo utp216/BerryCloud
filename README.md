@@ -28,7 +28,7 @@ Base OS: Ubuntu Core 15.10 with apt-get package manager
 
 # How to: 
 
-1. Download Ubuntu Core 15.10 RaspberryPI2 .img: https://waaromzomoeilijk.com/index.php/s/IcpQKfr1HCK1AG8
+1. Download Ubuntu Core 15.10 RaspberryPI2 .img: CHANGE ME **************************************
 
  1.1 Unpacking, see below!
 
@@ -48,7 +48,7 @@ Open terminal, enter following commands
 (go to directory where you have just downloaded the image, eg: cd /home/yourusername/Downloads)
 
 1. sudo apt-get install p7zip-full
-2. 7za x ownCloud-RPI2-UbuntuCore15.04-www.techandme.se.img.7z
+2. 7za x RPI2_ownCloud_techandme.se_UbuntuCore15.10_NOT_overclocked.img.7z
 
 On linux you can also use your archive manager to unpack
 
