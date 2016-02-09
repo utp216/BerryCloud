@@ -15,7 +15,7 @@ sed -e 's/\t\([\+0-9a-zA-Z]*\)[ \t].*/\1/' << EOF | fdisk /dev/sda
   p # primary partition
   1 # partition number 1
     # default - start at beginning of disk 
-  +4000M # 4000 MB swap partition
+  +2000M # 2000 MB swap partition
   n # new partition
   p # primary partition
   2 # partion number 2
