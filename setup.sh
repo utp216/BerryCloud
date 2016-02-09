@@ -222,6 +222,7 @@ bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 cd $OCPATH
 sudo -u www-data php occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$MYSQL_PASS" --admin-user "ocadmin" --admin-pass "owncloud"
 echo
+sudo -u www-data php $OCPATH/occ config:system:set datadirectory --value="/owncloud/data"
 echo ownCloud version:
 sudo -u www-data php $OCPATH/occ status
 echo
