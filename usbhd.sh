@@ -6,34 +6,34 @@ function ask_yes_or_no() {
         *)     echo "no" ;;
     esac
 }
-if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for ROOT partition (format to fat/ext4 first)? Also attach it before typing yes!!") ]]
+if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for the ROOT partition? Also attach it before typing yes!!") ]]
 then
 # Format and create partition
-
-#fdisk /dev/sda1 << EOF
-#wipefs
-#EOF
-
-#fdisk /dev/sda1 << EOF
-#o
-#n
-#p
-#
-#
-#
-#w
-#EOF
-#	echo -e "\e[32m"
-#	read -p "If it asks to overwrite anything just hit yes, make sure there are no needed files on the hd. Press any key to start the script..." -n1 -s
-#	echo -e "\e[0m"
-	echo -ne '\n' | sudo mkfs.ext4 -b 1024 -n 'PI_ROOT' -I /dev/sda1
-	sudo mount /dev/sda1
-	dd bs=1M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
-	sed -i 's|/dev/mmcblk0p2|/dev/sda1|g' /etc/fstab
+sed -e 's/\t\([\+0-9a-zA-Z]*\)[ \t].*/\1/' << EOF | fdisk /dev/sda
+  o # clear the in memory partition table
+  n # new partition
+  p # primary partition
+  1 # partition number 1
+    # default - start at beginning of disk 
+  +4000M # 4000 MB swap partition
+  n # new partition
+  p # primary partition
+  2 # partion number 2
+    # default, start immediately after preceding partition
+    # default, extend partition to end of disk
+  p # print the in-memory partition table
+  w # write the partition table
+  q # and we're done
+EOF
+partprobe
+sed -i 's|bash /var/scripts/usbhd.sh|#bash /var/scripts/usbhd.sh|g' /root/.profile
+sed -i 's|#bash /var/scripts/usbhd2.sh|bash /var/scripts/usbhd2.sh|g' /root/.profile
 else
 echo
-    echo "If you want to do this later run: bash /var/scripts/usbhd.sh"
-    echo -e "\e[32m"
-    read -p "Press any key to continue... " -n1 -s
-    echo -e "\e[0m"
+# Install swapfile of 2 GB
+fallocate -l 2048M /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo "/swapfile none swap defaults 0 0" >> /etc/fstab
 fi
