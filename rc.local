@@ -13,8 +13,6 @@
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 WWW=/var/www
-ifdown -a
-ifup -a
       	# Create dir
 if 		[ -d $SCRIPTS ];
 	then
