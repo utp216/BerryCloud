@@ -6,7 +6,7 @@ function ask_yes_or_no() {
         *)     echo "no" ;;
     esac
 }
-if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for the ROOT partition? Also attach it before typing yes!!") ]]
+if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for the ROOT partition, recommended! (SSD preferred)? Also attach it before typing yes!!") ]]
 then
 # Format and create partition
 sed -e 's/\t\([\+0-9a-zA-Z]*\)[ \t].*/\1/' << EOF | fdisk /dev/sda
@@ -25,9 +25,18 @@ sed -e 's/\t\([\+0-9a-zA-Z]*\)[ \t].*/\1/' << EOF | fdisk /dev/sda
   w # write the partition table
   q # and we're done
 EOF
+
+# Swap
+mkswap -L PI_SWAP /dev/sda1
+swapon /dev/sda1
+echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
+
+# Update tables
 partprobe
-sed -i 's|bash /var/scripts/usbhd.sh|#bash /var/scripts/usbhd.sh|g' /root/.profile
-sed -i 's|#bash /var/scripts/usbhd2.sh|bash /var/scripts/usbhd2.sh|g' /root/.profile
+sudo bash /var/scripts/usbhd2.sh
+#sed -i 's|bash /var/scripts/usbhd.sh|#bash /var/scripts/usbhd.sh|g' /root/.profile
+#sed -i 's|#bash /var/scripts/usbhd2.sh|bash /var/scripts/usbhd2.sh|g' /root/.profile
+
 else
 echo
 # Install swapfile of 2 GB
