@@ -62,6 +62,7 @@ if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
 mesg n
+bash /var/scripts/usbhd2.sh
 ROOT-PROFILE
 
 # Change back rc.local
