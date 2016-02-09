@@ -18,7 +18,6 @@ fi
 sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
 sudo apt-get install openssh-server dialog libnewt0.52 whiptail parted triggerhappy lua5.1 apt-tranport-https software-properties-common ifupdown openssh-server dialog clamav net-tools git linux-firmware dnsutils language-pack-en-base expect lvm2 ntp curl initscripts keyboard-configuration -y
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
-sudo apt-get install python-software-properties python3-software-properties
 sudo apt-get update && apt-get upgrade -y && apt-get -f install -y
 
 # Resize sd card
@@ -35,8 +34,8 @@ EOF
 
 # Install raspi-config
 cd /tmp
-wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160108_all.deb
-dpkg -i raspi-config_20160108_all.deb
+wget https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160210_all.deb
+dpkg -i raspi-config_20160210_all.deb
 cd
 
 # Change login scripts
