@@ -24,11 +24,11 @@
 
 *Much more, see the setup.sh and other scripts
 
-Base OS: Ubuntu Core 15.04 with apt-get package manager
+Base OS: Ubuntu Core 15.10 with apt-get package manager
 
 # How to: 
 
-1. Download Ubuntu Core 15.04 RaspberryPI2 .img: https://waaromzomoeilijk.com/index.php/s/IcpQKfr1HCK1AG8
+1. Download Ubuntu Core 15.10 RaspberryPI2 .img: https://waaromzomoeilijk.com/index.php/s/IcpQKfr1HCK1AG8
 
  1.1 Unpacking, see below!
 
