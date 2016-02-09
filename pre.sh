@@ -16,8 +16,8 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 fi
 
 sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
-sudo apt-get install openssh-server libnewt0.52 whiptail parted triggerhappy lua5.1 expect lvm2 -y
-#sudo apt-get install dnsutils
+sudo apt-get install openssh-server expect lvm2 -y
+#sudo apt-get install dnsutils libnewt0.52 whiptail parted triggerhappy lua5.1
 #sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 sudo apt-get update && apt-get upgrade -y && apt-get -f install -y
 
@@ -34,10 +34,10 @@ w
 EOF
 
 # Install raspi-config
-cd /tmp
-wget https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160210_all.deb
-dpkg -i raspi-config_20160210_all.deb
-cd
+#cd /tmp
+#wget https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160210_all.deb
+#dpkg -i raspi-config_20160210_all.deb
+#cd
 
 # Change login scripts
 sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
@@ -112,16 +112,15 @@ echo
 sudo apt-get update && sudo apt-get upgrade -y && apt-get -f install -y
 clear
 # Overclock
-echo -e "\e[32m"
-echo    "+--------------------------------------------------------------------+"
-echo    "| I recommend you to use one of the overclock settings, which do not |"
-echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
-echo    "| max overclock settings, visit config.txt @ BerryCloud @ github     |"
-echo    "+--------------------------------------------------------------------+"
-echo
-read -p "Press any key to enter overclock menu (only use overclock, don't use other settings yet, not tested)..." -n1 -s
-echo -e "\e[0m"
-echo
-raspi-config
-
+#echo -e "\e[32m"
+#echo    "+--------------------------------------------------------------------+"
+#echo    "| I recommend you to use one of the overclock settings, which do not |"
+#echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
+#echo    "| max overclock settings, visit config.txt @ BerryCloud @ github     |"
+#echo    "+--------------------------------------------------------------------+"
+#echo
+#read -p "Press any key to enter overclock menu (only use overclock, don't use other settings yet, not tested)..." -n1 -s
+#echo -e "\e[0m"
+#echo
+#raspi-config
 sudo reboot
