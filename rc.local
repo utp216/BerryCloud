@@ -13,7 +13,8 @@
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 WWW=/var/www
-sleep 5
+ifdown -a
+ifup -a
       	# Create dir
 if 		[ -d $SCRIPTS ];
 	then
@@ -35,7 +36,7 @@ if 		[ -d $HTML ];
       	else
       		mkdir $HTML
 fi
-##################################################################################################################
+
 # Setup
 if 		[ -f $SCRIPTS/setup.sh ];
         then
@@ -52,7 +53,7 @@ else
 	echo "Downloaded setup.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Pre script
 if 		[ -f $SCRIPTS/pre.sh ];
         then
@@ -69,7 +70,7 @@ else
 	echo "Downloaded pre.sh."
 	sleep 1
 fi
-##################################################################################################################
+#
 # Welcome message after login (change in /home/ocadmin/.profile
 if 		[ -f $SCRIPTS/instruction.sh ];
         then
@@ -86,7 +87,7 @@ else
 	echo "Downloaded instruction.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Pre1.sh
 if 		[ -f $SCRIPTS/pre1.sh ];
         then
@@ -103,7 +104,7 @@ else
 	echo "Downloaded pre1.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Get Redis install script
 if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
         then
@@ -120,7 +121,7 @@ else
 	echo "Downloaded install-redis-php-7.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Activate SSL
 if 		[ -f $SCRIPTS/activate-ssl.sh ];
         then
@@ -137,7 +138,7 @@ else
 	echo "Downloaded activate-ssl.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # The update script
 if 		[ -f $SCRIPTS/owncloud_update.sh ];
         then
@@ -154,7 +155,7 @@ else
 	echo "Downloaded owncloud_update.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Sets static IP to UNIX
 if 		[ -f $SCRIPTS/ip.sh ];
         then
@@ -171,7 +172,7 @@ else
 	echo "Downloaded ip.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Tests connection after static IP is set
 if 		[ -f $SCRIPTS/test_connection.sh ];
         then
@@ -188,7 +189,7 @@ else
 	echo "Downloaded test_connection.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Sets root partition to external drive
 if 		[ -f $SCRIPTS/usbhd.sh ];
         then
@@ -205,7 +206,7 @@ else
 	echo "Downloaded usbhd.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Sets root partition to external drive
 if 		[ -f $SCRIPTS/usbhd2.sh ];
         then
@@ -222,7 +223,7 @@ else
 	echo "Downloaded usbhd2.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Trusted ip conf script
 if 		[ -f $SCRIPTS/trusted.sh ];
         then
@@ -239,7 +240,7 @@ else
 	echo "Downloaded trusted.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Update-config script
 if 		[ -f $SCRIPTS/update-config.php ];
         then
@@ -256,7 +257,7 @@ else
 	echo "Downloaded update-config.php."
 	sleep 1
 fi
-##################################################################################################################
+
 # Clears command history on every login
 if 		[ -f $SCRIPTS/history.sh ];
         then
@@ -273,7 +274,7 @@ else
 	echo "Downloaded history.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Change roots .bash_profile
 if 		[ -f $SCRIPTS/change-root-profile.sh ];
         then
@@ -290,7 +291,7 @@ else
 	echo "Downloaded change-root-profile.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Change ocadmin .bash_profile
 if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
         then
@@ -307,17 +308,17 @@ else
 	echo "Downloaded change-ocadmin-profile.sh."
 	sleep 1
 fi
-##################################################################################################################
+
 # Make $SCRIPTS excutable
         	chmod +x -R $SCRIPTS
         	chown root:root -R $SCRIPTS
-##################################################################################################################
+
 # Allow ocadmin to run theese scripts
         	chown ocadmin:ocadmin $SCRIPTS/instructions.sh
         	chown ocadmin:ocadmin $SCRIPTS/history.sh
         	chown ocadmin:ocadmin $SCRIPTS/pre.sh
         	chown ocadmin:ocadmin $SCRIPTS/pre1.sh
-##################################################################################################################
+
 # Change root profile
         	bash $SCRIPTS/change-root-profile.sh
 if [[ $? > 0 ]]
@@ -328,7 +329,7 @@ then
 else
 	echo "change-root-profile.sh script executed OK."
 fi
-##################################################################################################################
+
 # Change ocadmin profile
         	bash $SCRIPTS/change-ocadmin-profile.sh
 if [[ $? > 0 ]]
@@ -339,7 +340,7 @@ then
 else
 	echo "change-ocadmin-profile.sh executed OK."
 fi
-##################################################################################################################
+
 # Fix ownership issue
 sudo chown ocadmin:ocadmin /home/ocadmin/.profile
 
