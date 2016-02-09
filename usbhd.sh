@@ -23,16 +23,16 @@ then
 #
 #w
 #EOF
-	echo -e "\e[32m"
-	read -p "If it asks to overwrite anything just hit yes, make sure there are no needed files on the hd. Press any key to start the script..." -n1 -s
-	echo -e "\e[0m"
-	sudo mkfs.ext4 -b 1024 -n 'PI_ROOT' -I /dev/sda1
-	sudo mount /dev
+#	echo -e "\e[32m"
+#	read -p "If it asks to overwrite anything just hit yes, make sure there are no needed files on the hd. Press any key to start the script..." -n1 -s
+#	echo -e "\e[0m"
+	echo -ne '\n' | sudo mkfs.ext4 -b 1024 -n 'PI_ROOT' -I /dev/sda1
+	sudo mount /dev/sda1
 	dd bs=1M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda1
 	sed -i 's|/dev/mmcblk0p2|/dev/sda1|g' /etc/fstab
 else
 echo
-    echo "If you want to do this later: bash /var/scripts/usbhd.sh"
+    echo "If you want to do this later run: bash /var/scripts/usbhd.sh"
     echo -e "\e[32m"
     read -p "Press any key to continue... " -n1 -s
     echo -e "\e[0m"
