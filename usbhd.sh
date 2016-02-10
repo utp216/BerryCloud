@@ -10,6 +10,7 @@ function ask_yes_or_no() {
 if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for the ROOT partition, recommended! (SSD preferred)? Also attach it before typing yes!!") ]]
 then
 # Format and create partition
+dd if=/dev/zero of=/dev/sda
 fdisk $device << EOF
   o # clear the in memory partition table
   n # new partition
