@@ -58,9 +58,10 @@ On linux you can also use your archive manager to unpack
 # Minimal req.
 1. 8 gb Class 10 Micro SDCard (16+ is recommended) 4 gb class 10 will do if you want to use an external HD (SSD recommended, if HD, please use an additional power supply to power the drive.)
 2. 2A 5V power supply
-3. Keyboard / HDMI cable / Monitor (for first setup, after pre-setup you can ssh)
-4. *Optional 3x heatsink for RPI2* (Heatsinks, fan + case go for around 5 dollar on the internet, just google it)
-5. *Optional CPU fan for RPI2*
+3. RaspberryPI2
+4. Keyboard / HDMI cable / Monitor (for first setup, after pre-setup you can ssh)
+5. *Optional 3x heatsink for RPI2* (Heatsinks, fan + case go for around 5 dollar on the internet, just google it)
+6. *Optional CPU fan for RPI2*
 
 # If you encounter any issues please use the issue tracker here on github: https://github.com/ezraholm50/BerryCloud/issues
 
