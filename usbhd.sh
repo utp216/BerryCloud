@@ -1,3 +1,4 @@
+device="/dev/sda"
 # Use external harddrive to mount os and sd card to boot
 function ask_yes_or_no() {
     read -p "$1 ([y]es or [N]o): "
@@ -9,7 +10,7 @@ function ask_yes_or_no() {
 if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for the ROOT partition, recommended! (SSD preferred)? Also attach it before typing yes!!") ]]
 then
 # Format and create partition
-sed -e 's/\t\([\+0-9a-zA-Z]*\)[ \t].*/\1/' << EOF | fdisk /dev/sda
+fdisk $device << EOF
   o # clear the in memory partition table
   n # new partition
   p # primary partition
