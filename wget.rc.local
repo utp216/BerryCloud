@@ -1,15 +1,19 @@
-#!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          rc.local
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Run /etc/rc.local if it exist
+### END INIT INFO
+
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
 sleep 1
 # Get a fresh RC.LOCAL
     if [ -f /var/rc.local ];
@@ -17,9 +21,36 @@ sleep 1
         echo "rc.local exists"
     else
         wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/rc.local -P /var/
-        cat /var/rc.local > /etc/rc.local
+        rm /etc/init.d/rc.local
+        cat /var/rc.local > /etc/init.d/rc.local
         rm /var/rc.local
         reboot
     fi
+do_start() {
+	if [ -x /etc/rc.local ]; then
+	        [ "$VERBOSE" != no ] && log_begin_msg "Running local boot scripts (/etc/rc.local)"
+		/etc/rc.local
+		ES=$?
+		[ "$VERBOSE" != no ] && log_end_msg $ES
+		return $ES
+	fi
+}
 
-exit 0
+case "$1" in
+    start)
+	do_start
+        ;;
+    restart|reload|force-reload)
+        echo "Error: argument '$1' not supported" >&2
+        exit 3
+        ;;
+    stop|status)
+        # No-op
+        exit 0
+        ;;
+    *)
+        echo "Usage: $0 start|stop" >&2
+        exit 3
+        ;;
+esac
+
