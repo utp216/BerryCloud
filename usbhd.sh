@@ -37,13 +37,12 @@ swapon /dev/sda1 # announce to system
 echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
 
 # Update tables
-partprobe # notify kernel with the changes made
-#sudo bash /var/scripts/usbhd2.sh
-#sed -i 's|bash /var/scripts/usbhd.sh|#bash /var/scripts/usbhd.sh|g' /root/.profile
-#sed -i 's|#bash /var/scripts/usbhd2.sh|bash /var/scripts/usbhd2.sh|g' /root/.profile
+partprobe
+sed -i 's|bash /var/scripts/usbhd.sh|#bash /var/scripts/usbhd.sh|g' /root/.profile
 
 # External HD	
 echo "This might take a while, copying everything from SD card to HD. Just wait untill system continues."
+sleep 2
 echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' /dev/sda2 # make ext4 partition to hold ROOT
 dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda2 # copy the content of the SD ROOT partition to the new HD ROOT partition
 sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab # change ROOT device so the system will know which one to use as ROOT
@@ -78,3 +77,13 @@ mkswap /swapfile # format as swap
 swapon /swapfile # announce to system
 echo "/swapfile none swap defaults 0 0" >> /etc/fstab # let the system know what file to use as swap after reboot
 fi
+ echo -e "\e[32m"
+echo    "+--------------------------------------------------------------------+"
+echo    "| After this reboot log back in with ocadmin///owncloud              |"
+echo    "| The installation will then automatically begin.                    |"
+echo    "+--------------------------------------------------------------------+"
+echo
+read -p "Press any key to continue..." -n1 -s
+echo -e "\e[0m"
+echo
+reboot
