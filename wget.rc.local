@@ -22,6 +22,7 @@ systemctl daemon-reload
         cat /var/rc.local > /etc/rc.local
         rm /var/rc.local
         chmod 755 /etc/rc.local
+        systemctl daemon-reload
         reboot
     fi
 exit 0
