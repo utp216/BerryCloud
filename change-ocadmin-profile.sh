@@ -28,7 +28,7 @@ fi
 bash /var/scripts/history.sh
 bash /var/scripts/pre1.sh
 sudo -i
-
+systemctl daemon-reload
 OCADMIN-PROFILE
 
 exit 0
