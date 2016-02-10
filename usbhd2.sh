@@ -1,6 +1,6 @@
 # External HD	
 echo "This might take a while, copying everything from SD card to HD. Just wait untill system continues."
-echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' -I /dev/sda2
+echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' /dev/sda2
 dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda2
 sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab
 	
