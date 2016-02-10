@@ -24,7 +24,6 @@ fdisk $device << EOF
     # default, extend partition to end of disk
   p # print the in-memory partition table
   w # write the partition table
-  q # and we're done
 EOF
 
 # Swap
