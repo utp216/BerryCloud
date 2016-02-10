@@ -139,8 +139,9 @@ bash /var/scripts/test_connection.sh
 sleep 2
 clear
 
+# Update
 apt-get update && apt-get upgrade -y && apt-get -f install -y
-#
+
 # Remove locale error over ssh in other language
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
 sed -i 's|AcceptEnv LANG LC_*|#AcceptEnv LANG LC_*|g' /etc/ssh/sshd_config
