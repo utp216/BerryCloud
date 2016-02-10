@@ -56,7 +56,8 @@ On linux you can also use your archive manager to unpack
 1. Download winrar, double click the archive and extract it.
 
 # Minimal req.
-1. 8 gb Class 10 Micro SDCard (16+ is recommended)
+1. 8 gb Class 10 Micro SDCard (16+ is recommended, this is when you only want to use the SD card)
+          ---> 4 gb class 10 will do if you want to use an external HD (SSD recommended, if HD, please use an additional power supply to power the drive.)
 2. 2A 5V power supply
 3. Keyboard / HDMI cable / Monitor (for first setup, after pre-setup you can ssh)
 4. *Optional 3x heatsink for RPI2* (Heatsinks, fan + case go for around 5 dollar on the internet, just google it)
