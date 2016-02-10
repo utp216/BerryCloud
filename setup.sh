@@ -235,6 +235,8 @@ bash $SCRIPTS/trusted.sh
 # Prepare cron.php to be run every 15 minutes
 # The user still has to activate it in the settings GUI
 crontab -u www-data -l | { cat; echo "*/15  *  *  *  * php -f $OCPATH/cron.php > /dev/null 2>&1"; } | crontab -u www-data -
+# Update virus defenitions daily at 03:30
+crontab -u root -l | { cat; echo "*30  3  *  *  *  /usr/local/bin/freshclam –quiet"; } | crontab -u root -
 #
 # Change values in php.ini (increase max file size)
 # max_execution_time
