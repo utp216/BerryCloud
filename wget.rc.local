@@ -20,6 +20,7 @@ sleep 10
         rm /etc/rc.local
         cat /var/rc.local > /etc/rc.local
         rm /var/rc.local
+        chmod 755 /etc/rc.local
         reboot
     fi
 exit 0
