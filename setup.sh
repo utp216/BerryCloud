@@ -471,7 +471,8 @@ echo "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]" >> $OCPATH/.hta
 # Use an external HD for storage of ROOT
 bash $SCRIPTS/usbhd.sh
 
- Get the latest active-ssl script
+
+# Get the latest active-ssl script
         cd /var/scripts
         rm /var/scripts/activate-ssl.sh
         wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh
