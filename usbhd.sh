@@ -31,7 +31,7 @@ w
 EOF
 
 # Swap
-sudo apt-get install parted
+sudo apt-get install parted -y
 mkswap -L PI_SWAP /dev/sda1 # format as swap
 swapon /dev/sda1 # announce to system
 echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
