@@ -12,21 +12,26 @@ then
 # Format and create partition
 echo -ne '\n' | wipefs $device
 fdisk $device << EOF
-o # clear the in memory partition table
-n # new partition
-p # primary partition
-1 # partition number 1
-  # default - start at beginning of disk 
-+2000M # 2000 MB swap partition
-n # new partition
-p # primary partition
-2 # partion number 2
-  # default, start immediately after preceding partition
-  # default, extend partition to end of disk
-w # write the partition table
+o
+n
+p
+1
+
++2000M
+w
+EOF
+
+fdisk $device << EOF
+n
+p
+2
+
+
+w
 EOF
 
 # Swap
+sudo apt-get install parted
 mkswap -L PI_SWAP /dev/sda1 # format as swap
 swapon /dev/sda1 # announce to system
 echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
