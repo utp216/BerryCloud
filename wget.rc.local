@@ -17,7 +17,7 @@ systemctl daemon-reload
     then
         echo "rc.local exists"
     else
-        wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/rc.local -P /var/
+        wget --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/rc.local -P /var/
         rm /etc/rc.local
         cat /var/rc.local > /etc/rc.local
         rm /var/rc.local
