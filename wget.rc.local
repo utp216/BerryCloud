@@ -11,6 +11,7 @@
 #
 # By default this script does nothing.
 sleep 10
+systemctl daemon-reload
 # Get a fresh RC.LOCAL
     if [ -f /var/rc.local ];
     then
