@@ -64,7 +64,9 @@ bash /var/scripts/pre.sh
 ROOT-PROFILE
 
 # External HD	
+echo -e "\e[32m"
 echo "This might take a while, copying everything from SD card to HD. Just wait untill system continues."
+echo -e "\e[0m"
 sleep 2
 echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' /dev/sda2 # make ext4 partition to hold ROOT
 dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda2 # copy the content of the SD ROOT partition to the new HD ROOT partition
