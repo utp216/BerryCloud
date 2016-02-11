@@ -8,7 +8,7 @@
 
 *Apache2
 
-*ClamAv (antivirus, app can be found in the ownCloud app section)
+*ClamAv (antivirus, scans uploaded files to owncloud. Change do daemon-socket in ownCloud admin panel)
 
 *LVM2
 
