@@ -26,7 +26,7 @@ if [ -d "$HOME/bin" ] ; then
 fi
 #bash /var/scripts/instructions.sh
 bash /var/scripts/history.sh
-bash /var/scripts/pre1.sh
+bash /var/scripts/pre_setup_message.sh
 sudo -i
 systemctl daemon-reload
 OCADMIN-PROFILE
