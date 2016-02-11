@@ -1,5 +1,7 @@
 #!/bin/bash
-
+#
+# Tech and Me, 2016 - www.techandme.se
+#
 HTML=/var/www/html
 OCPATH=/var/www/html/owncloud
 IFACE="eth0"
