@@ -12,7 +12,7 @@ OCVERSION=owncloud-8.2.2.zip
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 OCPATH=$HTML/owncloud
-Data=/owncloud/data
+DATA=/owncloud/data
 # Network
 ssl_conf="/etc/apache2/sites-available/owncloud_ssl_domain_self_signed.conf"
 IFACE="eth0"
@@ -206,8 +206,9 @@ if		[ -f $HTML/index.html ];
                 rm -f $HTML/index.html
 fi
 
+# Test page
 wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/index.php -P $HTML
-#        
+
 # Install PHP 7
 echo -ne '\n' | sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php -y
 apt-get update
@@ -245,9 +246,15 @@ bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 # Install ownCloud
 cd $OCPATH
 sudo -u www-data php occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$MYSQL_PASS" --admin-user "ocadmin" --admin-pass "owncloud"
-echo
-sudo -u www-data php $OCPATH/occ config:system:set datadirectory --value="/owncloud/data"
+
+# Change data dir
+sudo -u www-data php $OCPATH/occ config:system:set datadirectory --value="$DATA"
+
+# Setup fail2ban
 sudo bash $SCRIPTS/fail2ban.sh
+
+# Show version and status
+echo
 echo ownCloud version:
 sudo -u www-data php $OCPATH/occ status
 echo
@@ -320,7 +327,7 @@ a2ensite owncloud_ssl_domain_self_signed.conf
 a2dissite default-ssl
 service apache2 restart
 
-## Set config values
+# Set config values
 # Experimental apps
 sudo -u www-data php $OCPATH/occ config:system:set appstore.experimental.enabled --value="true"
 # Default mail server (make this user configurable?)
@@ -348,7 +355,7 @@ wget https://github.com/owncloud/files_antivirus/archive/stable8.2.zip -P $OCPAT
 cd $OCPATH/apps
 unzip -q stable8.2.zip
 rm stable8.2.zip
-mv stable8.2/ files_antivirus/
+mv files_antivirus-stable8.2/ files_antivirus/
 fi
 
 # Enable documents
@@ -404,7 +411,6 @@ fi
 if [ -d $OCPATH/apps/calendar ]; then
 sudo -u www-data php $OCPATH/occ app:enable calendar
 fi
-
 
 # Set secure permissions final (./data/.htaccess has wrong permissions otherwise)
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
@@ -469,7 +475,7 @@ echo "RewriteCond %{HTTPS} off" >> $OCPATH/.htaccess
 echo "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]" >> $OCPATH/.htaccess
 
 # Use an external HD for storage of ROOT
-bash $SCRIPTS/usbhd.sh
+bash $SCRIPTS/external_usb.sh
 
 
 # Get the latest active-ssl script
@@ -557,7 +563,7 @@ apt-get remove --purge expect
 rm /var/www/html/index.html
 rm /var/scripts/*
 wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
-rm /var/www/html/owncloud/data/owncloud.log
+rm $DATA/owncloud.log
 cat /dev/null > ~/.bash_history
 cat /dev/null > /var/spool/mail/root
 cat /dev/null > /var/spool/mail/ocadmin
@@ -582,6 +588,7 @@ fi
 mesg n
 ROOT-PROFILE
 
-## Reboot
+# Reboot
 reboot
+
 exit 0
