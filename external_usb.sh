@@ -41,7 +41,7 @@ echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
 # Update tables
 partprobe
 sync
-sed -i 's|bash /var/scripts/usbhd.sh|#bash /var/scripts/usbhd.sh|g' /root/.profile
+sed -i 's|bash /var/scripts/external_usb.sh|#bash /var/scripts/external_usb.sh|g' /root/.profile
 
 # Change back root/.profile
 rm $ROOT_PROFILE
@@ -125,3 +125,4 @@ bash /var/scripts/pre_setup.sh
 ROOT-PROFILE
 
 fi
+exit 0
