@@ -15,6 +15,6 @@ if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
 mesg n
-bash /var/scripts/usbhd.sh
+bash /var/scripts/external_usb.sh
 bash /var/scripts/pre_setup.sh
 ROOT-PROFILE
