@@ -58,7 +58,7 @@ else
 	sleep 1
 fi
 
-# Pre script
+# pre_setup.sh
 if 		[ -f $SCRIPTS/pre_setup.sh ];
         then
                 echo "pre_setup.sh exists"
