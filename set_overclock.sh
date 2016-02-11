@@ -1,3 +1,7 @@
+#!/bin/bash
+#
+# Tech and Me, 2016 - www.techandme.se
+#
 function ask_yes_or_no() {
     read -p "$1 ([y]es or [N]o): "
     case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
@@ -15,7 +19,7 @@ then
           *)     echo "no" ;;
       esac
   }
-  if [[ "yes" == $(ask_yes_or_no "Do you want to overclock and keep warranty on your device enter yes, else for max speed press no?") ]]
+  if [[ "yes" == $(ask_yes_or_no "Do you want to overclock and keep warranty on your device, enter yes. If not for the best speed enter no. (There's a safety option build in, when RPI reaches over 85 degrees celcius it uses default settings)") ]]
   then
     mount /dev/mmcblk0p1 /mnt
     rm config.txt
