@@ -678,7 +678,7 @@ gpu_mem=16
 ##     0        Splash screen enabled (Default)
 ##     1        Splash screen disabled
 ##
-#disable_splash=1
+disable_splash=1
 
 ################################################################################
 ##  Overclocking Settings
