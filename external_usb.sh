@@ -78,7 +78,7 @@ sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab # change ROOT device so the sys
 
 # Set cmdline.txt
 mount /dev/mmcblk0p1 /mnt
-echo "smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/sda2 rootfstype=ext4 bootdelay rootdelay rootwait" >> /mnt/cmdline.txt
+sed -i 's|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/mmcblk0p2|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/sda2 rootfstype=ext4 bootdelay rootdelay rootwait|g' /mnt/cmdline.txt
 umount /mnt
 
 # Remove SD card ROOT partition
