@@ -1,11 +1,12 @@
 #!/bin/bash
 #
 # Tech and Me, 2016 - www.techandme.se
-
+#
 USERNAME=ocadmin
 USERPASS=owncloud
 device=/dev/mmcblk0
 ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
+SCRIPTS=/var/scripts
 
 # Check if root
         if [ "$(whoami)" != "root" ]; then
@@ -15,12 +16,13 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
         exit 1
 fi
 
-#sudo dpkg --add-architecture armhf
-sudo apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
-sudo apt-get install openssh-server expect lvm2 -y
-#sudo apt-get install dnsutils libnewt0.52 whiptail parted triggerhappy lua5.1
-#sudo useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
-sudo apt-get update && apt-get upgrade -y && apt-get -f install -y
+apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
+apt-get install openssh-server expect lvm2 -y
+#useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
+apt-get update && apt-get upgrade -y && apt-get -f install -y
+
+# Ask overclock
+bash $SCRIPTS/set_overclock.sh
 
 # Resize sd card
 fdisk $device << EOF
@@ -33,12 +35,6 @@ p
 
 w
 EOF
-
-# Install raspi-config
-#cd /tmp
-#wget https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20160210_all.deb
-#dpkg -i raspi-config_20160210_all.deb
-#cd
 
 # Change login scripts
 sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
@@ -88,7 +84,7 @@ exit 0
 RCLOCAL
 
 # Set permissions for rc.local
-sudo chmod 755 /etc/rc.local
+chmod 755 /etc/rc.local
 
 clear
 # Success!
@@ -110,18 +106,9 @@ echo
 read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
 echo
-sudo apt-get update && sudo apt-get upgrade -y && apt-get -f install -y
 clear
-# Overclock
-#echo -e "\e[32m"
-#echo    "+--------------------------------------------------------------------+"
-#echo    "| I recommend you to use one of the overclock settings, which do not |"
-#echo    "| void warrenty as stated on the RPI2 site. If you want to use the   |"
-#echo    "| max overclock settings, visit config.txt @ BerryCloud @ github     |"
-#echo    "+--------------------------------------------------------------------+"
-#echo
-#read -p "Press any key to enter overclock menu (only use overclock, don't use other settings yet, not tested)..." -n1 -s
-#echo -e "\e[0m"
-#echo
-#raspi-config
-sudo reboot
+
+# Reboot
+reboot
+
+exit 0
