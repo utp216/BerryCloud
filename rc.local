@@ -18,6 +18,7 @@ systemctl daemon-reload
         echo "initial.sh exists"
     else
         wget --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/initial.sh -P /var/scripts
+        chmod +x /var/scripts/initial.sh
         bash /var/scripts/initial.sh
     fi
 exit 0
