@@ -60,7 +60,7 @@ if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
 mesg n
-bash /var/scripts/pre.sh
+bash /var/scripts/pre_setup.sh
 ROOT-PROFILE
 
 # External HD	
@@ -121,7 +121,7 @@ if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
 mesg n
-bash /var/scripts/pre.sh
+bash /var/scripts/pre_setup.sh
 ROOT-PROFILE
 
 fi
