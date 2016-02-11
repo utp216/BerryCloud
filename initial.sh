@@ -2,9 +2,10 @@
 #
 # Tech and Me, 2016 - www.techandme.se
 #
-SCRIPTS=/var/scripts
-HTML=/var/www/html
-WWW=/var/www
+SCRIPTS="/var/scripts"
+HTML="/var/www/html"
+WWW="/var/www"
+
       	# Create dir
 if 		[ -d $SCRIPTS ];
 	then
