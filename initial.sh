@@ -356,5 +356,4 @@ sudo chown ocadmin:ocadmin /home/ocadmin/.profile
 
 sleep 60
 
-reboot
 exit 0
