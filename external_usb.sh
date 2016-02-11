@@ -35,6 +35,7 @@ p
 
 w
 EOF
+sync
 
 # Swap
 sudo apt-get install parted -y
@@ -44,8 +45,12 @@ echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
 
 # Update tables
 #partprobe
-sync
-sed -i 's|bash /var/scripts/external_usb.sh|#bash /var/scripts/external_usb.sh|g' /root/.profile
+#sed -i 's|bash /var/scripts/external_usb.sh|#bash /var/scripts/external_usb.sh|g' /root/.profile
+
+# Set cmdline.txt
+mount /dev/mmcblk0p1 /mnt
+sed -i 's|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/mmcblk0p2|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/sda2 rootfstype=ext4 bootdelay rootdelay rootwait|g' /mnt/cmdline.txt
+umount /mnt
 
 # Change back root/.profile
 rm $ROOT_PROFILE
@@ -72,22 +77,18 @@ echo -e "\e[32m"
 echo "This might take a while, copying everything from SD card to HD. Just wait untill system continues."
 echo -e "\e[0m"
 sleep 2
+sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab # change ROOT device so the system will know which one to use as ROOT
 echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' /dev/sda2 && sync# make ext4 partition to hold ROOT
 dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda2 # copy the content of the SD ROOT partition to the new HD ROOT partition
-sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab # change ROOT device so the system will know which one to use as ROOT
 
-# Set cmdline.txt
-mount /dev/mmcblk0p1 /mnt
-sed -i 's|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/mmcblk0p2|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/sda2 rootfstype=ext4 bootdelay rootdelay rootwait|g' /mnt/cmdline.txt
-umount /mnt
 
 # Remove SD card ROOT partition
-fdisk /dev/mmcblk0 << EOF
-d
-2
-w
-EOF
-sync
+#fdisk /dev/mmcblk0 << EOF
+#d
+#2
+#w
+#EOF
+#sync
 
  echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
