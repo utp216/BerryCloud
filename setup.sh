@@ -565,7 +565,7 @@ cat /dev/null > /var/log/apache2/access.log
 cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
 sed -i 's/sudo -i//g' /home/ocadmin/.profile
-sed -i 's/#bash /var/scripts/pre1.sh//g' /home/ocadmin/.profile
+sed -i 's/#bash /var/scripts/pre_setup_message.sh//g' /home/ocadmin/.profile
 
 # Change root .profile
 rm /root/.profile
