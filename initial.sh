@@ -59,11 +59,11 @@ else
 fi
 
 # Pre script
-if 		[ -f $SCRIPTS/pre.sh ];
+if 		[ -f $SCRIPTS/pre_setup.sh ];
         then
-                echo "pre.sh exists"
+                echo "pre_setup.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre.sh -P $SCRIPTS
+        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre_setup.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -71,7 +71,7 @@ then
 	sleep 10
 	reboot
 else
-	echo "Downloaded pre.sh."
+	echo "Downloaded pre_setup.sh."
 	sleep 1
 fi
 #
@@ -320,7 +320,7 @@ fi
 # Allow ocadmin to run theese scripts
         	chown ocadmin:ocadmin $SCRIPTS/instructions.sh
         	chown ocadmin:ocadmin $SCRIPTS/history.sh
-        	chown ocadmin:ocadmin $SCRIPTS/pre.sh
+        	chown ocadmin:ocadmin $SCRIPTS/pre_setup.sh
         	chown ocadmin:ocadmin $SCRIPTS/pre_setup_message.sh
 
 # Change root profile
