@@ -1,6 +1,6 @@
-## Tech and me 2016 overclock setup - Warning voids warrenty - we cant be held 
+## Tech and me 2016 overclock setup  - we cant be held 
 ## responsible for any damage or loss what so ever
-## Ubuntu Core 15.04 (should work on any OS, place in BOOT partition)
+## Ubuntu Core 15.10 (should work on any OS, place in BOOT partition)
 ################################################################################
 ##  Raspberry Pi Configuration Settings
 ##
