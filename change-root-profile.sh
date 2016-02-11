@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Tech and Me, 2016 - www.techandme.se
+#
 ROOT_PROFILE="/root/.profile"
 
 rm /root/.profile
