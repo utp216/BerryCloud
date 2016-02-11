@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Tech and Me, 2016 - www.techandme.se
+#
 ocpath='/var/www/html/owncloud'
 htuser='www-data'
 htgroup='www-data'
