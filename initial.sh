@@ -317,6 +317,8 @@ else
 	sleep 1
 fi
 
+sleep 10
+
 # Make $SCRIPTS excutable
         	chmod +x -R $SCRIPTS
         	chown root:root -R $SCRIPTS
