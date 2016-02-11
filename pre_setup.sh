@@ -10,7 +10,7 @@ ADDRESS=$(ip route get 1 | awk '{print $NF;exit}')
 # Check if root
         if [ "$(whoami)" != "root" ]; then
         echo
-        echo -e "\e[31mSorry, you are not root.\n\e[0mYou must type: \e[36msudo \e[0mbash /var/scripts/pre.sh"
+        echo -e "\e[31mSorry, you are not root.\n\e[0mYou must type: \e[36msudo \e[0mbash /var/scripts/pre_setup.sh"
         echo
         exit 1
 fi
