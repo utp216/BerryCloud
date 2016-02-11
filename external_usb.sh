@@ -1,3 +1,7 @@
+#!/bin/bash
+#
+# Tech and Me, 2016 - www.techandme.se
+#
 device="/dev/sda"
 ROOT_PROFILE="/root/.profile"
 
@@ -125,4 +129,5 @@ bash /var/scripts/pre_setup.sh
 ROOT-PROFILE
 
 fi
+
 exit 0
