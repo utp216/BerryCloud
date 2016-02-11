@@ -10,8 +10,6 @@
 # bits.
 #
 # By default this script does nothing.
-sleep 10
-systemctl daemon-reload
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 WWW=/var/www
