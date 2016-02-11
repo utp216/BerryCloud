@@ -1,6 +1,6 @@
 # ownCloud server on your RaspberryPI2
 
-*Redis cache
+*Redis cache (with performance tweaks)
 
 *Php7
 
