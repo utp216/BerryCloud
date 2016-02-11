@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ROOT_PROFILE="/root/.profile"
 
 rm /root/.profile
@@ -18,3 +17,5 @@ mesg n
 bash /var/scripts/external_usb.sh
 bash /var/scripts/pre_setup.sh
 ROOT-PROFILE
+
+exit 0
