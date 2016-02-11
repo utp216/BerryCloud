@@ -38,7 +38,7 @@ Base OS: Ubuntu Core 15.10 with apt-get package manager
 
 4. login with ocadmin///owncloud (Connected to monitor with keyboard)
 
-5. Follow the instructions
+5. Follow the instructions (The defice will reboot a couple of times, don't worry about that. Just keep loggin in after reboot)
 
 6. For now only use Rapi-Config tool for overclocking. (RECOMMENDED FOR SPEED, this tool uses non warrenty void settings, if you dont care about that... remove the old config.txt from PI_BOOT partition and cp config.txt above to PI_BOOT)
 
