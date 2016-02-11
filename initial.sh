@@ -1,4 +1,7 @@
 #!/bin/sh -e
+#
+# Tech and Me, 2016 - www.techandme.se
+#
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 WWW=/var/www
@@ -38,6 +41,23 @@ then
 	reboot
 else
 	echo "Downloaded fail2ban.sh."
+	sleep 1
+fi
+
+# Overclock
+if 		[ -f $SCRIPTS/set_overclock.sh ];
+        then
+                echo "set_overclock.sh exists"
+        else
+        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/set_overclock.sh -P $SCRIPTS
+fi
+if [[ $? > 0 ]]
+then
+	echo "Download of scripts failed. System will reboot in 10 seconds..."
+	sleep 10
+	reboot
+else
+	echo "Downloaded set_overclock.sh."
 	sleep 1
 fi
 
