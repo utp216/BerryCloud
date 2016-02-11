@@ -1,5 +1,7 @@
 #!/bin/bash
-
+#
+# Tech and Me, 2016 - www.techandme.se
+#
 OCADMIN_PROFILE="/home/ocadmin/.profile"
 
 rm /home/ocadmin/.profile
