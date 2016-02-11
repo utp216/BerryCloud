@@ -42,7 +42,7 @@ EOF
 
 # Change login scripts
 sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
-sed -i 's|bash /var/scripts/pre1.sh|#bash /var/scripts/pre1.sh|g' /home/ocadmin/.profile
+sed -i 's|bash /var/scripts/pre_setup_message.sh|#bash /var/scripts/pre_setup_message.sh|g' /home/ocadmin/.profile
 
 # Change back root/.profile
 ROOT_PROFILE="/root/.profile"
