@@ -33,7 +33,7 @@ if 		[ -f $SCRIPTS/fail2ban.sh ];
         then
                 echo "fail2ban.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/fail2ban.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/fail2ban.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -50,7 +50,7 @@ if 		[ -f $SCRIPTS/set_overclock.sh ];
         then
                 echo "set_overclock.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/set_overclock.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/set_overclock.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -67,7 +67,7 @@ if 		[ -f $SCRIPTS/setup.sh ];
         then
                 echo "setup.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/setup.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/setup.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -84,7 +84,7 @@ if 		[ -f $SCRIPTS/pre_setup.sh ];
         then
                 echo "pre_setup.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre_setup.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre_setup.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -101,7 +101,7 @@ if 		[ -f $SCRIPTS/instruction.sh ];
         then
                 echo "instruction.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/instructions.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/instructions.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -118,7 +118,7 @@ if 		[ -f $SCRIPTS/pre_setup_message.sh ];
         then
                 echo "pre_setup_message.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre_setup_message.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre_setup_message.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -135,7 +135,7 @@ if 		[ -f $SCRIPTS/install-redis-php-7.sh ];
         then
         	echo "install-redis-php-7.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/install-redis-php-7.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -152,7 +152,7 @@ if 		[ -f $SCRIPTS/activate-ssl.sh ];
         then
         	echo "activate-ssl.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -169,7 +169,7 @@ if 		[ -f $SCRIPTS/owncloud_update.sh ];
         then
         	echo "owncloud_update.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_update.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/owncloud_update.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -186,7 +186,7 @@ if 		[ -f $SCRIPTS/ip.sh ];
         then
         	echo "ip.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/ip.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/ip.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -203,7 +203,7 @@ if 		[ -f $SCRIPTS/test_connection.sh ];
         then
         	echo "test_connection.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/test_connection.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/test_connection.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -220,7 +220,7 @@ if 		[ -f $SCRIPTS/external_usb.sh ];
         then
         	echo "external_usb.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/external_usb.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/external_usb.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -237,7 +237,7 @@ if 		[ -f $SCRIPTS/trusted.sh ];
         then
         	echo "trusted.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/trusted.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/trusted.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -254,7 +254,7 @@ if 		[ -f $SCRIPTS/update-config.php ];
         then
         	echo "update-config.php  exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/update-config.php -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -271,7 +271,7 @@ if 		[ -f $SCRIPTS/history.sh ];
         then
                 echo "history.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/history.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/beta/history.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -288,7 +288,7 @@ if 		[ -f $SCRIPTS/change-root-profile.sh ];
         then
                 echo "change-root-profile.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/change-root-profile.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/change-root-profile.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -305,7 +305,7 @@ if 		[ -f $SCRIPTS/change-ocadmin-profile.sh ];
         then
         	echo "change-ocadmin-profile.sh  exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/change-ocadmin-profile.sh -P $SCRIPTS
+        	wget -q --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/change-ocadmin-profile.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
