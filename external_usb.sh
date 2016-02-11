@@ -49,7 +49,7 @@ sed -i 's|bash /var/scripts/external_usb.sh|#bash /var/scripts/external_usb.sh|g
 
 # Change back root/.profile
 rm $ROOT_PROFILE
-
+touch $ROOT_PROFILE
 cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
 # ~/.profile: executed by Bourne-compatible login shells.
 if [ "$BASH" ]; then
@@ -110,7 +110,7 @@ echo "/swapfile none swap defaults 0 0" >> /etc/fstab # let the system know what
 
 # Change back root/.profile
 rm $ROOT_PROFILE
-
+touch $ROOT_PROFILE
 cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
 # ~/.profile: executed by Bourne-compatible login shells.
 if [ "$BASH" ]; then
