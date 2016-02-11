@@ -13,17 +13,12 @@
 sleep 10
 systemctl daemon-reload
 # Get a fresh RC.LOCAL
-    if [ -f /var/rc.local ];
+    if [ -f /var/scripts/initial.sh ];
     then
-        echo "rc.local exists"
+        echo "initial.sh exists"
     else
-        wget --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/rc.local -P /var/
-        rm /etc/rc.local
-        cat /var/rc.local > /etc/rc.local
-        rm /var/rc.local
-        chmod 755 /etc/rc.local
-        systemctl daemon-reload
-        reboot
+        wget --no-check-certificate https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/initial.sh -P /var/
+        bash /var/scripts/initial.sh
     fi
 exit 0
 
