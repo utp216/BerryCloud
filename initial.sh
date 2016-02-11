@@ -195,11 +195,11 @@ else
 fi
 
 # Sets root partition to external drive
-if 		[ -f $SCRIPTS/usbhd.sh ];
+if 		[ -f $SCRIPTS/external_usb.sh ];
         then
-        	echo "usbhd.sh  exists"
+        	echo "external_usb.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/usbhd.sh -P $SCRIPTS
+        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/external_usb.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -207,24 +207,7 @@ then
 	sleep 10
 	reboot
 else
-	echo "Downloaded usbhd.sh."
-	sleep 1
-fi
-
-# Sets root partition to external drive
-if 		[ -f $SCRIPTS/usbhd2.sh ];
-        then
-        	echo "usbhd.sh  exists"
-        else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/usbhd2.sh -P $SCRIPTS
-fi
-if [[ $? > 0 ]]
-then
-	echo "Download of scripts failed. System will reboot in 10 seconds..."
-	sleep 10
-	reboot
-else
-	echo "Downloaded usbhd2.sh."
+	echo "Downloaded external_usb.sh."
 	sleep 1
 fi
 
