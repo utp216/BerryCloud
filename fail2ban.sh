@@ -29,3 +29,5 @@ FAIL2BAN-OWNCLOUD-JAIL
 
 # Restart fail2ban
 sudo service fail2ban restart
+
+exit 0
