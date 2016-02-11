@@ -1,4 +1,6 @@
 device="/dev/sda"
+ROOT_PROFILE="/root/.profile"
+
 # Use external harddrive to mount os and sd card to boot
 function ask_yes_or_no() {
     read -p "$1 ([y]es or [N]o): "
@@ -42,9 +44,7 @@ sync
 sed -i 's|bash /var/scripts/usbhd.sh|#bash /var/scripts/usbhd.sh|g' /root/.profile
 
 # Change back root/.profile
-ROOT_PROFILE="/root/.profile"
-
-rm /root/.profile
+rm $ROOT_PROFILE
 
 cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
 # ~/.profile: executed by Bourne-compatible login shells.
@@ -74,7 +74,7 @@ sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab # change ROOT device so the sys
 
 # Set cmdline.txt
 mount /dev/mmcblk0p1 /mnt
-echo "dwc_otg.fiq_fix_enable=1 root=/dev/sda2 rootfstype=ext4 bootdelay rootdelay rootwait" >> /mnt/cmdline.txt
+echo "smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/sda2 rootfstype=ext4 bootdelay rootdelay rootwait" >> /mnt/cmdline.txt
 umount /mnt
 
 # Remove SD card ROOT partition
@@ -103,4 +103,25 @@ chmod 600 /swapfile # give it the right permissions
 mkswap /swapfile # format as swap
 swapon /swapfile # announce to system
 echo "/swapfile none swap defaults 0 0" >> /etc/fstab # let the system know what file to use as swap after reboot
+
+# Change back root/.profile
+rm $ROOT_PROFILE
+
+cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
+# ~/.profile: executed by Bourne-compatible login shells.
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+if [ -x /var/scripts/setup.sh ]; then
+        /var/scripts/setup.sh
+fi
+if [ -x /var/scripts/history.sh ]; then
+        /var/scripts/history.sh
+fi
+mesg n
+bash /var/scripts/pre.sh
+ROOT-PROFILE
+
 fi
