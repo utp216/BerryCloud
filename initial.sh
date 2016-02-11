@@ -103,12 +103,12 @@ else
 	sleep 1
 fi
 
-# Pre1.sh
-if 		[ -f $SCRIPTS/pre1.sh ];
+# pre_setup_message.sh
+if 		[ -f $SCRIPTS/pre_setup_message.sh ];
         then
-                echo "pre1.sh exists"
+                echo "pre_setup_message.sh exists"
         else
-        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre1.sh -P $SCRIPTS
+        	wget -q https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/pre_setup_message.sh -P $SCRIPTS
 fi
 if [[ $? > 0 ]]
 then
@@ -116,7 +116,7 @@ then
 	sleep 10
 	reboot
 else
-	echo "Downloaded pre1.sh."
+	echo "Downloaded pre_setup_message.sh."
 	sleep 1
 fi
 
@@ -332,7 +332,7 @@ fi
         	chown ocadmin:ocadmin $SCRIPTS/instructions.sh
         	chown ocadmin:ocadmin $SCRIPTS/history.sh
         	chown ocadmin:ocadmin $SCRIPTS/pre.sh
-        	chown ocadmin:ocadmin $SCRIPTS/pre1.sh
+        	chown ocadmin:ocadmin $SCRIPTS/pre_setup_message.sh
 
 # Change root profile
         	bash $SCRIPTS/change-root-profile.sh
