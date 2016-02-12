@@ -587,6 +587,7 @@ echo
 apt-get update
 apt-get upgrade -y
 apt-get -f install -y
+dpkg --configure --pending
 
 # Cleanup 1
 apt-get autoremove -y
@@ -629,8 +630,7 @@ cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
 sed -i 's/sudo -i//g' /home/ocadmin/.profile
 sed -i 's/#bash /var/scripts/pre_setup_message.sh//g' /home/ocadmin/.profile
-apt-get install -f -y
-dpkg --configure --pending
+sed -i 's/bash /var/scripts/instructions.sh//g' /home/ocadmin/.profile
 
 # Change root .profile
 rm /root/.profile
