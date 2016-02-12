@@ -23,7 +23,7 @@ printf "chown Directories\n"
 chown -R ${rootuser}:${htgroup} ${ocpath}/
 chown -R ${htuser}:${htgroup} ${ocpath}/apps/
 chown -R ${htuser}:${htgroup} ${ocpath}/config/
-chown -R ${rootuser}:${htgroup} $data/
+chown -R ${htgroup}:${htgroup} $data/
 chown -R ${htuser}:${htgroup} $data/data/
 chown -R ${htuser}:${htgroup} ${ocpath}/themes/
 chown -R ${htuser}:${htgroup} ${ocpath}/assets/
