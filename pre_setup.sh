@@ -17,24 +17,12 @@ SCRIPTS=/var/scripts
 fi
 
 apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
-apt-get install openssh-server expect lvm2 -y
+apt-get install expect lvm2 openssh-server -y
 #useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 apt-get update && apt-get upgrade -y && apt-get -f install -y
 
 # Ask overclock
 bash $SCRIPTS/set_overclock.sh
-
-# Resize sd card
-fdisk $device << EOF
-d
-2
-n
-p
-2
-
-
-w
-EOF
 
 # Change login scripts
 sed -i 's|#bash /var/scripts/instructions.sh|bash /var/scripts/instructions.sh|g' /home/ocadmin/.profile
