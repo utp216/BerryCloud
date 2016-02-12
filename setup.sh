@@ -246,11 +246,64 @@ wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/setup_secure
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 
 # Install ownCloud
-#cd $OCPATH
 sudo -u www-data php $OCPATH/occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$MYSQL_PASS_OC" --admin-user "ocadmin" --admin-pass "owncloud"
 
 # Change data dir
-#sudo -u www-data php $OCPATH/occ config:system:set datadirectory --value="$DATA"
+sudo -u www-data php $OCPATH/occ config:system:set datadirectory --value="$DATA"
+cp -aR $OCPATH/data/.htaccess $DATA
+cp -aR $OCPATH/data/* $DATA
+rm -rf $OCPATH/data
+touch $DATA/.ocdata
+rm $SCRIPTS/setup_secure_permissions_owncloud.sh
+
+cat <<-PERMISSION > "$SCRIPTS/setup_secure_permissions_owncloud.sh"
+#!/bin/bash
+#
+# Tech and Me, 2016 - www.techandme.se
+#
+ocpath='/var/www/html/owncloud'
+htuser='www-data'
+htgroup='www-data'
+rootuser='root'
+data='/owncloud'
+
+
+printf "Creating possible missing Directories\n"
+mkdir -p $data
+mkdir -p $ocpath/assets
+mkdir -p $data/data
+
+printf "chmod Files and Directories\n"
+find ${ocpath}/ -type f -print0 | xargs -0 chmod 0640
+find ${ocpath}/ -type d -print0 | xargs -0 chmod 0750
+find ${data}/ -type f -print0 | xargs -0 chmod 0640
+find ${data}/ -type d -print0 | xargs -0 chmod 0750
+
+printf "chown Directories\n"
+chown -R ${rootuser}:${htgroup} ${ocpath}/
+chown -R ${htuser}:${htgroup} ${ocpath}/apps/
+chown -R ${htuser}:${htgroup} ${ocpath}/config/
+chown -R ${rootuser}:${htgroup} ${data}/
+chown -R ${htuser}:${htgroup} ${data}/data/
+chown -R ${htuser}:${htgroup} ${ocpath}/themes/
+chown -R ${htuser}:${htgroup} ${ocpath}/assets/
+
+chmod +x ${ocpath}/occ
+
+printf "chmod/chown .htaccess\n"
+if [ -f ${ocpath}/.htaccess ]
+ then
+  chmod 0644 ${ocpath}/.htaccess
+  chown ${rootuser}:${htgroup} ${ocpath}/.htaccess
+fi
+if [ -f ${data}/data/.htaccess ]
+ then
+  chmod 0644 ${data}/data/.htaccess
+  chown ${rootuser}:${htgroup} ${data}/data/.htaccess
+fi
+PERMISSION
+
+bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 
 # Setup fail2ban
 sudo bash $SCRIPTS/fail2ban.sh
@@ -270,6 +323,9 @@ bash $SCRIPTS/trusted.sh
 crontab -u www-data -l | { cat; echo "*/15  *  *  *  * php -f $OCPATH/cron.php > /dev/null 2>&1"; } | crontab -u www-data -
 # Update virus defenitions daily at 03:30
 crontab -u root -l | { cat; echo "*30  3  *  *  *  /usr/local/bin/freshclam –quiet"; } | crontab -u root -
+# Run secure permissions script daily
+cp -ar $SCRIPTS/setup_secure_permissions_owncloud.sh /etc/cron.daily/setup_secure_permissions_owncloud.sh
+chmod 755 /etc/cron.daily/setup_secure_permissions_owncloud.sh
 
 # Change values in php.ini (increase max file size)
 # max_execution_time
@@ -483,25 +539,26 @@ echo "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]" >> $OCPATH/.hta
         chmod 755 /var/scripts/activate-ssl.sh
 clear
 # Let's Encrypt
-function ask_yes_or_no() {
-    read -p "$1 ([y]es or [N]o): "
-    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
-        y|yes) echo "yes" ;;
-        *)     echo "no" ;;
-    esac
-}
-if [[ "yes" == $(ask_yes_or_no "Last but not least, do you want to install a real SSL cert (from Let's Encrypt) on this machine?") ]]
-then
-	sudo bash /var/scripts/activate-ssl.sh
-else
-echo
-    echo "If you want to run the installation of a real ssl cert later, just type: bash /var/scripts/activate-ssl.sh"
-    echo -e "\e[32m"
-    read -p "Press any key to continue... " -n1 -s
-    echo -e "\e[0m"
-fi
+#function ask_yes_or_no() {
+#    read -p "$1 ([y]es or [N]o): "
+#    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+#        y|yes) echo "yes" ;;
+#        *)     echo "no" ;;
+#    esac
+#}
+#if [[ "yes" == $(ask_yes_or_no "Last but not least, do you want to install a real SSL cert (from Let's Encrypt) on this machine?") ]]
+#then
+#	sudo bash /var/scripts/activate-ssl.sh
+#else
+#echo
+#    echo "If you want to run the installation of a real ssl cert later, just type: bash /var/scripts/activate-ssl.sh"
+#    echo -e "\e[32m"
+#    read -p "Press any key to continue... " -n1 -s
+#    echo -e "\e[0m"
+#fi
 
 # Install Redis
+cd
 bash /var/scripts/install-redis-php-7.sh
 echo
 redis-cli ping
@@ -559,7 +616,9 @@ echo
 sudo -u www-data php /var/www/html/owncloud/occ maintenance:repair
 apt-get remove --purge expect
 rm /var/www/html/index.html
-rm /var/scripts/*
+shopt -s extglob
+cd /var/scripts
+rm !(setup_secure_permissions_owncloud.sh|history.sh)
 wget -q https://raw.githubusercontent.com/enoch85/ownCloud-VM/master/lets-encrypt/activate-ssl.sh -P $SCRIPTS
 rm $DATA/owncloud.log
 cat /dev/null > ~/.bash_history
