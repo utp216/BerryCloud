@@ -13,6 +13,7 @@ SCRIPTS=/var/scripts
 HTML=/var/www/html
 OCPATH=/var/www/html/owncloud)
 DATA=/owncloud/data
+MYSQL_PASS_OC=$(cat /var/mysql_password.txt)
 # Network
 ssl_conf="/etc/apache2/sites-available/owncloud_ssl_domain_self_signed.conf"
 IFACE="eth0"
@@ -245,8 +246,8 @@ wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/setup_secure
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 
 # Install ownCloud
-cd $OCPATH
-sudo -u www-data php occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$MYSQL_PASS" --admin-user "ocadmin" --admin-pass "owncloud"
+#cd $OCPATH
+sudo -u www-data php $OCPATH/occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$MYSQL_PASS_OC" --admin-user "ocadmin" --admin-pass "owncloud"
 
 # Change data dir
 #sudo -u www-data php $OCPATH/occ config:system:set datadirectory --value="$DATA"
