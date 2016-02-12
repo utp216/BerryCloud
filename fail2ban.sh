@@ -7,6 +7,7 @@ OCPATH=$HTML/owncloud
 DATA=/owncloud/data
 
 # Setup fail2ban
+apt-get install fail2ban -y
 sudo -u www-data php $OCPATH/occ config:system:set loglevel --value="2"
 sudo -u www-data php $OCPATH/occ config:system:set logfile --value="$DATA/owncloud.log"
 
