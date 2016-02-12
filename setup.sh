@@ -11,7 +11,7 @@ CONFIG=$HTML/owncloud/config/config.php
 OCVERSION=owncloud-8.2.2.zip
 SCRIPTS=/var/scripts
 HTML=/var/www/html
-OCPATH=$HTML/owncloud
+OCPATH=/var/www/html/owncloud)
 DATA=/owncloud/data
 # Network
 ssl_conf="/etc/apache2/sites-available/owncloud_ssl_domain_self_signed.conf"
