@@ -7,13 +7,13 @@ htuser='www-data'
 htgroup='www-data'
 rootuser='root'
 data='/owncloud'
-data.old='/var/www/html/owncloud/data'
+data_old='/var/www/html/owncloud/data'
 
 printf "Creating possible missing Directories\n"
 mkdir -p $data
 mkdir -p $ocpath/assets
 mkdir -p $data/data
-mkdir -p $data.old
+mkdir -p $data_old
 
 printf "chmod Files and Directories\n"
 find ${ocpath}/ -type f -print0 | xargs -0 chmod 0640
@@ -27,9 +27,9 @@ printf "chown Directories\n"
 chown -R ${rootuser}:${htgroup} ${ocpath}/
 chown -R ${htuser}:${htgroup} ${ocpath}/apps/
 chown -R ${htuser}:${htgroup} ${ocpath}/config/
-chown -R ${rootuser}:${htgroup} $data/
-chown -R ${htuser}:${htgroup} $data/data/
-chown -R ${htuser}:${htgroup} $data.old/
+chown -R ${rootuser}:${htgroup} ${data}/
+chown -R ${htuser}:${htgroup} ${data}/data/
+chown -R ${htuser}:${htgroup} ${data_old}/
 chown -R ${htuser}:${htgroup} ${ocpath}/themes/
 chown -R ${htuser}:${htgroup} ${ocpath}/assets/
 
