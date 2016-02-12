@@ -249,7 +249,7 @@ cd $OCPATH
 sudo -u www-data php occ maintenance:install --database "mysql" --database-name "owncloud_db" --database-user "root" --database-pass "$MYSQL_PASS" --admin-user "ocadmin" --admin-pass "owncloud"
 
 # Change data dir
-sudo -u www-data php $OCPATH/occ config:system:set datadirectory --value="$DATA"
+#sudo -u www-data php $OCPATH/occ config:system:set datadirectory --value="$DATA"
 
 # Setup fail2ban
 sudo bash $SCRIPTS/fail2ban.sh
@@ -474,10 +474,6 @@ chmod 755 /etc/cron.daily/freshclam.sh
 echo "RewriteEngine On" >> $OCPATH/.htaccess
 echo "RewriteCond %{HTTPS} off" >> $OCPATH/.htaccess
 echo "RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]" >> $OCPATH/.htaccess
-
-# Use an external HD for storage of ROOT
-bash $SCRIPTS/external_usb.sh
-
 
 # Get the latest active-ssl script
         cd /var/scripts
