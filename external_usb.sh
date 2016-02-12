@@ -106,6 +106,10 @@ else
 fdisk $device << EOF
 d
 2
+w
+EOF
+sync
+fdisk $device << EOF
 n
 p
 2
@@ -113,7 +117,7 @@ p
 
 w
 EOF
-sync
+
 
 echo
 # Install swapfile of 2 GB
