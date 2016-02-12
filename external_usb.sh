@@ -38,7 +38,7 @@ EOF
 sync
 
 # Swap
-sudo apt-get install parted -y
+#sudo apt-get install parted -y
 mkswap -L PI_SWAP /dev/sda1 # format as swap
 swapon /dev/sda1 # announce to system
 echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
@@ -81,14 +81,13 @@ sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab # change ROOT device so the sys
 echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' /dev/sda2 && sync# make ext4 partition to hold ROOT
 dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda2 # copy the content of the SD ROOT partition to the new HD ROOT partition
 
-
 # Remove SD card ROOT partition
-#fdisk /dev/mmcblk0 << EOF
-#d
-#2
-#w
-#EOF
-#sync
+fdisk /dev/mmcblk0 << EOF
+d
+2
+w
+EOF
+sync
 
  echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
@@ -102,6 +101,20 @@ echo
 reboot
 
 else
+
+# Resize sd card
+fdisk $device << EOF
+d
+2
+n
+p
+2
+
+
+w
+EOF
+sync
+
 echo
 # Install swapfile of 2 GB
 fallocate -l 2048M /swapfile # create swapfile and set size
