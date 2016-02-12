@@ -20,8 +20,8 @@ find ${ocpath}/ -type f -print0 | xargs -0 chmod 0640
 find ${ocpath}/ -type d -print0 | xargs -0 chmod 0750
 find ${data}/ -type f -print0 | xargs -0 chmod 0640
 find ${data}/ -type d -print0 | xargs -0 chmod 0750
-find ${data.old}/ -type f -print0 | xargs -0 chmod 0640
-find ${data.old}/ -type d -print0 | xargs -0 chmod 0750
+find ${data_old}/ -type f -print0 | xargs -0 chmod 0640
+find ${data_old}/ -type d -print0 | xargs -0 chmod 0750
 
 printf "chown Directories\n"
 chown -R ${rootuser}:${htgroup} ${ocpath}/
