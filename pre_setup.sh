@@ -51,7 +51,9 @@ mesg n
 ROOT-PROFILE
 
 # Change back rc.local
+
 rm /etc/rc.local
+
 cat << RCLOCAL > "/etc/rc.local"
 #!/bin/sh -e
 #
@@ -65,7 +67,6 @@ cat << RCLOCAL > "/etc/rc.local"
 # bits.
 #
 # By default this script does nothing.
-sysctl -w net.core.somaxconn=65535
 
 exit 0
 
