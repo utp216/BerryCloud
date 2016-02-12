@@ -11,7 +11,7 @@ CONFIG=$HTML/owncloud/config/config.php
 OCVERSION=owncloud-8.2.2.zip
 SCRIPTS=/var/scripts
 HTML=/var/www/html
-OCPATH=/var/www/html/owncloud)
+OCPATH=/var/www/html/owncloud
 DATA=/owncloud/data
 MYSQL_PASS_OC=$(cat /var/mysql_password.txt)
 # Network
@@ -152,18 +152,18 @@ sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
 
 # Show MySQL pass, and write it to a file in case the user fails to write it down
 echo
-echo -e "Your MySQL root password is: \e[32m$MYSQL_PASS\e[0m"
-echo "Please save this somewhere safe. The password is also saved in this file: $PW_FILE."
 echo "$MYSQL_PASS" > $PW_FILE
 chmod 600 $PW_FILE
+echo -e "Your MySQL root password is: \e[32m$MYSQL_PASS_OC\e[0m"
+echo "Please save this somewhere safe. The password is also saved in this file: $PW_FILE."
 echo -e "\e[32m"
 read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
 sleep 5
 
 # Install MYSQL 5.6
-echo "mysql-server-5.6 mysql-server/root_password password $MYSQL_PASS" | debconf-set-selections
-echo "mysql-server-5.6 mysql-server/root_password_again password $MYSQL_PASS" | debconf-set-selections
+echo "mysql-server-5.6 mysql-server/root_password password $MYSQL_PASS_OC" | debconf-set-selections
+echo "mysql-server-5.6 mysql-server/root_password_again password $MYSQL_PASS_OC" | debconf-set-selections
 apt-get install mysql-server-5.6 -y
 
 # mysql_secure_installation
@@ -172,7 +172,7 @@ SECURE_MYSQL=$(expect -c "
 set timeout 10
 spawn mysql_secure_installation
 expect \"Enter current password for root (enter for none):\"
-send \"$MYSQL_PASS\r\"
+send \"$MYSQL_PASS_OC\r\"
 expect \"Change the root password?\"
 send \"n\r\"
 expect \"Remove anonymous users?\"
