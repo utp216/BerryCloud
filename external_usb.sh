@@ -117,7 +117,7 @@ p
 
 w
 EOF
-
+sync
 
 echo
 # Install swapfile of 2 GB
