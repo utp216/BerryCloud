@@ -43,8 +43,8 @@ if [ -f ${ocpath}/.htaccess ]
 fi
 if [ -f ${ocpath}/data/.htaccess ]
  then
-  chmod 0644 ${data.old}/.htaccess
-  chown ${rootuser}:${htgroup} ${data.old}/.htaccess
+  chmod 0644 ${data_old}/.htaccess
+  chown ${rootuser}:${htgroup} ${data_old}/.htaccess
 fi
 if [ -f ${data}/.htaccess ]
  then
