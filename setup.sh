@@ -158,6 +158,7 @@ chmod 600 $PW_FILE
 echo -e "\e[32m"
 read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
+sleep 5
 
 # Install MYSQL 5.6
 echo "mysql-server-5.6 mysql-server/root_password password $MYSQL_PASS" | debconf-set-selections
