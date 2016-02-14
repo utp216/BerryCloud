@@ -306,7 +306,7 @@ PERMISSION
 bash $SCRIPTS/setup_secure_permissions_owncloud.sh
 
 # Setup fail2ban
-sudo bash $SCRIPTS/fail2ban.sh
+#sudo bash $SCRIPTS/fail2ban.sh
 
 # Show version and status
 echo
