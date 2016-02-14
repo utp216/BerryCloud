@@ -101,52 +101,54 @@ reboot
 
 else
 
+bash /var/scripts/external_usb.sh
+
 # Resize sd card
-fdisk $device << EOF
-d
-2
-w
-EOF
-sync
-
-fdisk $device << EOF
-n
-p
-2
-
-
-w
-EOF
-sync
-
-echo
+#fdisk $device << EOF
+#d
+#2
+#w
+#EOF
+#sync
+#
+#fdisk $device << EOF
+#n
+#p
+#2
+#
+#
+#w
+#EOF
+#sync
+#
+#echo
 # Install swapfile of 2 GB
-fallocate -l 2048M /swapfile # create swapfile and set size
-chmod 600 /swapfile # give it the right permissions
-mkswap /swapfile # format as swap
-swapon /swapfile # announce to system
-echo "/swapfile none swap defaults 0 0" >> /etc/fstab # let the system know what file to use as swap after reboot
-
+#fallocate -l 2048M /swapfile # create swapfile and set size
+#chmod 600 /swapfile # give it the right permissions
+#mkswap /swapfile # format as swap
+#swapon /swapfile # announce to system
+#echo "/swapfile none swap defaults 0 0" >> /etc/fstab # let the system know what file to use as swap after reboot
+#
 # Change back root/.profile
-rm $ROOT_PROFILE
-touch $ROOT_PROFILE
-cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
-# ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-if [ -x /var/scripts/setup.sh ]; then
-        /var/scripts/setup.sh
-fi
-if [ -x /var/scripts/history.sh ]; then
-        /var/scripts/history.sh
-fi
-mesg n
-bash /var/scripts/pre_setup.sh
-ROOT-PROFILE
-
-fi
+#rm $ROOT_PROFILE
+#ouch $ROOT_PROFILE
+#at <<-ROOT-PROFILE > "$ROOT_PROFILE"
+## ~/.profile: executed by Bourne-compatible login shells.
+#if [ "$BASH" ]; then
+#  if [ -f ~/.bashrc ]; then
+#    . ~/.bashrc
+#  fi
+#fi
+#if [ -x /var/scripts/setup.sh ]; then
+#        /var/scripts/setup.sh
+#fi
+#if [ -x /var/scripts/history.sh ]; then
+#        /var/scripts/history.sh
+#fi
+#mesg n
+#bash /var/scripts/pre_setup.sh
+#ROOT-PROFILE
+#
+#fi
 
 exit 0
