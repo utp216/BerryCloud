@@ -54,7 +54,6 @@ umount /mnt
 
 # Change back root/.profile
 rm $ROOT_PROFILE
-touch $ROOT_PROFILE
 cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
 # ~/.profile: executed by Bourne-compatible login shells.
 if [ "$BASH" ]; then
