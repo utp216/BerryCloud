@@ -78,7 +78,7 @@ echo "This might take a while, copying everything from SD card to HD. Just wait 
 echo -e "\e[0m"
 sleep 2
 sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab # change ROOT device so the system will know which one to use as ROOT
-echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' /dev/sda2 && sync# make ext4 partition to hold ROOT
+echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' /dev/sda2 # make ext4 partition to hold ROOT
 dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda2 # copy the content of the SD ROOT partition to the new HD ROOT partition
 
 # Remove SD card ROOT partition
@@ -87,7 +87,6 @@ d
 2
 w
 EOF
-sync
 
  echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
@@ -109,6 +108,7 @@ d
 w
 EOF
 sync
+
 fdisk $device << EOF
 n
 p
