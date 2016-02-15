@@ -283,7 +283,7 @@ else
 	sleep 1
 fi
 
-# Change roots .bash_profile
+# Change roots .profile
 if 		[ -f $SCRIPTS/change-root-profile.sh ];
         then
                 echo "change-root-profile.sh exists"
@@ -317,7 +317,7 @@ else
 	sleep 1
 fi
 
-sleep 10
+sleep 15
 
 # Make $SCRIPTS excutable
         	chmod +x -R $SCRIPTS
@@ -330,6 +330,7 @@ sleep 10
         	chown ocadmin:ocadmin $SCRIPTS/pre_setup_message.sh
 
 # Change root profile
+sleep 10
         	bash $SCRIPTS/change-root-profile.sh
 if [[ $? > 0 ]]
 then
