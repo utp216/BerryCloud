@@ -154,6 +154,7 @@ sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
 echo
 echo "$MYSQL_PASS" > $PW_FILE
 chmod 600 $PW_FILE
+sleep 5
 echo -e "Your MySQL root password is: \e[32m$MYSQL_PASS_OC\e[0m"
 echo "Please save this somewhere safe. The password is also saved in this file: $PW_FILE."
 echo -e "\e[32m"
