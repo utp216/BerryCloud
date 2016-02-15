@@ -97,7 +97,6 @@ read -p "Press any key to continue..." -n1 -s
 echo -e "\e[0m"
 echo
 reboot
-fi
 
 else
 # Really dont want to use external usb?
@@ -239,6 +238,7 @@ fi
 mesg n
 bash /var/scripts/pre_setup.sh
 ROOT-PROFILE
+    fi
 fi
 
 exit 0
