@@ -15,6 +15,26 @@ function ask_yes_or_no() {
 }
 if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for the ROOT partition, recommended! (SSD preferred)? Also attach it before typing yes!!") ]]
 then
+
+# Change back root/.profile
+rm $ROOT_PROFILE
+cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
+# ~/.profile: executed by Bourne-compatible login shells.
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+if [ -x /var/scripts/setup.sh ]; then
+        /var/scripts/setup.sh
+fi
+if [ -x /var/scripts/history.sh ]; then
+        /var/scripts/history.sh
+fi
+mesg n
+bash /var/scripts/pre_setup.sh
+ROOT-PROFILE
+
 # Format and create partition
 echo -ne '\n' | wipefs $device
 fdisk $device << EOF
@@ -51,26 +71,6 @@ echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
 mount /dev/mmcblk0p1 /mnt
 sed -i 's|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/mmcblk0p2|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/sda2 rootfstype=ext4 bootdelay rootdelay rootwait|g' /mnt/cmdline.txt
 umount /mnt
-
-# Change back root/.profile
-rm $ROOT_PROFILE
-touch $ROOT_PROFILE
-cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
-# ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-if [ -x /var/scripts/setup.sh ]; then
-        /var/scripts/setup.sh
-fi
-if [ -x /var/scripts/history.sh ]; then
-        /var/scripts/history.sh
-fi
-mesg n
-bash /var/scripts/pre_setup.sh
-ROOT-PROFILE
 
 # External HD	
 echo -e "\e[32m"
@@ -110,6 +110,26 @@ function ask_yes_or_no() {
 }
 if [[ "yes" == $(ask_yes_or_no "Usb connected press y. n to use sd card, not recommended.") ]]
 then
+
+# Change back root/.profile
+rm $ROOT_PROFILE
+cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
+# ~/.profile: executed by Bourne-compatible login shells.
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+if [ -x /var/scripts/setup.sh ]; then
+        /var/scripts/setup.sh
+fi
+if [ -x /var/scripts/history.sh ]; then
+        /var/scripts/history.sh
+fi
+mesg n
+bash /var/scripts/pre_setup.sh
+ROOT-PROFILE
+
 # Format and create partition
 echo -ne '\n' | wipefs $device
 fdisk $device << EOF
@@ -147,26 +167,6 @@ mount /dev/mmcblk0p1 /mnt
 sed -i 's|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/mmcblk0p2|smsc95xx.turbo_mode=N dwc_otg.fiq_fix_enable=1 root=/dev/sda2 rootfstype=ext4 bootdelay rootdelay rootwait|g' /mnt/cmdline.txt
 umount /mnt
 
-# Change back root/.profile
-rm $ROOT_PROFILE
-touch $ROOT_PROFILE
-cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
-# ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-if [ -x /var/scripts/setup.sh ]; then
-        /var/scripts/setup.sh
-fi
-if [ -x /var/scripts/history.sh ]; then
-        /var/scripts/history.sh
-fi
-mesg n
-bash /var/scripts/pre_setup.sh
-ROOT-PROFILE
-
 # External HD	
 echo -e "\e[32m"
 echo "This might take a while, copying everything from SD card to HD. Just wait untill system continues."
@@ -195,6 +195,26 @@ echo
 reboot
 
 else
+
+# Change back root/.profile
+rm $ROOT_PROFILE
+cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
+## ~/.profile: executed by Bourne-compatible login shells.
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+if [ -x /var/scripts/setup.sh ]; then
+        /var/scripts/setup.sh
+fi
+if [ -x /var/scripts/history.sh ]; then
+        /var/scripts/history.sh
+fi
+mesg n
+bash /var/scripts/pre_setup.sh
+ROOT-PROFILE
+
 # Resize sd card
 fdisk $device << EOF
 d
@@ -220,26 +240,6 @@ chmod 600 /swapfile # give it the right permissions
 mkswap /swapfile # format as swap
 swapon /swapfile # announce to system
 echo "/swapfile none swap defaults 0 0" >> /etc/fstab # let the system know what file to use as swap after reboot
-
-# Change back root/.profile
-rm $ROOT_PROFILE
-touch $ROOT_PROFILE
-cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
-## ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-if [ -x /var/scripts/setup.sh ]; then
-        /var/scripts/setup.sh
-fi
-if [ -x /var/scripts/history.sh ]; then
-        /var/scripts/history.sh
-fi
-mesg n
-bash /var/scripts/pre_setup.sh
-ROOT-PROFILE
     fi
 fi
 
