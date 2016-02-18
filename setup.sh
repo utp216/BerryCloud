@@ -32,26 +32,6 @@ GATEWAY=$(/sbin/ip route | awk '/default/ { print $3 }')
         exit 1
 fi
 
-clear
-echo "+--------------------------------------------------------------------+"
-echo "| This script will install your ownCloud and activate SSL.           |"
-echo "| It will do alot more, nano/vi the script to see what.              |"
-echo "|                                                                    |"
-echo "|                                                                    |"
-echo "|   The script will take about 60 minutes to finish,                 |"
-echo "|   depending on your internet connection and if you overclocked     |"
-echo "|                      your RaspberryPi2                             |"
-echo "|                                                                    |"
-echo "|   We offer more aswome Virtual Machines, guides and news           |"
-echo "|         on our website https://www.techandme.se                    |"
-echo "|                                                                    |"
-echo "| ####################### Tech and Me - 2016 ####################### |"
-echo "+--------------------------------------------------------------------+"
-echo -e "\e[32m"
-read -p "Press any key to start the script..." -n1 -s
-clear
-echo -e "\e[0m"
-
 # Set keyboard layout
 echo "Current keyboard layout is English"
 echo "You must change keyboard layout to your language"
