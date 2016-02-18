@@ -13,7 +13,9 @@ function ask_yes_or_no() {
         *)     echo "no" ;;
     esac
 }
-if [[ "yes" == $(ask_yes_or_no "Do you want to use an external HD for the ROOT partition, recommended! (SSD preferred)? Also attach it before typing yes!!") ]]
+echo -e "\e[32m"
+if [[ "yes" == $(ask_yes_or_no "Please use an external HD, for the best performance. Ok? (SSD preferred) Also attach it before typing yes!!") ]]
+echo -e "\e[0m"
 then
 
 # Change back root/.profile
