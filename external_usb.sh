@@ -2,8 +2,8 @@
 #
 # Tech and Me, 2016 - www.techandme.se
 #
-device="/dev/sda"
-ROOT_PROFILE="/root/.profile"
+device='/dev/sda'
+ROOT_PROFILE='/root/.profile' 
 
 # Use external harddrive to mount os and sd card to boot
 function ask_yes_or_no() {
@@ -54,6 +54,7 @@ umount /mnt
 
 # Change back root/.profile
 rm $ROOT_PROFILE
+touch $ROOT_PROFILE
 cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
 # ~/.profile: executed by Bourne-compatible login shells.
 if [ "$BASH" ]; then
@@ -148,6 +149,7 @@ umount /mnt
 
 # Change back root/.profile
 rm $ROOT_PROFILE
+touch $ROOT_PROFILE
 cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
 # ~/.profile: executed by Bourne-compatible login shells.
 if [ "$BASH" ]; then
@@ -221,8 +223,8 @@ echo "/swapfile none swap defaults 0 0" >> /etc/fstab # let the system know what
 
 # Change back root/.profile
 rm $ROOT_PROFILE
-ouch $ROOT_PROFILE
-at <<-ROOT-PROFILE > "$ROOT_PROFILE"
+touch $ROOT_PROFILE
+cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
 ## ~/.profile: executed by Bourne-compatible login shells.
 if [ "$BASH" ]; then
   if [ -f ~/.bashrc ]; then
