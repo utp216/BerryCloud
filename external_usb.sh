@@ -25,14 +25,12 @@ if [ "$BASH" ]; then
     . ~/.bashrc
   fi
 fi
-if [ -x /var/scripts/setup.sh ]; then
-        /var/scripts/setup.sh
-fi
 if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
-mesg n
 bash /var/scripts/pre_setup.sh
+mesg n
+
 ROOT-PROFILE
 
 # Format and create partition
@@ -120,9 +118,6 @@ if [ "$BASH" ]; then
     . ~/.bashrc
   fi
 fi
-if [ -x /var/scripts/setup.sh ]; then
-        /var/scripts/setup.sh
-fi
 if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
@@ -204,9 +199,6 @@ if [ "$BASH" ]; then
   if [ -f ~/.bashrc ]; then
     . ~/.bashrc
   fi
-fi
-if [ -x /var/scripts/setup.sh ]; then
-        /var/scripts/setup.sh
 fi
 if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
