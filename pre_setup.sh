@@ -32,9 +32,7 @@ sed -i 's|bash /var/scripts/pre_setup_message.sh|#bash /var/scripts/pre_setup_me
 
 # Change back root/.profile
 ROOT_PROFILE="/root/.profile"
-
 rm /root/.profile
-
 cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
 # ~/.profile: executed by Bourne-compatible login shells.
 if [ "$BASH" ]; then
@@ -49,7 +47,6 @@ if [ -x /var/scripts/history.sh ]; then
         /var/scripts/history.sh
 fi
 mesg n
-#bash /var/scripts/usbhd2.sh
 ROOT-PROFILE
 
 # Change back rc.local
