@@ -144,8 +144,10 @@ clear
 apt-get update && apt-get upgrade -y && apt-get -f install -y
 
 # Update checker
-wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/update_checker.sh
-chmod 750 $SCRIPTS/update_checker.sh
+#wget https://raw.githubusercontent.com/ezraholm50/BerryCloud/master/update_checker.sh
+#chmod 750 $SCRIPTS/update_checker.sh
+#sed -i 's/sudo -i/bash /var/scripts/update_checker.sh/g' /home/ocadmin/.profile
+sed -i 's/sudo -i//g' /home/ocadmin/.profile
 
 # Remove locale error over ssh in other language
 sed -i 's|    SendEnv LANG LC_*|#   SendEnv LANG LC_*|g' /etc/ssh/ssh_config
@@ -634,7 +636,6 @@ cat /dev/null > /var/spool/mail/ocadmin
 cat /dev/null > /var/log/apache2/access.log
 cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
-sed -i 's/sudo -i/bash /var/scripts/update_checker.sh/g' /home/ocadmin/.profile
 sed -i 's/#bash /var/scripts/pre_setup_message.sh//g' /home/ocadmin/.profile
 sed -i 's/bash /var/scripts/instructions.sh//g' /home/ocadmin/.profile
 
