@@ -33,6 +33,13 @@ dpkg-reconfigure keyboard-configuration
 echo
 clear
 
+# Change NTP server
+sed -i 's|server 0.ubuntu.pool.ntp.org|server 0.pool.ntp.org|g' /etc/ntp.conf
+sed -i 's|server 1.ubuntu.pool.ntp.org|server 1.pool.ntp.org|g' /etc/ntp.conf
+sed -i 's|server 2.ubuntu.pool.ntp.org|server 2.pool.ntp.org|g' /etc/ntp.conf
+sed -i 's|server 3.ubuntu.pool.ntp.org|server 3.pool.ntp.org|g' /etc/ntp.conf
+/etc/init.d/ntp restart
+
 # Change Timezone
 echo "Current Timezone is Europe/Amsterdam"
 echo "You must change timezone to your timezone"
