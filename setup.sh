@@ -32,27 +32,6 @@ GATEWAY=$(/sbin/ip route | awk '/default/ { print $3 }')
         exit 1
 fi
 
-# Set keyboard layout
-echo "Current keyboard layout is English"
-echo "You must change keyboard layout to your language"
-echo -e "\e[32m"
-read -p "Press any key to change keyboard layout... " -n1 -s
-echo -e "\e[0m"
-dpkg-reconfigure keyboard-configuration
-echo
-clear
-
-# Change Timezone
-echo "Current Timezone is Europe/Amsterdam"
-echo "You must change timezone to your timezone"
-echo -e "\e[32m"
-read -p "Press any key to change timezone... " -n1 -s
-echo -e "\e[0m"
-dpkg-reconfigure tzdata
-echo
-sleep 3
-clear
-
 # Resize sdcard
 resize2fs /dev/mmcblk0p2
 clear
