@@ -3,6 +3,7 @@
 # Tech and Me, 2016 - www.techandme.se
 #
 # MySql
+touch $PW_FILE
 MYSQL_PASS=$(cat /dev/urandom| tr -dc 'a-zA-Z0-9-_!@#$%^&*()_+{}|:<>?='|fold -w 19| head -1)
 SHUF=$(shuf -i 27-38 -n 1)
 PW_FILE=/var/mysql_password.txt
@@ -117,7 +118,7 @@ sudo locale-gen "en_US.UTF-8" && sudo dpkg-reconfigure locales
 
 # Show MySQL pass, and write it to a file in case the user fails to write it down
 echo
-echo "$MYSQL_PASS" > $PW_FILE
+echo "$MYSQL_PASS" >> $PW_FILE
 chmod 600 $PW_FILE
 sleep 5
 echo -e "Your MySQL root password is: \e[32m$MYSQL_PASS_OC\e[0m"
