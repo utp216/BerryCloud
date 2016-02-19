@@ -17,11 +17,32 @@ SCRIPTS=/var/scripts
 fi
 
 apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
-apt-get install expect lvm2 openssh-server -y
+apt-get install expect lvm2 openssh-server ntp -y
 # fail2ban
 #useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 apt-get update && apt-get upgrade -y && apt-get -f install -y
 dpkg --configure --pending
+
+# Set keyboard layout
+echo "Current keyboard layout is English"
+echo "You must change keyboard layout to your language"
+echo -e "\e[32m"
+read -p "Press any key to change keyboard layout... " -n1 -s
+echo -e "\e[0m"
+dpkg-reconfigure keyboard-configuration
+echo
+clear
+
+# Change Timezone
+echo "Current Timezone is Europe/Amsterdam"
+echo "You must change timezone to your timezone"
+echo -e "\e[32m"
+read -p "Press any key to change timezone... " -n1 -s
+echo -e "\e[0m"
+dpkg-reconfigure tzdata
+echo
+sleep 3
+clear
 
 # Ask overclock
 bash $SCRIPTS/set_overclock.sh
@@ -73,6 +94,9 @@ RCLOCAL
 
 # Set permissions for rc.local
 chmod 755 /etc/rc.local
+
+# Ask external usb
+bash $SCRIPTS/external_usb.sh
 
 clear
 # Success!
