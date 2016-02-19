@@ -10,7 +10,9 @@
           *)     echo "no" ;;
       esac
   }
+  echo -e "\e[32m"
   if [[ "yes" == $(ask_yes_or_no "Do you want to supercharge your RPI? (safety is build in, warranty is void. Tech and me can't be held responsible for any loss/damage whatsoever.") ]]
+  echo -e "\e[0m"
   then
     sync
     mount /dev/mmcblk0p1 /mnt
