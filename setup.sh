@@ -616,7 +616,7 @@ cat /dev/null > /var/spool/mail/ocadmin
 cat /dev/null > /var/log/apache2/access.log
 cat /dev/null > /var/log/apache2/error.log
 cat /dev/null > /var/log/cronjobs_success.log
-sed -i 's/#bash /var/scripts/pre_setup_message.sh//g' /home/ocadmin/.profile
+sed -i 's/#bash /var/scripts/pre_setup_message.sh/echo "ownCloud server Tech and me. VERSION 1.0"/g' /home/ocadmin/.profile
 sed -i 's/bash /var/scripts/instructions.sh//g' /home/ocadmin/.profile
 
 # Change root .profile
