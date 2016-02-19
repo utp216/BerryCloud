@@ -18,23 +18,6 @@ if [[ "yes" == $(ask_yes_or_no "Please use an external HD, for the best performa
 echo -e "\e[0m"
 then
 
-# Change back root/.profile
-rm $ROOT_PROFILE
-cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
-# ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-if [ -x /var/scripts/history.sh ]; then
-        /var/scripts/history.sh
-fi
-bash /var/scripts/pre_setup.sh
-mesg n
-
-ROOT-PROFILE
-
 # Format and create partition
 echo -ne '\n' | wipefs $device
 fdisk $device << EOF
@@ -111,22 +94,6 @@ function ask_yes_or_no() {
 if [[ "yes" == $(ask_yes_or_no "Usb connected press y. n to use sd card, not recommended.") ]]
 then
 
-# Change back root/.profile
-rm $ROOT_PROFILE
-cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
-# ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-if [ -x /var/scripts/history.sh ]; then
-        /var/scripts/history.sh
-fi
-mesg n
-bash /var/scripts/pre_setup.sh
-ROOT-PROFILE
-
 # Format and create partition
 echo -ne '\n' | wipefs $device
 fdisk $device << EOF
@@ -192,22 +159,6 @@ echo
 reboot
 
 else
-
-# Change back root/.profile
-rm $ROOT_PROFILE
-cat <<-ROOT-PROFILE > "$ROOT_PROFILE"
-## ~/.profile: executed by Bourne-compatible login shells.
-if [ "$BASH" ]; then
-  if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-  fi
-fi
-if [ -x /var/scripts/history.sh ]; then
-        /var/scripts/history.sh
-fi
-mesg n
-bash /var/scripts/pre_setup.sh
-ROOT-PROFILE
 
 # Resize sd card
 fdisk $device << EOF
