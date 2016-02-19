@@ -17,7 +17,7 @@ SCRIPTS=/var/scripts
 fi
 
 apt-get autoremove -y && apt-get autoclean -y && apt-get update && apt-get upgrade -y && apt-get -f install -y
-apt-get install expect lvm2 openssh-server ntp -y
+apt-get install expect lvm2 openssh-server ntp parted -y
 # fail2ban
 #useradd -d /home/$USERNAME -m $USERNAME && sudo usermod -aG sudo $USERNAME && echo $USERNAME:$USERPASS | chpasswd
 apt-get update && apt-get upgrade -y && apt-get -f install -y
