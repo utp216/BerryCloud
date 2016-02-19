@@ -19,7 +19,11 @@ echo -e "\e[0m"
 then
 
 # Format and create partition
-echo -ne '\n' | wipefs $device
+#echo -ne '\n' | wipefs $device
+fdisk $device << EOF
+wipefs
+EOF
+
 fdisk $device << EOF
 o
 n
@@ -39,9 +43,9 @@ p
 w
 EOF
 sync
+partprobe
 
 # Swap
-#sudo apt-get install parted -y
 mkswap -L PI_SWAP /dev/sda1 # format as swap
 swapon /dev/sda1 # announce to system
 echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
@@ -91,11 +95,15 @@ function ask_yes_or_no() {
         *)     echo "no" ;;
     esac
 }
-if [[ "yes" == $(ask_yes_or_no "Usb connected press y. n to use sd card, not recommended.") ]]
+if [[ "yes" == $(ask_yes_or_no "Usb connected? press y. n to use sd card, not recommended.") ]]
 then
 
 # Format and create partition
-echo -ne '\n' | wipefs $device
+#echo -ne '\n' | wipefs $device
+fdisk $device << EOF
+wipefs
+EOF
+
 fdisk $device << EOF
 o
 n
@@ -115,9 +123,9 @@ p
 w
 EOF
 sync
+partprobe
 
 # Swap
-#sudo apt-get install parted -y
 mkswap -L PI_SWAP /dev/sda1 # format as swap
 swapon /dev/sda1 # announce to system
 echo "/dev/sda1 none swap sw 0 0" >> /etc/fstab
@@ -139,6 +147,7 @@ sleep 2
 sed -i 's|/dev/mmcblk0p2|/dev/sda2|g' /etc/fstab # change ROOT device so the system will know which one to use as ROOT
 echo -ne '\n' | sudo mke2fs -t ext4 -b 4096 -L 'PI_ROOT' /dev/sda2 # make ext4 partition to hold ROOT
 dd bs=4M conv=sync,noerror if=/dev/mmcblk0p2 of=/dev/sda2 # copy the content of the SD ROOT partition to the new HD ROOT partition
+partprobe
 
 # Remove SD card ROOT partition
 fdisk /dev/mmcblk0 << EOF
@@ -146,6 +155,7 @@ d
 2
 w
 EOF
+partprobe
 
 echo -e "\e[32m"
 echo    "+--------------------------------------------------------------------+"
