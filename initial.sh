@@ -355,8 +355,7 @@ fi
 # Fix ownership issue
 sudo chown ocadmin:ocadmin /home/ocadmin/.profile
 
-echo "*********Please wait for 30 seconds *********"
-sleep 30
+sleep 15
 
 # Change back rc.local
 rm /etc/rc.local
