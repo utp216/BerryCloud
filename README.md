@@ -60,8 +60,9 @@ On linux you can also use your archive manager to unpack
 2. 2A 5V power supply
 3. RaspberryPI2
 4. Keyboard / HDMI cable / Monitor (for first setup, after pre-setup you can ssh)
-5. *Optional 3x heatsink for RPI2* (Heatsinks, fan + case go for around 5 dollar on the internet, just google it)
-6. *Optional CPU fan for RPI2*
+5. Wired connection to internet
+6. *Optional 3x heatsink for RPI2* (Heatsinks, fan + case go for around 5 dollar on the internet, just google it)
+7. *Optional CPU fan for RPI2*
 
 # If you encounter any issues please use the issue tracker here on github: https://github.com/ezraholm50/BerryCloud/issues
 
