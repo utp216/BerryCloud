@@ -1,20 +1,20 @@
 # ownCloud server on your RaspberryPI2
 
-*Redis cache (with performance tweaks)
+*Redis Cache (with performance tweaks)
 
-*Php7
+*PHP 7
 
-*Fail2ban
+*Fail2Ban
 
 *Apache2
 
-*ClamAv (antivirus, scans uploaded files to owncloud. Change do daemon-socket in ownCloud admin panel)
+*ClamAV (antivirus, scans uploaded files to owncloud. Change do daemon-socket in ownCloud admin panel)
 
 *LVM2
 
 *Webmin
 
-*MySql (random password generated)
+*MySQL(random password generated)
 
 *Libre Office Writer
 
@@ -22,9 +22,12 @@
 
 *Possibility to use an external USB device as ROOT partition (recommended, preferably an SSD)
 
+*Base OS: Ubuntu Core 15.10 with apt-get package manager
+
+*Default safe overclocked settings that do not void your RaspberryPI2 warranty!!! (You are asked if you want to supercharge voiding warranty AT YOUR OWN RISK, which I always use, without any problems for over 4 months.)
+
 *Much more, see the setup.sh and other scripts
 
-Base OS: Ubuntu Core 15.10 with apt-get package manager
 
 # How to: 
 
@@ -39,8 +42,6 @@ Base OS: Ubuntu Core 15.10 with apt-get package manager
 4. login with ocadmin///owncloud (Connected to monitor with keyboard)
 
 5. Follow the instructions (The device will reboot a couple of times, don't worry about that. Just keep loggin in after reboot)
-
-6. For now only use Rapi-Config tool for overclocking. (RECOMMENDED FOR SPEED, this tool uses non warrenty void settings, if you dont care about that... remove the old config.txt from PI_BOOT partition and cp config.txt above to PI_BOOT)
 
 # Unpacking the image on unix:
 Open terminal, enter following commands
