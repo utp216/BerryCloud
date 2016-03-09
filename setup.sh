@@ -9,7 +9,7 @@ SHUF=$(shuf -i 27-38 -n 1)
 PW_FILE=/var/mysql_password.txt
 # ownCloud
 CONFIG=$HTML/owncloud/config/config.php
-OCVERSION=owncloud-8.2.2.zip
+OCVERSION=owncloud-9.0.0.zip
 SCRIPTS=/var/scripts
 HTML=/var/www/html
 OCPATH=/var/www/html/owncloud
@@ -376,28 +376,28 @@ apt-get install --no-install-recommends libreoffice-writer -y
 if [ -d $OCPATH/apps/files_antivirus ]; then
 sleep 1
 else
-wget https://github.com/owncloud/files_antivirus/archive/stable8.2.zip -P $OCPATH/apps
+wget https://github.com/owncloud/files_antivirus/archive/master.zip -P $OCPATH/apps
 cd $OCPATH/apps
 unzip -q stable8.2.zip
 rm stable8.2.zip
-mv files_antivirus-stable8.2/ files_antivirus/
+mv files_antivirus-master/ files_antivirus/
 fi
 
-# Enable documents
+# Enable antivirus
 if [ -d $OCPATH/apps/files_antivirus ]; then
 sudo -u www-data php $OCPATH/occ app:enable files_antivirus
 fi
 
 # Download and install Documents
-if [ -d $OCPATH/apps/documents ]; then
-sleep 1
-else
-wget https://github.com/owncloud/documents/archive/master.zip -P $OCPATH/apps
-cd $OCPATH/apps
-unzip -q master.zip
-rm master.zip
-mv documents-master/ documents/
-fi
+#if [ -d $OCPATH/apps/documents ]; then
+#sleep 1
+#else
+#wget https://github.com/owncloud/documents/archive/master.zip -P $OCPATH/apps
+#cd $OCPATH/apps
+#unzip -q master.zip
+#rm master.zip
+#mv documents-master/ documents/
+#fi
 
 # Enable documents
 if [ -d $OCPATH/apps/documents ]; then
@@ -406,15 +406,15 @@ sudo -u www-data php $OCPATH/occ config:system:set preview_libreoffice_path --va
 fi
 
 # Download and install Contacts
-if [ -d $OCPATH/apps/contacts ]; then
-sleep 1
-else
-wget https://github.com/owncloud/contacts/archive/master.zip -P $OCPATH/apps
-unzip -q $OCPATH/apps/master.zip -d $OCPATH/apps
-cd $OCPATH/apps
-rm master.zip
-mv contacts-master/ contacts/
-fi
+#if [ -d $OCPATH/apps/contacts ]; then
+#sleep 1
+#else
+#wget https://github.com/owncloud/contacts/archive/master.zip -P $OCPATH/apps
+#unzip -q $OCPATH/apps/master.zip -d $OCPATH/apps
+#cd $OCPATH/apps
+#rm master.zip
+#mv contacts-master/ contacts/
+#fi
 
 # Enable Contacts
 if [ -d $OCPATH/apps/contacts ]; then
@@ -422,15 +422,15 @@ sudo -u www-data php $OCPATH/occ app:enable contacts
 fi
 
 # Download and install Calendar
-if [ -d $OCPATH/apps/calendar ]; then
-sleep 1
-else
-wget https://github.com/owncloud/calendar/archive/master.zip -P $OCPATH/apps
-unzip -q $OCPATH/apps/master.zip -d $OCPATH/apps
-cd $OCPATH/apps
-rm master.zip
-mv calendar-master/ calendar/
-fi
+#if [ -d $OCPATH/apps/calendar ]; then
+#sleep 1
+#else
+#wget https://github.com/owncloud/calendar/archive/master.zip -P $OCPATH/apps
+#unzip -q $OCPATH/apps/master.zip -d $OCPATH/apps
+#cd $OCPATH/apps
+#rm master.zip
+#mv calendar-master/ calendar/
+#fi
 
 # Enable Calendar
 if [ -d $OCPATH/apps/calendar ]; then
