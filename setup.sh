@@ -31,10 +31,10 @@ GATEWAY=$(/sbin/ip route | awk '/default/ { print $3 }')
         echo
         exit 1
 fi
-
 # Resize sdcard
 resize2fs /dev/mmcblk0p2
 clear
+dpkg-reconfigure keyboard-configuration
 
 # Set hostname and ServerName
 hostnamectl set-hostname owncloud 
